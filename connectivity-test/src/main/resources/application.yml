@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: connectivity-test
+  profiles:
+    active: local
+
+server:
+  port: ${SERVER_PORT:8081}
+
+aws:
+  region: ${AWS_REGION:us-east-1}
+  endpoint-override: ${AWS_ENDPOINT_URL:}   # blank = real AWS; set for Ministack/LocalStack
+  access-key: ${AWS_ACCESS_KEY_ID:test}
+  secret-key: ${AWS_SECRET_ACCESS_KEY:test}
+  resources:
+    bucket: health-check-bucket
+    table: HealthCheckTable
+    queue: health-check-queue
+    topic: health-check-topic
+    stream: health-check-stream

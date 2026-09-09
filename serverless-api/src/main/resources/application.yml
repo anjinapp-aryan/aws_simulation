@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: serverless-api
+  profiles:
+    active: local
+
+server:
+  port: ${SERVER_PORT:8082}
+
+aws:
+  region: ${AWS_REGION:us-east-1}
+  endpoint-override: ${AWS_ENDPOINT_URL:}
+  access-key: ${AWS_ACCESS_KEY_ID:test}
+  secret-key: ${AWS_SECRET_ACCESS_KEY:test}
+  resources:
+    table: TasksTable
+    attachments-bucket: task-attachments-bucket

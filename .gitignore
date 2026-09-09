@@ -1,0 +1,5 @@
+.tools/
+target/
+*.tfstate
+*.tfstate.backup
+.terraform/

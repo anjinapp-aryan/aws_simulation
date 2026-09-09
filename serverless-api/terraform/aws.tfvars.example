@@ -1,0 +1,3 @@
+# terraform apply -var-file=aws.tfvars
+use_local_endpoints = false
+region              = "us-east-1"

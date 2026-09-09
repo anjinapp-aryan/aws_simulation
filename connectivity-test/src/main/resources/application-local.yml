@@ -1,0 +1,5 @@
+# Local profile: talk to Ministack (LocalStack-compatible) on a single edge port.
+aws:
+  endpoint-override: ${AWS_ENDPOINT_URL:http://localhost:4566}
+  access-key: test
+  secret-key: test

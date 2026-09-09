@@ -1,0 +1,69 @@
+version: "3.8"
+
+services:
+  ministack:
+    image: ministackorg/ministack:latest
+    container_name: ministack
+    ports:
+      - "4566:4566"   # single edge port, LocalStack-compatible API
+    environment:
+      - SERVICES=s3,dynamodb,sqs,sns,kinesis,iam,sts
+      - DEFAULT_REGION=us-east-1
+      - PERSISTENCE=1
+    volumes:
+      - ministack-data:/var/lib/ministack
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4566/_ministack/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  connectivity-test:
+    build: ./connectivity-test
+    container_name: connectivity-test
+    depends_on:
+      ministack:
+        condition: service_healthy
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_PROFILES_ACTIVE=local
+      - AWS_ENDPOINT_URL=http://ministack:4566
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+      - AWS_REGION=us-east-1
+
+  serverless-api:
+    build: ./serverless-api
+    container_name: serverless-api
+    depends_on:
+      ministack:
+        condition: service_healthy
+    ports:
+      - "8082:8082"
+    environment:
+      - SPRING_PROFILES_ACTIVE=local
+      - AWS_ENDPOINT_URL=http://ministack:4566
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+      - AWS_REGION=us-east-1
+
+  event-pipeline:
+    build: ./event-pipeline
+    container_name: event-pipeline
+    depends_on:
+      ministack:
+        condition: service_healthy
+    ports:
+      - "8083:8083"
+    environment:
+      - SPRING_PROFILES_ACTIVE=local
+      - AWS_ENDPOINT_URL=http://ministack:4566
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+      - AWS_REGION=us-east-1
+      # Toggle Version A vs Version B: PIPELINE_CONSUMER_MODE=spring-cloud-aws|plain-sdk
+      - PIPELINE_CONSUMER_MODE=${PIPELINE_CONSUMER_MODE:-plain-sdk}
+
+volumes:
+  ministack-data:

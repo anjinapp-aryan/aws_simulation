@@ -1,0 +1,5 @@
+# Real AWS profile: leave endpoint-override blank so SDK talks to real regional endpoints.
+# Credentials come from the default provider chain (env vars, ~/.aws/credentials, or IAM role) —
+# do not put real keys here.
+aws:
+  endpoint-override: ""

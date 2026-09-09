@@ -1,0 +1,14 @@
+spring:
+  cloud:
+    aws:
+      sqs:
+        endpoint: ${AWS_ENDPOINT_URL:http://localhost:4566}
+      sns:
+        endpoint: ${AWS_ENDPOINT_URL:http://localhost:4566}
+      s3:
+        endpoint: ${AWS_ENDPOINT_URL:http://localhost:4566}
+
+aws:
+  endpoint-override: ${AWS_ENDPOINT_URL:http://localhost:4566}
+  access-key: test
+  secret-key: test

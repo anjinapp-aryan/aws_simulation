@@ -1,0 +1,4 @@
+# Real AWS: terraform apply -var-file=aws.tfvars
+# Credentials come from env vars / ~/.aws/credentials / IAM role — not from this file.
+use_local_endpoints = false
+region              = "us-east-1"

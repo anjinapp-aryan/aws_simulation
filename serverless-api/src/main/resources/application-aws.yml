@@ -1,0 +1,3 @@
+# Real AWS: default credentials provider chain, no endpoint override.
+aws:
+  endpoint-override: ""

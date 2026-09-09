@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: event-pipeline
+  profiles:
+    active: local
+  cloud:
+    aws:
+      credentials:
+        access-key: ${AWS_ACCESS_KEY_ID:test}
+        secret-key: ${AWS_SECRET_ACCESS_KEY:test}
+      region:
+        static: ${AWS_REGION:us-east-1}
+
+server:
+  port: ${SERVER_PORT:8083}
+
+aws:
+  region: ${AWS_REGION:us-east-1}
+  endpoint-override: ${AWS_ENDPOINT_URL:}
+  access-key: ${AWS_ACCESS_KEY_ID:test}
+  secret-key: ${AWS_SECRET_ACCESS_KEY:test}
+  resources:
+    topic: order-events-topic
+    queue: order-processing-queue
+    dlq: order-processing-dlq
+    table: OrdersTable
+    archive-bucket: order-events-archive
+
+pipeline:
+  consumer:
+    # plain-sdk = Version B (SqsPollingConsumer); spring-cloud-aws = Version A (@SqsListener)
+    mode: plain-sdk
