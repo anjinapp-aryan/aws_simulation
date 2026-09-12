@@ -1,0 +1,6 @@
+staging real stress-ng binary into app container (one-time)
+stress-ng, version 0.22.00 (gcc 14.2.0, x86_64 Linux 6.6.87.2-microsoft-standard-WSL2)
+21:36:42 starting memory stress: vm-bytes=300M (container limit=128m)
+polling docker inspect for OOMKilled...
+21:36:42.855 OOMKilled=true Running=true
+REAL OOM observed live.

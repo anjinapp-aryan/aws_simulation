@@ -1,0 +1,21 @@
+=== R5-01 BASELINE 21:30:09 ===
+--- vegeta already run above, 150 req, 100% success, mean 3.3ms ---
+--- cadvisor cpu (app container) ---
+{
+    "status": "success",
+    "data": {
+        "resultType": "vector",
+        "result": []
+    }
+}
+--- cadvisor memory (app container) ---
+{
+    "status": "success",
+    "data": {
+        "resultType": "vector",
+        "result": []
+    }
+}
+--- docker inspect app ---
+time="2026-09-11T21:30:09+05:30" level=warning msg="D:\\WORK_SPACE\\aws_simulation\\labs\\r5-observability\\docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+Status=running OOMKilled=false RestartCount=0

@@ -1,0 +1,7 @@
+=== R5-03 AFTER OOM (recovery), 21:36:52 ===
+Status=running OOMKilled=true RestartCount=0 StartedAt=2026-09-11T16:06:33.07607242Z
+CONTAINER ID   NAME                     CPU %     MEM USAGE / LIMIT   MEM %     NET I/O           BLOCK I/O         PIDS
+5d03cf70f311   r5-observability-app-1   100.17%   71.1MiB / 128MiB    55.55%    5.99kB / 5.21kB   16.6MB / 57.3kB   4
+--- app health after recovery ---
+healthy
+ (HTTP 200)

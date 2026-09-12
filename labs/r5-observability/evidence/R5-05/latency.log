@@ -1,0 +1,3 @@
+=== R5-05 LATENCY (300ms), 21:38:00 ===
+OK db_time=2026-09-11 16:08:01.283195+00:00 backend_pid=2090 elapsed=1.536s
+ HTTP=200 time=1.543296s

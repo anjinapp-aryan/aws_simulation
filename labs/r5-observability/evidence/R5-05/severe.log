@@ -1,0 +1,4 @@
+=== R5-05 SEVERE LATENCY (2000ms), 21:38:06 ===
+DB_ERROR after 2.925s: OperationalError: connection to server at "toxiproxy" (172.22.0.9), port 5432 failed: timeout expired
+
+ HTTP=500 time=2.932384s

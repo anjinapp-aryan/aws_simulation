@@ -1,0 +1,10 @@
+=== R3 Evidence — Fri Sep 11 20:44:19 IST 2026 ===
+R3-01: Task-1/Task-2 VERSION=1, alternating, registry catalog: r3-app tags [v1]
+R3-02: 20:40:05 Up -> 20:40:07 Exited(137) -> 20:40:20 Up again (same container ID, manual start required)
+R3-03: container Up throughout; Traefik DOWN while /tmp/unhealthy present; UP after removal
+R3-04: self-crash via /crash -> RestartCount 0->1, automatic, unassisted, ~2s
+R3-05: docker run localhost:5000/r3-app:bad -> 'failed to resolve reference...not found' (real registry 404)
+R3-06: registry tags [v1,v2] both real; v1 container says VERSION=1, v2 container says VERSION=2
+R3-07: OOMKilled=true caught live; RestartCount climbed 0->3 across OOM cycles; stabilized OOMKilled=false after
+R3-09: scale 1 (app2 DOWN) -> 2 -> 3 (all three UP) -> back to 2
+R3-10: kill app-1 under load: 9/10 requests succeeded, 1 request HTTP 000 during the ~2.5s detection gap; manual restart required, then UP

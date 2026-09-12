@@ -1,0 +1,128 @@
+# R5 - Observability + performance pressure + failure correlation, $0, local.
+# Reused unmodified: traefik:v3.1 (R2/R3 file-provider pattern - proven
+# workaround for the Windows/Docker-Desktop socket-provider bug), postgres:16-alpine,
+# edoburu/pgbouncer, ghcr.io/shopify/toxiproxy, prometheuscommunity/postgres-exporter,
+# prom/prometheus, grafana/grafana, amir20/dozzle (R3), gcr.io/cadvisor/cadvisor.
+# Adapted: app/server.py = R4's /db handler + R2's unhealthy-toggle, verbatim, one file.
+# Utility containers (stress-ng, vegeta) launched on-demand by scripts, not part
+# of the base stack, so the app image itself is never modified for stress-ng
+# (per explicit rule: keep the application container clean).
+version: "3.8"
+
+services:
+  traefik:
+    image: traefik:v3.1
+    command:
+      - "--api.insecure=true"
+      - "--providers.file.filename=/etc/traefik/dynamic.yml"
+      - "--providers.file.watch=true"
+      - "--entrypoints.web.address=:80"
+      - "--log.level=INFO"
+      - "--accesslog=true"
+    ports:
+      - "58080:80"     # traffic entrypoint
+      - "58081:8080"   # dashboard
+    volumes:
+      - ./traefik-dynamic.yml:/etc/traefik/dynamic.yml:ro
+    networks: [r5net]
+    depends_on: [app]
+
+  app:
+    build: ./app
+    environment:
+      DB_HOST: toxiproxy
+      DB_PORT: "5432"
+      DB_NAME: appdb
+      DB_USER: appuser
+      DB_PASSWORD: apppass
+      PYTHONUNBUFFERED: "1"
+    ports:
+      - "58000:8000"
+    depends_on: [toxiproxy]
+    mem_limit: 128m
+    memswap_limit: 128m
+    restart: on-failure
+    networks: [r5net]
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: appdb
+      POSTGRES_USER: appuser
+      POSTGRES_PASSWORD: apppass
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U appuser -d appdb"]
+      interval: 2s
+      timeout: 2s
+      retries: 15
+    networks: [r5net]
+
+  pgbouncer:
+    image: edoburu/pgbouncer:latest
+    volumes:
+      - ./pgbouncer/pgbouncer.ini:/etc/pgbouncer/pgbouncer.ini:ro
+      - ./pgbouncer/userlist.txt:/etc/pgbouncer/userlist.txt:ro
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks: [r5net]
+
+  toxiproxy:
+    image: ghcr.io/shopify/toxiproxy:2.9.0
+    ports:
+      - "58474:8474"   # control API
+    depends_on: [pgbouncer]
+    networks: [r5net]
+
+  postgres_exporter:
+    image: prometheuscommunity/postgres-exporter:latest
+    environment:
+      DATA_SOURCE_NAME: "postgresql://appuser:apppass@postgres:5432/appdb?sslmode=disable"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks: [r5net]
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:v0.52.1
+    environment:
+      DOCKER_API_VERSION: "1.41"
+    ports:
+      - "58082:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /:/rootfs:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    privileged: true
+    networks: [r5net]
+
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    ports:
+      - "59090:9090"
+    networks: [r5net]
+
+  grafana:
+    image: grafana/grafana:latest
+    environment:
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: "Admin"
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+    ports:
+      - "53000:3000"
+    networks: [r5net]
+
+  dozzle:
+    image: amir20/dozzle:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    ports:
+      - "58888:8080"
+    networks: [r5net]
+
+networks:
+  r5net:
+    driver: bridge

@@ -1,0 +1,9 @@
+=== R4 Evidence — Fri Sep 11 21:11:31 IST 2026 ===
+R4-01: real query chain works, backend_pid rotates each call (109,110,112) - proves real PgBouncer transaction pooling
+R4-02: [BUG FOUND+FIXED] first script (fresh docker run + heredoc) hung indefinitely under Git Bash quoting; isolated test on running container proved real auth rejection is instant (0.00s): FATAL: password authentication failed
+R4-03: real pgbench vs real PgBouncer max_client_conn=5 -> 'FATAL: no more connections allowed (max_client_conn)' from client 6 onward
+R4-04a: 300ms Toxiproxy latency -> query SUCCEEDED but elapsed=1.561s (compounding across Postgres handshake round-trips)
+R4-04b: 2000ms Toxiproxy latency -> exceeded app's 3s connect_timeout -> real timeout error at 3.892s
+R4-05: proxy disabled -> instant 'Connection refused' (0.046s)
+R4-06: proxy re-enabled -> immediate success, new backend_pid=687
+Grafana HTTP 200, pgweb HTTP 200 - both visualization layers live and reachable

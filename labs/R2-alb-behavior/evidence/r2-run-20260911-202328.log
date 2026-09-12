@@ -1,0 +1,26 @@
+=== R2 Evidence — Fri Sep 11 20:23:28 IST 2026 ===
+
+--- Experiment 1: normal routing (6 requests, round-robin) ---
+Hello from App-2 / App-1 / App-2 / App-1 / App-2 / App-1 (alternating)
+
+--- Experiment 2: health status, both healthy ---
+{"loadBalancer":{"servers":[{"url":"http://app-1:8000"},{"url":"http://app-2:8000"}],"healthCheck":{"mode":"http","path":"/health","interval":"2s","timeout":"1s","followRedirects":true},"passHostHeader":true,"responseForwarding":{"flushInterval":"100ms"}},"status":"enabled","usedBy":["app-router@file"],"serverStatus":{"http://app-1:8000":"UP","http://app-2:8000":"UP"},"name":"backend@file","provider":"file","type":"loadbalancer"}
+
+
+--- Experiment 3: after 'docker compose stop app-1' ---
+serverStatus: {app-1: DOWN, app-2: UP}
+6/6 requests routed to App-2, zero client-visible failures
+
+--- Diagnosis evidence: real Traefik WRN log lines ---
+traefik-1  | [90m2026-09-11T14:53:11Z[0m [31mWRN[0m Health check failed. [36merror=[0m[31m"received error status code: 500"[0m [36mserviceName=[0mbackend@file [36mtargetURL=[0mhttp://app-1:8000
+traefik-1  | [90m2026-09-11T14:53:13Z[0m [31mWRN[0m Health check failed. [36merror=[0m[31m"received error status code: 500"[0m [36mserviceName=[0mbackend@file [36mtargetURL=[0mhttp://app-1:8000
+traefik-1  | [90m2026-09-11T14:53:15Z[0m [31mWRN[0m Health check failed. [36merror=[0m[31m"received error status code: 500"[0m [36mserviceName=[0mbackend@file [36mtargetURL=[0mhttp://app-1:8000
+
+--- Experiment 4: after 'docker compose start app-1' ---
+serverStatus: {app-1: UP, app-2: UP} - traffic alternation resumed
+
+--- Experiment 5: container Up, /health broken via touch /tmp/unhealthy ---
+docker compose ps app-1 -> Up (unchanged)
+Traefik serverStatus -> app-1: DOWN
+Direct probe of app-1:8000/ (bypassing Traefik) -> 200 Hello from App-1 (app itself fine)
+6/6 requests through Traefik -> all routed to App-2

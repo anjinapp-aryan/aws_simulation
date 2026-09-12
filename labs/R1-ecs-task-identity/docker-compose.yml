@@ -1,0 +1,90 @@
+# Lab R1 — ECS Task Identity + IAM (real local runtime behavior, $0)
+#
+# Reused, unmodified:
+#   amazon/amazon-ecs-local-container-endpoints  (AWS-official real ECS credential-vending protocol)
+#   minio/minio + minio/mc                        (real S3-compatible API with real IAM policy enforcement)
+# Built: only this compose file + the scripts/ glue.
+version: "2.4"
+
+networks:
+  # The special 169.254.170.0/24 network is what makes the AWS SDK/CLI's default
+  # credential chain find the metadata endpoint at the well-known link-local IP,
+  # exactly as it does inside a real ECS task.
+  credentials_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: "169.254.170.0/24"
+          gateway: 169.254.170.1
+  default:
+    driver: bridge
+
+services:
+  # The REAL target AWS API. Provides real SigV4 request validation and real
+  # IAM-style policy evaluation (genuine ALLOW/DENY), unlike an API-shape-only
+  # emulator. This is NOT AWS S3 (no real AWS infrastructure), but the
+  # authorization behavior it enforces is real, not mocked.
+  minio:
+    image: minio/minio:latest
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin123
+    networks: [default]
+    ports:
+      - "19000:9000"
+      - "19001:9001"
+    healthcheck:
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+
+  # One-shot provisioning: creates the bucket, the task-role user, and attaches
+  # the MINIMUM REQUIRED policy. This represents the platform/IAM team's
+  # actions, entirely separate from the app container.
+  mc-init:
+    image: minio/mc:latest
+    depends_on:
+      minio:
+        condition: service_healthy
+    networks: [default]
+    volumes:
+      - ./config/policies:/policies:ro
+      - ./scripts:/scripts:ro
+    entrypoint: ["/bin/sh", "/scripts/provision.sh"]
+
+  # AWS-official, REUSED UNCHANGED. Vends whatever credentials are in the
+  # mounted profile via the exact ECS Task Metadata / Container Credentials
+  # protocol a real ECS task role uses. This is REAL protocol behavior; the
+  # credentials themselves are a long-lived MinIO user key (not real rotating
+  # STS temporary credentials) — the one place this lab is NOT AWS-identical.
+  ecs-local-endpoints:
+    image: amazon/amazon-ecs-local-container-endpoints
+    volumes:
+      - /var/run:/var/run
+      - ./config/aws-credentials:/home/.aws:ro
+    environment:
+      AWS_PROFILE: "default"
+    networks:
+      credentials_network:
+        ipv4_address: "169.254.170.2"
+
+  # The application under test. Uses the AWS CLI's DEFAULT credential chain —
+  # no hardcoded keys anywhere — which auto-discovers container credentials
+  # via AWS_CONTAINER_CREDENTIALS_RELATIVE_URI, exactly as a real ECS task's
+  # SDK/CLI does.
+  app:
+    image: amazon/aws-cli:latest
+    depends_on:
+      - ecs-local-endpoints
+    entrypoint: ["/bin/sh", "-c", "sleep infinity"]
+    networks:
+      credentials_network:
+        ipv4_address: "169.254.170.3"
+      default: {}
+    environment:
+      AWS_DEFAULT_REGION: "us-east-1"
+      AWS_CONTAINER_CREDENTIALS_RELATIVE_URI: "/creds"
+      ECS_CONTAINER_METADATA_URI: "http://169.254.170.2/v3"
+      AWS_EC2_METADATA_DISABLED: "true"

@@ -1,0 +1,8 @@
+=== R5-02 CPU PRESSURE DURING, 21:34:27 ===
+--- docker stats (during, 3 samples) ---
+CONTAINER ID   NAME                     CPU %     MEM USAGE / LIMIT   MEM %     NET I/O         BLOCK I/O         PIDS
+50297df238bf   r5-observability-app-1   200.03%   18.69MiB / 128MiB   14.60%    180kB / 155kB   22.5MB / 57.3kB   4
+CONTAINER ID   NAME                     CPU %     MEM USAGE / LIMIT   MEM %     NET I/O         BLOCK I/O         PIDS
+50297df238bf   r5-observability-app-1   200.00%   18.66MiB / 128MiB   14.58%    181kB / 155kB   22.5MB / 57.3kB   4
+CONTAINER ID   NAME                     CPU %     MEM USAGE / LIMIT   MEM %     NET I/O         BLOCK I/O         PIDS
+50297df238bf   r5-observability-app-1   199.61%   18.66MiB / 128MiB   14.58%    182kB / 156kB   22.5MB / 57.3kB   4

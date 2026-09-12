@@ -1,0 +1,8 @@
+=== R5-03 FINAL recovery state, 21:37:28 ===
+Status=running OOMKilled=true RestartCount=0
+CONTAINER ID   NAME                     CPU %     MEM USAGE / LIMIT   MEM %     NET I/O           BLOCK I/O         PIDS
+5d03cf70f311   r5-observability-app-1   0.38%     11.4MiB / 128MiB    8.91%     15.3kB / 13.8kB   16.6MB / 57.3kB   1
+--- dmesg-style kernel oom evidence via docker logs (app stdout won't show it - check container events) ---
+failed to parse value as time or duration: "now"
+healthy
+ (HTTP 200)

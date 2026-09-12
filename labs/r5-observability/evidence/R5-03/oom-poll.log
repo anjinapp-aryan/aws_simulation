@@ -1,0 +1,43 @@
+stress-ng already staged in app container
+21:35:19 starting memory stress: vm-bytes=200M (container limit=128m)
+polling docker inspect for OOMKilled...
+21:35:19.777 OOMKilled=false Running=true
+21:35:20.847 OOMKilled=false Running=true
+21:35:21.901 OOMKilled=false Running=true
+21:35:22.964 OOMKilled=false Running=true
+21:35:24.000 OOMKilled=false Running=true
+21:35:25.062 OOMKilled=false Running=true
+21:35:26.124 OOMKilled=false Running=true
+21:35:27.172 OOMKilled=false Running=true
+21:35:28.222 OOMKilled=false Running=true
+21:35:29.298 OOMKilled=false Running=true
+21:35:30.366 OOMKilled=false Running=true
+21:35:31.419 OOMKilled=false Running=true
+21:35:32.499 OOMKilled=false Running=true
+21:35:33.551 OOMKilled=false Running=true
+21:35:34.643 OOMKilled=false Running=true
+21:35:35.705 OOMKilled=false Running=true
+21:35:36.756 OOMKilled=false Running=true
+21:35:37.814 OOMKilled=false Running=true
+21:35:38.866 OOMKilled=false Running=true
+21:35:39.958 OOMKilled=false Running=true
+21:35:41.045 OOMKilled=false Running=true
+21:35:42.155 OOMKilled=false Running=true
+21:35:43.227 OOMKilled=false Running=true
+21:35:44.343 OOMKilled=false Running=true
+21:35:45.439 OOMKilled=false Running=true
+21:35:46.521 OOMKilled=false Running=true
+21:35:47.603 OOMKilled=false Running=true
+21:35:48.689 OOMKilled=false Running=true
+21:35:49.759 OOMKilled=false Running=true
+21:35:50.813 OOMKilled=false Running=true
+21:35:51.896 OOMKilled=false Running=true
+21:35:52.979 OOMKilled=false Running=true
+21:35:54.024 OOMKilled=false Running=true
+21:35:55.104 OOMKilled=false Running=true
+21:35:56.180 OOMKilled=false Running=true
+21:35:57.293 OOMKilled=false Running=true
+21:35:58.363 OOMKilled=false Running=true
+21:35:59.436 OOMKilled=false Running=true
+21:36:00.541 OOMKilled=false Running=true
+21:36:01.603 OOMKilled=false Running=true

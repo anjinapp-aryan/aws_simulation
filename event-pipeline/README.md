@@ -90,7 +90,7 @@ curl http://localhost:8083/orders/<orderId>
 ./mvnw test -Dtest=OrderPipelineIT # integration test: full HTTP -> SNS -> SQS -> DynamoDB, needs Ministack + terraform apply
 ```
 
-Same JDK 21 note as the other projects — Mockito's inline mock maker needs it if your default
+Same JDK 25 note as the other projects — Mockito's inline mock maker needs it if your default
 JDK is newer.
 
 ## Deploying to real AWS

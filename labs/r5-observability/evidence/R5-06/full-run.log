@@ -1,0 +1,152 @@
+=== BEFORE ===
+--- app /health ---
+healthy
+ (HTTP 200)
+--- app /db ---
+OK db_time=2026-09-11 16:08:22.410337+00:00 backend_pid=2175 elapsed=0.009s
+ (HTTP 200)
+--- Traefik backend state ---
+{
+    "loadBalancer": {
+        "servers": [
+            {
+                "url": "http://app:8000"
+            }
+        ],
+        "healthCheck": {
+            "mode": "http",
+            "path": "/health",
+            "interval": "2s",
+            "timeout": "1s",
+            "followRedirects": true
+        },
+        "passHostHeader": true,
+        "responseForwarding": {
+            "flushInterval": "100ms"
+        }
+    },
+    "status": "enabled",
+    "usedBy": [
+        "app-router@file"
+    ],
+    "serverStatus": {
+        "http://app:8000": "UP"
+    },
+    "name": "backend@file",
+    "provider": "file",
+    "type": "loadbalancer"
+}
+
+=== INJECT: severe DB latency (2000ms) ===
+21:38:22 escalating to 2000ms DB latency
+{"attributes":{"latency":2000,"jitter":100},"name":"latency","type":"latency","stream":"downstream","toxicity":1}
+
+watching app /db and Traefik backend state for 20s...
+[21:38:22] /db -> DB_ERROR after 3.090s: OperationalError: connection to server at "toxiproxy" (172.22.0.9), port 5432 failed: timeout expired
+
+ HTTP=500 time=3.094944s
+[21:38:28] /db -> DB_ERROR after 3.019s: OperationalError: connection to server at "toxiproxy" (172.22.0.9), port 5432 failed: timeout expired
+
+ HTTP=500 time=3.028282s
+[21:38:33] /db -> DB_ERROR after 2.917s: OperationalError: connection to server at "toxiproxy" (172.22.0.9), port 5432 failed: timeout expired
+
+ HTTP=500 time=2.923435s
+[21:38:38] /db -> DB_ERROR after 2.924s: OperationalError: connection to server at "toxiproxy" (172.22.0.9), port 5432 failed: timeout expired
+
+ HTTP=500 time=2.954128s
+[21:38:43] /db -> DB_ERROR after 3.046s: OperationalError: connection to server at "toxiproxy" (172.22.0.9), port 5432 failed: timeout expired
+
+ HTTP=500 time=3.054243s
+[21:38:48] /db -> DB_ERROR after 3.019s: OperationalError: connection to server at "toxiproxy" (172.22.0.9), port 5432 failed: timeout expired
+
+ HTTP=500 time=3.027755s
+[21:38:53] /db -> DB_ERROR after 2.964s: OperationalError: connection to server at "toxiproxy" (172.22.0.9), port 5432 failed: timeout expired
+
+ HTTP=500 time=2.972520s
+[21:38:58] /db -> DB_ERROR after 2.928s: OperationalError: connection to server at "toxiproxy" (172.22.0.9), port 5432 failed: timeout expired
+
+ HTTP=500 time=2.933703s
+[21:39:03] /db -> DB_ERROR after 3.057s: OperationalError: connection to server at "toxiproxy" (172.22.0.9), port 5432 failed: timeout expired
+
+ HTTP=500 time=3.065178s
+[21:39:09] /db -> DB_ERROR after 3.098s: OperationalError: connection to server at "toxiproxy" (172.22.0.9), port 5432 failed: timeout expired
+
+ HTTP=500 time=3.107382s
+
+=== marking app unhealthy (real production practice: an app whose critical dependency is failing should fail its own health check) ===
+21:39:14 marking app unhealthy
+=== Traefik backend state now ===
+{
+    "loadBalancer": {
+        "servers": [
+            {
+                "url": "http://app:8000"
+            }
+        ],
+        "healthCheck": {
+            "mode": "http",
+            "path": "/health",
+            "interval": "2s",
+            "timeout": "1s",
+            "followRedirects": true
+        },
+        "passHostHeader": true,
+        "responseForwarding": {
+            "flushInterval": "100ms"
+        }
+    },
+    "status": "enabled",
+    "usedBy": [
+        "app-router@file"
+    ],
+    "serverStatus": {
+        "http://app:8000": "DOWN"
+    },
+    "name": "backend@file",
+    "provider": "file",
+    "type": "loadbalancer"
+}
+
+=== FIX: restore DB, clear unhealthy flag ===
+21:39:18 removing app unhealthy flag
+21:39:18 removing DB latency toxic (if any)
+21:39:18 re-enabling DB proxy (if cut)
+fix applied
+=== AFTER (recovery) ===
+--- app /health ---
+healthy
+ (HTTP 200)
+--- app /db ---
+OK db_time=2026-09-11 16:09:21.920730+00:00 backend_pid=2410 elapsed=0.010s
+ (HTTP 200)
+--- Traefik backend state ---
+{
+    "loadBalancer": {
+        "servers": [
+            {
+                "url": "http://app:8000"
+            }
+        ],
+        "healthCheck": {
+            "mode": "http",
+            "path": "/health",
+            "interval": "2s",
+            "timeout": "1s",
+            "followRedirects": true
+        },
+        "passHostHeader": true,
+        "responseForwarding": {
+            "flushInterval": "100ms"
+        }
+    },
+    "status": "enabled",
+    "usedBy": [
+        "app-router@file"
+    ],
+    "serverStatus": {
+        "http://app:8000": "UP"
+    },
+    "name": "backend@file",
+    "provider": "file",
+    "type": "loadbalancer"
+}

@@ -67,7 +67,7 @@ curl -X POST "http://localhost:8082/tasks/<id>/attachments/upload-url?fileName=n
 ```
 
 Note: on very new JDKs (25+) Mockito's inline mock maker can fail to self-attach — this
-project was verified on JDK 21. If your default JDK is newer, point `JAVA_HOME` at a 21
+project was verified on JDK 25. If your default JDK is newer, point `JAVA_HOME` at a 25
 install for `./mvnw test`.
 
 ## Deploying to real AWS

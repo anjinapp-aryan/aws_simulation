@@ -1,0 +1,5 @@
+=== R5-04 DURING FAILURE, 21:37:42 ===
+serverStatus: {'http://app:8000': 'DOWN'}
+--- client-facing request through Traefik ---
+no available server
+ (HTTP 503)

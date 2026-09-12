@@ -3,3 +3,4 @@ target/
 *.tfstate
 *.tfstate.backup
 .terraform/
+candidates/

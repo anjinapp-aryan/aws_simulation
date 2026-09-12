@@ -1,0 +1,19 @@
+=== Lab R1 - scenario: break-observed ===
+
+--- Step 1: real credentials fetched from the ECS-compatible metadata endpoint ---
+{"AccessKeyId":"TASKROLEACCESSKEY01","Expiration":"2026-09-11T14:43:24Z","RoleArn":"","SecretAccessKey":"[REDACTED]","Token":"LabR1LocalSessionTokenNotRealSTS"}
+
+--- Step 2: s3:ListBucket (currently granted by policy) ---
+time="2026-09-11T20:00:55+05:30" level=warning msg="D:\\WORK_SPACE\\aws_simulation\\labs\\R1-ecs-task-identity\\docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+2026-09-11 14:30:20         16 evidence.txt
+
+--- Step 3: s3:PutObject (the permission broken/fixed in this lab) ---
+time="2026-09-11T20:00:56+05:30" level=warning msg="D:\\WORK_SPACE\\aws_simulation\\labs\\R1-ecs-task-identity\\docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+Completed 16 Bytes/16 Bytes (2.5 KiB/s) with 1 file(s) remainingupload failed: ../tmp/evidence.txt to s3://lab-bucket/evidence.txt An error occurred (AccessDenied) when calling the PutObject operation: Access Denied.
+
+--- Step 4: s3:DeleteObject (never granted - proves least privilege) ---
+time="2026-09-11T20:00:58+05:30" level=warning msg="D:\\WORK_SPACE\\aws_simulation\\labs\\R1-ecs-task-identity\\docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+
+aws: [ERROR]: An error occurred (AccessDenied) when calling the DeleteObject operation: Access Denied.
+
+Evidence saved to evidence/20260911-200054-break-observed.log

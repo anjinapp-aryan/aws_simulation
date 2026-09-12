@@ -7,7 +7,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>3.3.4</version>
+    <version>3.5.16</version>
     <relativePath/>
   </parent>
 
@@ -18,7 +18,9 @@
   <description>Order event pipeline: SNS fan-out to SQS (+DLQ), DynamoDB + S3 archive. Plain SDK v2 and Spring Cloud AWS consumers side by side.</description>
 
   <properties>
-    <java.version>21</java.version>
+    <java.version>25</java.version>
+    <jackson.version>2.18.9</jackson.version>
+    <byte-buddy.version>1.17.7</byte-buddy.version>
     <awssdk.version>2.28.11</awssdk.version>
     <spring-cloud-aws.version>3.2.0</spring-cloud-aws.version>
   </properties>
@@ -42,7 +44,7 @@
       <dependency>
         <groupId>org.mockito</groupId>
         <artifactId>mockito-bom</artifactId>
-        <version>5.14.2</version>
+        <version>5.23.0</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>

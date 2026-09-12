@@ -1,0 +1,92 @@
+# R4 - Database/RDS connectivity simulation, $0, entirely local.
+# Reused unmodified: postgres:16-alpine, pgbouncer/pgbouncer, ghcr.io/shopify/toxiproxy,
+# prometheuscommunity/postgres-exporter, prom/prometheus, grafana/grafana, sosedoff/pgweb.
+# Built: app/server.py (~55 lines, one /db endpoint - same minimal pattern as R2/R3's app).
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: appdb
+      POSTGRES_USER: appuser
+      POSTGRES_PASSWORD: apppass
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U appuser -d appdb"]
+      interval: 2s
+      timeout: 2s
+      retries: 15
+    networks: [r4net]
+
+  pgbouncer:
+    image: edoburu/pgbouncer:latest
+    volumes:
+      - ./pgbouncer/pgbouncer.ini:/etc/pgbouncer/pgbouncer.ini:ro
+      - ./pgbouncer/userlist.txt:/etc/pgbouncer/userlist.txt:ro
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks: [r4net]
+
+  toxiproxy:
+    image: ghcr.io/shopify/toxiproxy:2.9.0
+    ports:
+      - "48474:8474"   # Toxiproxy control API, for toxiproxy-cli / curl
+    depends_on: [pgbouncer]
+    networks: [r4net]
+
+  app:
+    build: ./app
+    environment:
+      DB_HOST: toxiproxy
+      DB_PORT: "5432"
+      DB_NAME: appdb
+      DB_USER: appuser
+      DB_PASSWORD: apppass
+    ports:
+      - "48000:8000"
+    depends_on: [toxiproxy]
+    networks: [r4net]
+
+  postgres_exporter:
+    image: prometheuscommunity/postgres-exporter:latest
+    environment:
+      DATA_SOURCE_NAME: "postgresql://appuser:apppass@postgres:5432/appdb?sslmode=disable"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks: [r4net]
+
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    ports:
+      - "49090:9090"
+    networks: [r4net]
+
+  grafana:
+    image: grafana/grafana:latest
+    environment:
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: "Admin"
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+    ports:
+      - "43000:3000"
+    networks: [r4net]
+
+  pgweb:
+    image: sosedoff/pgweb:latest
+    environment:
+      PGWEB_DATABASE_URL: "postgres://appuser:apppass@postgres:5432/appdb?sslmode=disable"
+    ports:
+      - "48081:8081"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks: [r4net]
+
+networks:
+  r4net:
+    driver: bridge

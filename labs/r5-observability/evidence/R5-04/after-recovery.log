@@ -1,0 +1,4 @@
+=== R5-04 AFTER (recovery), 21:37:51 ===
+serverStatus: {'http://app:8000': 'UP'}
+healthy
+ (HTTP 200)

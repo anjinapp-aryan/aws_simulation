@@ -1,0 +1,5 @@
+=== R5-02 AFTER (recovery), 21:35:13 ===
+CONTAINER ID   NAME                     CPU %     MEM USAGE / LIMIT   MEM %     NET I/O         BLOCK I/O         PIDS
+50297df238bf   r5-observability-app-1   0.02%     13.85MiB / 128MiB   10.82%    259kB / 218kB   22.5MB / 57.3kB   1
+OCI runtime exec failed: exec failed: unable to start container process: exec: "pgrep": executable file not found in $PATH
+stress-ng finished, no process

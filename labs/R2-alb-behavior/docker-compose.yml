@@ -1,0 +1,38 @@
+# R2 — ALB-behavior simulation, $0, entirely local.
+# Reused, unmodified: traefik/traefik (MIT). Built: app/server.py (the one
+# gap the reuse audit found — see R2-REPORT.md).
+version: "3.8"
+
+services:
+  traefik:
+    image: traefik:v3.1
+    command:
+      - "--api.insecure=true"          # dashboard at :8080, local-only, $0
+      - "--providers.file.filename=/etc/traefik/dynamic.yml"
+      - "--providers.file.watch=true"
+      - "--entrypoints.web.address=:80"
+      - "--log.level=INFO"
+      - "--accesslog=true"
+    ports:
+      - "18080:80"      # traffic entrypoint
+      - "18081:8080"    # dashboard
+    volumes:
+      - ./traefik-dynamic.yml:/etc/traefik/dynamic.yml:ro
+    networks: [r2net]
+    depends_on: [app-1, app-2]
+
+  app-1:
+    build: ./app
+    environment:
+      APP_NAME: "App-1"
+    networks: [r2net]
+
+  app-2:
+    build: ./app
+    environment:
+      APP_NAME: "App-2"
+    networks: [r2net]
+
+networks:
+  r2net:
+    driver: bridge

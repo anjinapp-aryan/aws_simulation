@@ -1,0 +1,11 @@
+=== R5-01 cadvisor bug investigation, real, 21:33:50 ===
+SYMPTOM: /api/v1.3/docker/ on cadvisor returns {} - zero containers, despite Docker factory 'registered successfully'
+FIRST CHECK: cgroup paths under /rootfs/sys/fs/cgroup/docker/<id> exist and match real container IDs (docker compose ps -q app) - confirmed present
+EVIDENCE: cadvisor's own manager.go:233 startup log shows DockerVersion: (empty) DockerAPIVersion: (empty) - client never completed docker info/version handshake
+  meanwhile Dozzle, on the identical bind-mounted /var/run/docker.sock, logs 'Connected to Docker' and lists containers fine
+HYPOTHESIS: cAdvisor's vendored Docker client fails its version-negotiation handshake against this Docker Desktop daemon (API 1.54)
+TESTED: gcr.io/cadvisor/cadvisor v0.49.1 -> same failure. v0.52.1 (newer, updated client) -> same failure.
+TESTED: DOCKER_API_VERSION=1.41 env var (forces client to skip negotiation) -> same failure.
+ROOT CAUSE: not fully resolvable from outside cAdvisor's binary (no debug/verbose docker-client logging exposed); narrowed to cAdvisor's Docker API client vs this specific Docker Desktop daemon version, not a config or path mistake on our side.
+FIX / WORKAROUND: cAdvisor stays deployed (real tool, real host-level root cgroup metrics, real dashboard) but is NOT the per-container evidence source here. Fall back to docker stats/docker inspect (already the proven per-container evidence mechanism in R1-R4) for R5-02/03 evidence.
+This mirrors R2's Traefik-socket-provider bug: same category of real Windows/Docker-Desktop-specific incompatibility, same response (investigate, document, work around with a proven-reliable mechanism, do not hide).

@@ -1,0 +1,71 @@
+# R3 - ECR + ECS/Fargate behavior simulation, $0, entirely local.
+# Reused unmodified: registry:2 (distribution/distribution), traefik:v3.1,
+# amir20/dozzle. Adapted: labs/r3-ecs/app/server.py (from R2, +VERSION +/oom).
+# Portainer deliberately NOT included - Traefik's dashboard + Dozzle + `docker
+# compose ps` already cover routing/health, logs, and container state without
+# duplicating a third dashboard (see REUSE-AUDIT.md).
+version: "3.8"
+
+services:
+  registry:
+    image: registry:2
+    ports:
+      - "5000:5000"
+    volumes:
+      - registry-data:/var/lib/registry
+    networks: [r3net]
+
+  traefik:
+    image: traefik:v3.1
+    command:
+      - "--api.insecure=true"
+      - "--providers.file.filename=/etc/traefik/dynamic.yml"
+      - "--providers.file.watch=true"
+      - "--entrypoints.web.address=:80"
+      - "--log.level=INFO"
+      - "--accesslog=true"
+    ports:
+      - "38080:80"      # traffic entrypoint
+      - "38081:8080"    # dashboard
+    volumes:
+      - ./traefik-dynamic.yml:/etc/traefik/dynamic.yml:ro
+    networks: [r3net]
+
+  dozzle:
+    image: amir20/dozzle:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    ports:
+      - "38888:8080"
+    networks: [r3net]
+
+  app-1:
+    image: localhost:5000/r3-app:v1
+    environment:
+      APP_NAME: "Task-1"
+    mem_limit: 128m
+    restart: on-failure
+    networks: [r3net]
+
+  app-2:
+    image: localhost:5000/r3-app:v1
+    environment:
+      APP_NAME: "Task-2"
+    mem_limit: 128m
+    restart: on-failure
+    networks: [r3net]
+
+  app-3:
+    image: localhost:5000/r3-app:v1
+    environment:
+      APP_NAME: "Task-3"
+    mem_limit: 128m
+    restart: on-failure
+    networks: [r3net]
+
+networks:
+  r3net:
+    driver: bridge
+
+volumes:
+  registry-data:

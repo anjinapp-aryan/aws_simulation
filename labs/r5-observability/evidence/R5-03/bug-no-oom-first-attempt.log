@@ -1,0 +1,7 @@
+=== R5-03 real bug found ===
+SYMPTOM: stress-ng --vm-bytes 200M against mem_limit=128m never triggered OOMKilled in 12s of polling
+FIRST CHECK: docker stats after the run showed CPU back to 0.01%, PIDs=1 (stress-ng already exited cleanly, not killed)
+EVIDENCE: memory.max=134217728 (128MB, correct); memory.swap.max=134217728 (ANOTHER 128MB of swap allowed); Block I/O = 3.08GB/3GB (real heavy swapping activity)
+HYPOTHESIS: Docker's default cgroup swap accounting grants swap equal to the memory limit unless --memory-swap is set explicitly
+ROOT CAUSE: effective budget before OOM is RAM+swap = 256MB, not 128MB. 200MB fit inside that combined budget via paging, so the kernel OOM killer was never invoked.
+FIX: set mem_limit AND memswap_limit equal in compose (disables swap for this container, same as production disabling swap on ECS/EC2 for predictable OOM behavior), and raise stress vm-bytes well past 128MB.

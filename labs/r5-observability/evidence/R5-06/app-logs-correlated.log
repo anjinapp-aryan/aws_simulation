@@ -1,0 +1,11 @@
+=== R5-06 log correlation (with fix), 21:40:16 ===
+[app] 172.22.0.11 - "GET /health HTTP/1.1" 200 -
+[app] 172.22.0.11 - "GET /health HTTP/1.1" 200 -
+[app] 172.22.0.11 - "GET /health HTTP/1.1" 200 -
+[app] 172.22.0.11 - "GET /db HTTP/1.1" 500 -
+[app] 172.22.0.11 - "GET /health HTTP/1.1" 200 -
+[app] 172.22.0.11 - "GET /db HTTP/1.1" 500 -
+[app] 172.22.0.11 - "GET /health HTTP/1.1" 200 -
+[app] 172.22.0.11 - "GET /health HTTP/1.1" 200 -
+[app] 172.22.0.11 - "GET /db HTTP/1.1" 500 -
+[app] 172.22.0.11 - "GET /health HTTP/1.1" 200 -

@@ -1,0 +1,5 @@
+=== R5-05 CUT, 21:38:14 ===
+DB_ERROR after 0.000s: OperationalError: connection to server at "toxiproxy" (172.22.0.9), port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+ HTTP=500 time=0.005179s
