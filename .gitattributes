@@ -1,0 +1,6 @@
+# Shell scripts must always use LF, even on Windows checkouts - a CRLF line
+# ending inside a script that later runs via a Linux container's /bin/sh or
+# /bin/bash breaks it (e.g. "set -e\r" is parsed as an invalid option).
+# Root-caused in R1 (labs/R1-ecs-task-identity), same class of bug also hit
+# and fixed in R14's vendored patroni/patroni clone.
+*.sh text eol=lf
