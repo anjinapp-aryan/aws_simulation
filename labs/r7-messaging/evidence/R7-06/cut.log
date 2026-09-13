@@ -1,0 +1,29 @@
+=== R7-06 NETWORK/BROKER FAILURE, 18:42:41 ===
+--- baseline publish (should succeed fast) ---
+ Container r7-messaging-rabbitmq-1 Running 
+ Container r7-messaging-toxiproxy-1 Running 
+ Container r7-messaging-producer-run-8b468f508f3d Creating 
+ Container r7-messaging-producer-run-8b468f508f3d Created 
+published id=net-test-1 type=normal seq=None
+18:42:42 cutting RabbitMQ connectivity
+{"name":"rabbitmq","listen":"[::]:5672","upstream":"rabbitmq:5672","enabled":false,"Logger":{},"toxics":[]}
+--- publish attempt during cut (expect failure/timeout) ---
+time="2026-09-12T18:42:43+05:30" level=warning msg="D:\\WORK_SPACE\\aws_simulation\\labs\\r7-messaging\\docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+ Container r7-messaging-rabbitmq-1 Running 
+ Container r7-messaging-toxiproxy-1 Running 
+ Container r7-messaging-producer-run-a67984879e3d Creating 
+ Container r7-messaging-producer-run-a67984879e3d Created 
+Traceback (most recent call last):
+  File "/producer.py", line 43, in <module>
+    main()
+  File "/producer.py", line 33, in main
+    conn = pika.BlockingConnection(params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 360, in __init__
+    self._impl = self._create_connection(parameters, _impl_class)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/pika/adapters/blocking_connection.py", line 451, in _create_connection
+    raise self._reap_last_connection_workflow_error(error)
+pika.exceptions.AMQPConnectionError
+
+PRODUCE FAILED AS EXPECTED (connection cut)

@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: r10-app
+spec:
+  selector: { app: r10-app }
+  ports:
+    - port: 80
+      targetPort: 8000
+      nodePort: 30080
+  type: NodePort

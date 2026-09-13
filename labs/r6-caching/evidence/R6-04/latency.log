@@ -1,0 +1,11 @@
+=== R6-04 CACHE LATENCY, 07:14:05 ===
+--- baseline HIT latency ---
+HIT source=cache value=item-1 computed_at=2026-09-12 01:43:59.999341+00:00 elapsed=0.003s
+ (HTTP 200)
+07:14:05 injecting 500ms cache latency
+{"attributes":{"latency":500,"jitter":50},"name":"latency","type":"latency","stream":"downstream","toxicity":1}
+--- HIT latency with 500ms cache latency injected ---
+HIT source=cache value=item-1 computed_at=2026-09-12 01:43:59.999341+00:00 elapsed=1.501s
+ (HTTP 200)
+HIT source=cache value=item-1 computed_at=2026-09-12 01:43:59.999341+00:00 elapsed=1.481s
+ (HTTP 200)

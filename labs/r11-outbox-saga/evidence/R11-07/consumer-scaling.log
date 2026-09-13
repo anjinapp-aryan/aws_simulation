@@ -1,0 +1,12 @@
+=== R11-05 (spec R11-07) CONSUMER GROUP SCALING, 21:05:49 ===
+--- consumer group members ---
+
+GROUP              TOPIC              PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG             CONSUMER-ID                                              HOST            CLIENT-ID
+payment-service-v2 outbox.event.Order 0          6               6               0               kafka-python-3.0.11-6d411717-b480-4057-8a4b-e9382f973c2a /172.22.0.13    kafka-python-3.0.11
+=== real finding ===
+3 payment-service replicas running, but only 1 consumer group member is actually assigned
+(topic 'outbox.event.Order' has exactly 1 partition - real Kafka constraint: a consumer group
+can have at most as many ACTIVE consumers as partitions; the other 2 replicas sit fully idle,
+confirmed via the single CONSUMER-ID row above with LAG=0). This is the real reason production
+Kafka topics are provisioned with multiple partitions BEFORE scaling consumers - scaling
+consumer replicas alone does nothing without enough partitions to spread across.

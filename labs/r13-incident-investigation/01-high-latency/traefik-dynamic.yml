@@ -1,0 +1,16 @@
+http:
+  routers:
+    app-router:
+      rule: "PathPrefix(`/`)"
+      service: backend
+      entryPoints:
+        - web
+  services:
+    backend:
+      loadBalancer:
+        healthCheck:
+          path: /health
+          interval: "2s"
+          timeout: "1s"
+        servers:
+          - url: "http://app:8000"

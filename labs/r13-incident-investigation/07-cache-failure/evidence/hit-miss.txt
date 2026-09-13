@@ -1,0 +1,1200 @@
+MISS source=db value=item-1 computed_at=2026-09-13 03:19:44.270441+00:00 elapsed=0.112s
+
+MISS source=db value=item-2 computed_at=2026-09-13 03:19:44.437958+00:00 elapsed=0.110s
+
+MISS source=db value=item-3 computed_at=2026-09-13 03:19:44.604325+00:00 elapsed=0.111s
+
+MISS source=db value=item-4 computed_at=2026-09-13 03:19:44.771859+00:00 elapsed=0.114s
+
+MISS source=db value=item-5 computed_at=2026-09-13 03:19:44.935059+00:00 elapsed=0.110s
+
+MISS source=db value=item-6 computed_at=2026-09-13 03:19:45.102083+00:00 elapsed=0.113s
+
+MISS source=db value=item-7 computed_at=2026-09-13 03:19:45.267570+00:00 elapsed=0.112s
+
+MISS source=db value=item-8 computed_at=2026-09-13 03:19:45.435467+00:00 elapsed=0.114s
+
+MISS source=db value=item-9 computed_at=2026-09-13 03:19:45.602117+00:00 elapsed=0.113s
+
+MISS source=db value=item-10 computed_at=2026-09-13 03:19:45.774523+00:00 elapsed=0.114s
+
+MISS source=db value=item-11 computed_at=2026-09-13 03:19:45.945495+00:00 elapsed=0.119s
+
+MISS source=db value=item-12 computed_at=2026-09-13 03:19:46.112258+00:00 elapsed=0.112s
+
+MISS source=db value=item-13 computed_at=2026-09-13 03:19:46.273025+00:00 elapsed=0.112s
+
+MISS source=db value=item-14 computed_at=2026-09-13 03:19:46.436419+00:00 elapsed=0.110s
+
+MISS source=db value=item-15 computed_at=2026-09-13 03:19:46.604668+00:00 elapsed=0.113s
+
+MISS source=db value=item-16 computed_at=2026-09-13 03:19:46.764997+00:00 elapsed=0.111s
+
+MISS source=db value=item-17 computed_at=2026-09-13 03:19:46.925522+00:00 elapsed=0.110s
+
+MISS source=db value=item-18 computed_at=2026-09-13 03:19:47.088146+00:00 elapsed=0.110s
+
+MISS source=db value=item-19 computed_at=2026-09-13 03:19:47.246742+00:00 elapsed=0.111s
+
+MISS source=db value=item-20 computed_at=2026-09-13 03:19:47.404528+00:00 elapsed=0.109s
+
+MISS source=db value=item-21 computed_at=2026-09-13 03:19:47.567848+00:00 elapsed=0.113s
+
+MISS source=db value=item-22 computed_at=2026-09-13 03:19:47.734188+00:00 elapsed=0.110s
+
+MISS source=db value=item-23 computed_at=2026-09-13 03:19:47.907274+00:00 elapsed=0.112s
+
+MISS source=db value=item-24 computed_at=2026-09-13 03:19:48.065585+00:00 elapsed=0.111s
+
+MISS source=db value=item-25 computed_at=2026-09-13 03:19:48.230994+00:00 elapsed=0.113s
+
+MISS source=db value=item-26 computed_at=2026-09-13 03:19:48.397148+00:00 elapsed=0.115s
+
+MISS source=db value=item-27 computed_at=2026-09-13 03:19:48.567531+00:00 elapsed=0.113s
+
+MISS source=db value=item-28 computed_at=2026-09-13 03:19:48.733048+00:00 elapsed=0.111s
+
+MISS source=db value=item-29 computed_at=2026-09-13 03:19:48.893330+00:00 elapsed=0.113s
+
+MISS source=db value=item-30 computed_at=2026-09-13 03:19:49.054644+00:00 elapsed=0.110s
+
+MISS source=db value=item-31 computed_at=2026-09-13 03:19:49.219489+00:00 elapsed=0.113s
+
+MISS source=db value=item-32 computed_at=2026-09-13 03:19:49.387614+00:00 elapsed=0.113s
+
+MISS source=db value=item-33 computed_at=2026-09-13 03:19:49.569076+00:00 elapsed=0.113s
+
+MISS source=db value=item-34 computed_at=2026-09-13 03:19:49.734347+00:00 elapsed=0.112s
+
+MISS source=db value=item-35 computed_at=2026-09-13 03:19:49.901836+00:00 elapsed=0.114s
+
+MISS source=db value=item-36 computed_at=2026-09-13 03:19:50.070541+00:00 elapsed=0.110s
+
+MISS source=db value=item-37 computed_at=2026-09-13 03:19:50.235536+00:00 elapsed=0.111s
+
+MISS source=db value=item-38 computed_at=2026-09-13 03:19:50.432637+00:00 elapsed=0.116s
+
+MISS source=db value=item-39 computed_at=2026-09-13 03:19:50.606538+00:00 elapsed=0.111s
+
+MISS source=db value=item-40 computed_at=2026-09-13 03:19:50.780037+00:00 elapsed=0.113s
+
+MISS source=db value=item-41 computed_at=2026-09-13 03:19:50.945704+00:00 elapsed=0.112s
+
+MISS source=db value=item-42 computed_at=2026-09-13 03:19:51.109670+00:00 elapsed=0.110s
+
+MISS source=db value=item-43 computed_at=2026-09-13 03:19:51.297683+00:00 elapsed=0.114s
+
+MISS source=db value=item-44 computed_at=2026-09-13 03:19:51.465048+00:00 elapsed=0.112s
+
+MISS source=db value=item-45 computed_at=2026-09-13 03:19:51.631348+00:00 elapsed=0.116s
+
+MISS source=db value=item-46 computed_at=2026-09-13 03:19:51.797852+00:00 elapsed=0.111s
+
+MISS source=db value=item-47 computed_at=2026-09-13 03:19:51.962787+00:00 elapsed=0.115s
+
+MISS source=db value=item-48 computed_at=2026-09-13 03:19:52.126855+00:00 elapsed=0.111s
+
+MISS source=db value=item-49 computed_at=2026-09-13 03:19:52.289973+00:00 elapsed=0.113s
+
+MISS source=db value=item-50 computed_at=2026-09-13 03:19:52.454565+00:00 elapsed=0.112s
+
+MISS source=db value=item-51 computed_at=2026-09-13 03:19:52.623396+00:00 elapsed=0.111s
+
+MISS source=db value=item-52 computed_at=2026-09-13 03:19:52.789407+00:00 elapsed=0.111s
+
+MISS source=db value=item-53 computed_at=2026-09-13 03:19:52.956634+00:00 elapsed=0.115s
+
+MISS source=db value=item-54 computed_at=2026-09-13 03:19:53.121519+00:00 elapsed=0.110s
+
+MISS source=db value=item-55 computed_at=2026-09-13 03:19:53.283917+00:00 elapsed=0.112s
+
+MISS source=db value=item-56 computed_at=2026-09-13 03:19:53.447056+00:00 elapsed=0.113s
+
+MISS source=db value=item-57 computed_at=2026-09-13 03:19:53.618162+00:00 elapsed=0.111s
+
+MISS source=db value=item-58 computed_at=2026-09-13 03:19:53.789525+00:00 elapsed=0.111s
+
+MISS source=db value=item-59 computed_at=2026-09-13 03:19:53.968408+00:00 elapsed=0.114s
+
+MISS source=db value=item-60 computed_at=2026-09-13 03:19:54.138422+00:00 elapsed=0.113s
+
+MISS source=db value=item-61 computed_at=2026-09-13 03:19:54.300061+00:00 elapsed=0.113s
+
+MISS source=db value=item-62 computed_at=2026-09-13 03:19:54.468091+00:00 elapsed=0.113s
+
+MISS source=db value=item-63 computed_at=2026-09-13 03:19:54.643114+00:00 elapsed=0.113s
+
+MISS source=db value=item-64 computed_at=2026-09-13 03:19:54.810715+00:00 elapsed=0.110s
+
+MISS source=db value=item-65 computed_at=2026-09-13 03:19:54.976620+00:00 elapsed=0.112s
+
+MISS source=db value=item-66 computed_at=2026-09-13 03:19:55.144078+00:00 elapsed=0.115s
+
+MISS source=db value=item-67 computed_at=2026-09-13 03:19:55.313870+00:00 elapsed=0.115s
+
+MISS source=db value=item-68 computed_at=2026-09-13 03:19:55.483799+00:00 elapsed=0.114s
+
+MISS source=db value=item-69 computed_at=2026-09-13 03:19:55.654537+00:00 elapsed=0.111s
+
+MISS source=db value=item-70 computed_at=2026-09-13 03:19:55.820832+00:00 elapsed=0.114s
+
+MISS source=db value=item-71 computed_at=2026-09-13 03:19:55.990917+00:00 elapsed=0.114s
+
+MISS source=db value=item-72 computed_at=2026-09-13 03:19:56.162802+00:00 elapsed=0.110s
+
+MISS source=db value=item-73 computed_at=2026-09-13 03:19:56.337498+00:00 elapsed=0.113s
+
+MISS source=db value=item-74 computed_at=2026-09-13 03:19:56.508232+00:00 elapsed=0.112s
+
+MISS source=db value=item-75 computed_at=2026-09-13 03:19:56.673009+00:00 elapsed=0.111s
+
+MISS source=db value=item-76 computed_at=2026-09-13 03:19:56.830387+00:00 elapsed=0.110s
+
+MISS source=db value=item-77 computed_at=2026-09-13 03:19:57.003189+00:00 elapsed=0.116s
+
+MISS source=db value=item-78 computed_at=2026-09-13 03:19:57.172667+00:00 elapsed=0.112s
+
+MISS source=db value=item-79 computed_at=2026-09-13 03:19:57.336993+00:00 elapsed=0.114s
+
+MISS source=db value=item-80 computed_at=2026-09-13 03:19:57.506574+00:00 elapsed=0.110s
+
+MISS source=db value=item-81 computed_at=2026-09-13 03:19:57.699453+00:00 elapsed=0.116s
+
+MISS source=db value=item-82 computed_at=2026-09-13 03:19:57.862921+00:00 elapsed=0.111s
+
+MISS source=db value=item-83 computed_at=2026-09-13 03:19:58.025680+00:00 elapsed=0.111s
+
+MISS source=db value=item-84 computed_at=2026-09-13 03:19:58.198292+00:00 elapsed=0.113s
+
+MISS source=db value=item-85 computed_at=2026-09-13 03:19:58.381406+00:00 elapsed=0.112s
+
+MISS source=db value=item-86 computed_at=2026-09-13 03:19:58.556565+00:00 elapsed=0.113s
+
+MISS source=db value=item-87 computed_at=2026-09-13 03:19:58.739055+00:00 elapsed=0.116s
+
+MISS source=db value=item-88 computed_at=2026-09-13 03:19:58.911168+00:00 elapsed=0.111s
+
+MISS source=db value=item-89 computed_at=2026-09-13 03:19:59.076022+00:00 elapsed=0.111s
+
+MISS source=db value=item-90 computed_at=2026-09-13 03:19:59.242315+00:00 elapsed=0.111s
+
+MISS source=db value=item-91 computed_at=2026-09-13 03:19:59.409013+00:00 elapsed=0.114s
+
+MISS source=db value=item-92 computed_at=2026-09-13 03:19:59.575846+00:00 elapsed=0.110s
+
+MISS source=db value=item-93 computed_at=2026-09-13 03:19:59.742336+00:00 elapsed=0.112s
+
+MISS source=db value=item-94 computed_at=2026-09-13 03:19:59.908339+00:00 elapsed=0.112s
+
+MISS source=db value=item-95 computed_at=2026-09-13 03:20:00.075513+00:00 elapsed=0.110s
+
+MISS source=db value=item-96 computed_at=2026-09-13 03:20:00.241540+00:00 elapsed=0.115s
+
+MISS source=db value=item-97 computed_at=2026-09-13 03:20:00.411665+00:00 elapsed=0.114s
+
+MISS source=db value=item-98 computed_at=2026-09-13 03:20:00.578637+00:00 elapsed=0.110s
+
+MISS source=db value=item-99 computed_at=2026-09-13 03:20:00.743426+00:00 elapsed=0.113s
+
+MISS source=db value=item-100 computed_at=2026-09-13 03:20:00.911797+00:00 elapsed=0.113s
+
+MISS source=db value=item-101 computed_at=2026-09-13 03:20:01.074994+00:00 elapsed=0.112s
+
+MISS source=db value=item-102 computed_at=2026-09-13 03:20:01.256477+00:00 elapsed=0.113s
+
+MISS source=db value=item-103 computed_at=2026-09-13 03:20:01.428251+00:00 elapsed=0.112s
+
+MISS source=db value=item-104 computed_at=2026-09-13 03:20:01.590047+00:00 elapsed=0.114s
+
+MISS source=db value=item-105 computed_at=2026-09-13 03:20:01.760107+00:00 elapsed=0.112s
+
+MISS source=db value=item-106 computed_at=2026-09-13 03:20:01.924418+00:00 elapsed=0.111s
+
+MISS source=db value=item-107 computed_at=2026-09-13 03:20:02.274434+00:00 elapsed=0.283s
+
+MISS source=db value=item-108 computed_at=2026-09-13 03:20:02.439267+00:00 elapsed=0.112s
+
+MISS source=db value=item-109 computed_at=2026-09-13 03:20:02.604733+00:00 elapsed=0.114s
+
+MISS source=db value=item-110 computed_at=2026-09-13 03:20:02.771315+00:00 elapsed=0.113s
+
+MISS source=db value=item-111 computed_at=2026-09-13 03:20:03.247848+00:00 elapsed=0.131s
+
+MISS source=db value=item-112 computed_at=2026-09-13 03:20:03.414134+00:00 elapsed=0.110s
+
+MISS source=db value=item-113 computed_at=2026-09-13 03:20:03.586613+00:00 elapsed=0.113s
+
+MISS source=db value=item-114 computed_at=2026-09-13 03:20:03.752769+00:00 elapsed=0.113s
+
+MISS source=db value=item-115 computed_at=2026-09-13 03:20:03.922028+00:00 elapsed=0.112s
+
+MISS source=db value=item-116 computed_at=2026-09-13 03:20:04.086654+00:00 elapsed=0.112s
+
+MISS source=db value=item-117 computed_at=2026-09-13 03:20:04.253432+00:00 elapsed=0.112s
+
+MISS source=db value=item-118 computed_at=2026-09-13 03:20:04.420415+00:00 elapsed=0.112s
+
+MISS source=db value=item-119 computed_at=2026-09-13 03:20:04.600769+00:00 elapsed=0.112s
+
+MISS source=db value=item-120 computed_at=2026-09-13 03:20:04.771095+00:00 elapsed=0.113s
+
+MISS source=db value=item-121 computed_at=2026-09-13 03:20:04.957630+00:00 elapsed=0.113s
+
+MISS source=db value=item-122 computed_at=2026-09-13 03:20:05.126879+00:00 elapsed=0.113s
+
+MISS source=db value=item-123 computed_at=2026-09-13 03:20:05.299145+00:00 elapsed=0.113s
+
+MISS source=db value=item-124 computed_at=2026-09-13 03:20:05.464409+00:00 elapsed=0.111s
+
+MISS source=db value=item-125 computed_at=2026-09-13 03:20:05.627578+00:00 elapsed=0.110s
+
+MISS source=db value=item-126 computed_at=2026-09-13 03:20:05.791748+00:00 elapsed=0.115s
+
+MISS source=db value=item-127 computed_at=2026-09-13 03:20:05.962734+00:00 elapsed=0.114s
+
+MISS source=db value=item-128 computed_at=2026-09-13 03:20:06.145619+00:00 elapsed=0.112s
+
+MISS source=db value=item-129 computed_at=2026-09-13 03:20:06.314117+00:00 elapsed=0.111s
+
+MISS source=db value=item-130 computed_at=2026-09-13 03:20:06.486580+00:00 elapsed=0.114s
+
+MISS source=db value=item-131 computed_at=2026-09-13 03:20:06.654041+00:00 elapsed=0.113s
+
+MISS source=db value=item-132 computed_at=2026-09-13 03:20:06.824848+00:00 elapsed=0.111s
+
+MISS source=db value=item-133 computed_at=2026-09-13 03:20:07.004123+00:00 elapsed=0.113s
+
+MISS source=db value=item-134 computed_at=2026-09-13 03:20:07.170386+00:00 elapsed=0.111s
+
+MISS source=db value=item-135 computed_at=2026-09-13 03:20:07.341022+00:00 elapsed=0.113s
+
+MISS source=db value=item-136 computed_at=2026-09-13 03:20:07.504193+00:00 elapsed=0.109s
+
+MISS source=db value=item-137 computed_at=2026-09-13 03:20:07.667572+00:00 elapsed=0.112s
+
+MISS source=db value=item-138 computed_at=2026-09-13 03:20:07.829678+00:00 elapsed=0.111s
+
+MISS source=db value=item-139 computed_at=2026-09-13 03:20:07.990607+00:00 elapsed=0.110s
+
+MISS source=db value=item-140 computed_at=2026-09-13 03:20:08.152581+00:00 elapsed=0.112s
+
+MISS source=db value=item-141 computed_at=2026-09-13 03:20:08.313061+00:00 elapsed=0.114s
+
+MISS source=db value=item-142 computed_at=2026-09-13 03:20:08.480045+00:00 elapsed=0.110s
+
+MISS source=db value=item-143 computed_at=2026-09-13 03:20:08.646876+00:00 elapsed=0.114s
+
+MISS source=db value=item-144 computed_at=2026-09-13 03:20:08.814260+00:00 elapsed=0.110s
+
+MISS source=db value=item-145 computed_at=2026-09-13 03:20:08.984445+00:00 elapsed=0.113s
+
+MISS source=db value=item-146 computed_at=2026-09-13 03:20:09.145993+00:00 elapsed=0.113s
+
+MISS source=db value=item-147 computed_at=2026-09-13 03:20:09.311767+00:00 elapsed=0.114s
+
+MISS source=db value=item-148 computed_at=2026-09-13 03:20:09.480810+00:00 elapsed=0.112s
+
+MISS source=db value=item-149 computed_at=2026-09-13 03:20:09.639601+00:00 elapsed=0.112s
+
+MISS source=db value=item-150 computed_at=2026-09-13 03:20:09.832796+00:00 elapsed=0.114s
+
+MISS source=db value=item-151 computed_at=2026-09-13 03:20:10.001522+00:00 elapsed=0.112s
+
+MISS source=db value=item-152 computed_at=2026-09-13 03:20:10.165098+00:00 elapsed=0.113s
+
+MISS source=db value=item-153 computed_at=2026-09-13 03:20:10.345789+00:00 elapsed=0.113s
+
+MISS source=db value=item-154 computed_at=2026-09-13 03:20:10.514746+00:00 elapsed=0.112s
+
+MISS source=db value=item-155 computed_at=2026-09-13 03:20:10.675052+00:00 elapsed=0.110s
+
+MISS source=db value=item-156 computed_at=2026-09-13 03:20:10.836258+00:00 elapsed=0.111s
+
+MISS source=db value=item-157 computed_at=2026-09-13 03:20:11.014232+00:00 elapsed=0.115s
+
+MISS source=db value=item-158 computed_at=2026-09-13 03:20:11.176988+00:00 elapsed=0.111s
+
+MISS source=db value=item-159 computed_at=2026-09-13 03:20:11.349670+00:00 elapsed=0.114s
+
+MISS source=db value=item-160 computed_at=2026-09-13 03:20:11.516462+00:00 elapsed=0.111s
+
+MISS source=db value=item-161 computed_at=2026-09-13 03:20:11.680079+00:00 elapsed=0.112s
+
+MISS source=db value=item-162 computed_at=2026-09-13 03:20:11.846343+00:00 elapsed=0.113s
+
+MISS source=db value=item-163 computed_at=2026-09-13 03:20:12.016567+00:00 elapsed=0.114s
+
+MISS source=db value=item-164 computed_at=2026-09-13 03:20:12.189661+00:00 elapsed=0.113s
+
+MISS source=db value=item-165 computed_at=2026-09-13 03:20:12.362683+00:00 elapsed=0.115s
+
+MISS source=db value=item-166 computed_at=2026-09-13 03:20:12.532458+00:00 elapsed=0.114s
+
+MISS source=db value=item-167 computed_at=2026-09-13 03:20:12.694637+00:00 elapsed=0.112s
+
+MISS source=db value=item-168 computed_at=2026-09-13 03:20:12.856109+00:00 elapsed=0.113s
+
+MISS source=db value=item-169 computed_at=2026-09-13 03:20:13.023700+00:00 elapsed=0.114s
+
+MISS source=db value=item-170 computed_at=2026-09-13 03:20:13.192076+00:00 elapsed=0.111s
+
+MISS source=db value=item-171 computed_at=2026-09-13 03:20:13.357446+00:00 elapsed=0.111s
+
+MISS source=db value=item-172 computed_at=2026-09-13 03:20:13.528628+00:00 elapsed=0.113s
+
+MISS source=db value=item-173 computed_at=2026-09-13 03:20:13.700348+00:00 elapsed=0.111s
+
+MISS source=db value=item-174 computed_at=2026-09-13 03:20:13.868840+00:00 elapsed=0.113s
+
+MISS source=db value=item-175 computed_at=2026-09-13 03:20:14.036221+00:00 elapsed=0.112s
+
+MISS source=db value=item-176 computed_at=2026-09-13 03:20:14.201653+00:00 elapsed=0.110s
+
+MISS source=db value=item-177 computed_at=2026-09-13 03:20:14.373762+00:00 elapsed=0.113s
+
+MISS source=db value=item-178 computed_at=2026-09-13 03:20:14.546502+00:00 elapsed=0.112s
+
+MISS source=db value=item-179 computed_at=2026-09-13 03:20:14.711860+00:00 elapsed=0.112s
+
+MISS source=db value=item-180 computed_at=2026-09-13 03:20:14.872210+00:00 elapsed=0.112s
+
+MISS source=db value=item-181 computed_at=2026-09-13 03:20:15.040433+00:00 elapsed=0.113s
+
+MISS source=db value=item-182 computed_at=2026-09-13 03:20:15.208960+00:00 elapsed=0.114s
+
+MISS source=db value=item-183 computed_at=2026-09-13 03:20:15.376419+00:00 elapsed=0.112s
+
+MISS source=db value=item-184 computed_at=2026-09-13 03:20:15.543496+00:00 elapsed=0.113s
+
+MISS source=db value=item-185 computed_at=2026-09-13 03:20:15.702215+00:00 elapsed=0.110s
+
+MISS source=db value=item-186 computed_at=2026-09-13 03:20:15.866258+00:00 elapsed=0.112s
+
+MISS source=db value=item-187 computed_at=2026-09-13 03:20:16.031363+00:00 elapsed=0.112s
+
+MISS source=db value=item-188 computed_at=2026-09-13 03:20:16.206029+00:00 elapsed=0.112s
+
+MISS source=db value=item-189 computed_at=2026-09-13 03:20:16.365992+00:00 elapsed=0.111s
+
+MISS source=db value=item-190 computed_at=2026-09-13 03:20:16.530231+00:00 elapsed=0.112s
+
+MISS source=db value=item-191 computed_at=2026-09-13 03:20:16.690691+00:00 elapsed=0.110s
+
+MISS source=db value=item-192 computed_at=2026-09-13 03:20:16.875750+00:00 elapsed=0.113s
+
+MISS source=db value=item-193 computed_at=2026-09-13 03:20:17.047026+00:00 elapsed=0.113s
+
+MISS source=db value=item-194 computed_at=2026-09-13 03:20:17.214982+00:00 elapsed=0.110s
+
+MISS source=db value=item-195 computed_at=2026-09-13 03:20:17.381921+00:00 elapsed=0.111s
+
+MISS source=db value=item-196 computed_at=2026-09-13 03:20:17.554656+00:00 elapsed=0.113s
+
+MISS source=db value=item-197 computed_at=2026-09-13 03:20:17.742607+00:00 elapsed=0.113s
+
+MISS source=db value=item-198 computed_at=2026-09-13 03:20:17.963364+00:00 elapsed=0.110s
+
+MISS source=db value=item-199 computed_at=2026-09-13 03:20:18.124578+00:00 elapsed=0.110s
+
+MISS source=db value=item-200 computed_at=2026-09-13 03:20:18.289043+00:00 elapsed=0.112s
+
+MISS source=db value=item-1 computed_at=2026-09-13 03:20:18.495329+00:00 elapsed=0.114s
+
+MISS source=db value=item-2 computed_at=2026-09-13 03:20:18.667958+00:00 elapsed=0.115s
+
+MISS source=db value=item-3 computed_at=2026-09-13 03:20:18.836064+00:00 elapsed=0.111s
+
+MISS source=db value=item-4 computed_at=2026-09-13 03:20:19.003299+00:00 elapsed=0.112s
+
+MISS source=db value=item-5 computed_at=2026-09-13 03:20:19.176182+00:00 elapsed=0.113s
+
+MISS source=db value=item-6 computed_at=2026-09-13 03:20:19.363913+00:00 elapsed=0.113s
+
+MISS source=db value=item-7 computed_at=2026-09-13 03:20:19.532700+00:00 elapsed=0.114s
+
+MISS source=db value=item-8 computed_at=2026-09-13 03:20:19.699029+00:00 elapsed=0.112s
+
+MISS source=db value=item-9 computed_at=2026-09-13 03:20:19.863939+00:00 elapsed=0.111s
+
+MISS source=db value=item-10 computed_at=2026-09-13 03:20:20.031455+00:00 elapsed=0.110s
+
+MISS source=db value=item-11 computed_at=2026-09-13 03:20:20.197967+00:00 elapsed=0.114s
+
+MISS source=db value=item-12 computed_at=2026-09-13 03:20:20.365114+00:00 elapsed=0.111s
+
+MISS source=db value=item-13 computed_at=2026-09-13 03:20:20.538135+00:00 elapsed=0.114s
+
+MISS source=db value=item-14 computed_at=2026-09-13 03:20:20.696091+00:00 elapsed=0.110s
+
+MISS source=db value=item-15 computed_at=2026-09-13 03:20:20.858243+00:00 elapsed=0.114s
+
+MISS source=db value=item-16 computed_at=2026-09-13 03:20:21.024059+00:00 elapsed=0.112s
+
+MISS source=db value=item-17 computed_at=2026-09-13 03:20:21.193959+00:00 elapsed=0.112s
+
+MISS source=db value=item-18 computed_at=2026-09-13 03:20:21.361389+00:00 elapsed=0.112s
+
+MISS source=db value=item-19 computed_at=2026-09-13 03:20:21.528007+00:00 elapsed=0.113s
+
+MISS source=db value=item-20 computed_at=2026-09-13 03:20:21.695934+00:00 elapsed=0.112s
+
+MISS source=db value=item-21 computed_at=2026-09-13 03:20:21.860076+00:00 elapsed=0.113s
+
+MISS source=db value=item-22 computed_at=2026-09-13 03:20:22.024440+00:00 elapsed=0.113s
+
+MISS source=db value=item-23 computed_at=2026-09-13 03:20:22.188886+00:00 elapsed=0.112s
+
+MISS source=db value=item-24 computed_at=2026-09-13 03:20:22.358508+00:00 elapsed=0.112s
+
+MISS source=db value=item-25 computed_at=2026-09-13 03:20:22.525791+00:00 elapsed=0.112s
+
+MISS source=db value=item-26 computed_at=2026-09-13 03:20:22.691282+00:00 elapsed=0.113s
+
+MISS source=db value=item-27 computed_at=2026-09-13 03:20:22.855475+00:00 elapsed=0.113s
+
+MISS source=db value=item-28 computed_at=2026-09-13 03:20:23.023601+00:00 elapsed=0.111s
+
+MISS source=db value=item-29 computed_at=2026-09-13 03:20:23.192742+00:00 elapsed=0.113s
+
+MISS source=db value=item-30 computed_at=2026-09-13 03:20:23.358240+00:00 elapsed=0.112s
+
+MISS source=db value=item-31 computed_at=2026-09-13 03:20:23.526152+00:00 elapsed=0.113s
+
+MISS source=db value=item-32 computed_at=2026-09-13 03:20:23.693576+00:00 elapsed=0.112s
+
+MISS source=db value=item-33 computed_at=2026-09-13 03:20:23.859761+00:00 elapsed=0.113s
+
+MISS source=db value=item-34 computed_at=2026-09-13 03:20:24.025251+00:00 elapsed=0.111s
+
+MISS source=db value=item-35 computed_at=2026-09-13 03:20:24.194479+00:00 elapsed=0.112s
+
+MISS source=db value=item-36 computed_at=2026-09-13 03:20:24.364244+00:00 elapsed=0.114s
+
+MISS source=db value=item-37 computed_at=2026-09-13 03:20:24.541032+00:00 elapsed=0.115s
+
+MISS source=db value=item-38 computed_at=2026-09-13 03:20:24.705808+00:00 elapsed=0.112s
+
+MISS source=db value=item-39 computed_at=2026-09-13 03:20:24.867631+00:00 elapsed=0.112s
+
+MISS source=db value=item-40 computed_at=2026-09-13 03:20:25.049652+00:00 elapsed=0.114s
+
+MISS source=db value=item-41 computed_at=2026-09-13 03:20:25.215423+00:00 elapsed=0.112s
+
+MISS source=db value=item-42 computed_at=2026-09-13 03:20:25.382841+00:00 elapsed=0.113s
+
+MISS source=db value=item-43 computed_at=2026-09-13 03:20:25.548975+00:00 elapsed=0.113s
+
+MISS source=db value=item-44 computed_at=2026-09-13 03:20:25.709186+00:00 elapsed=0.110s
+
+MISS source=db value=item-45 computed_at=2026-09-13 03:20:25.876171+00:00 elapsed=0.116s
+
+MISS source=db value=item-46 computed_at=2026-09-13 03:20:26.035967+00:00 elapsed=0.111s
+
+MISS source=db value=item-47 computed_at=2026-09-13 03:20:26.203422+00:00 elapsed=0.112s
+
+MISS source=db value=item-48 computed_at=2026-09-13 03:20:26.369008+00:00 elapsed=0.111s
+
+MISS source=db value=item-49 computed_at=2026-09-13 03:20:26.531595+00:00 elapsed=0.113s
+
+MISS source=db value=item-50 computed_at=2026-09-13 03:20:26.695983+00:00 elapsed=0.113s
+
+MISS source=db value=item-51 computed_at=2026-09-13 03:20:26.864475+00:00 elapsed=0.119s
+
+MISS source=db value=item-52 computed_at=2026-09-13 03:20:27.033533+00:00 elapsed=0.113s
+
+MISS source=db value=item-53 computed_at=2026-09-13 03:20:27.212779+00:00 elapsed=0.114s
+
+MISS source=db value=item-54 computed_at=2026-09-13 03:20:27.385267+00:00 elapsed=0.114s
+
+MISS source=db value=item-55 computed_at=2026-09-13 03:20:27.552986+00:00 elapsed=0.113s
+
+MISS source=db value=item-56 computed_at=2026-09-13 03:20:27.719073+00:00 elapsed=0.113s
+
+MISS source=db value=item-57 computed_at=2026-09-13 03:20:27.885328+00:00 elapsed=0.113s
+
+MISS source=db value=item-58 computed_at=2026-09-13 03:20:28.048854+00:00 elapsed=0.110s
+
+MISS source=db value=item-59 computed_at=2026-09-13 03:20:28.211701+00:00 elapsed=0.113s
+
+MISS source=db value=item-60 computed_at=2026-09-13 03:20:28.377545+00:00 elapsed=0.111s
+
+MISS source=db value=item-61 computed_at=2026-09-13 03:20:28.547459+00:00 elapsed=0.115s
+
+MISS source=db value=item-62 computed_at=2026-09-13 03:20:28.719839+00:00 elapsed=0.113s
+
+MISS source=db value=item-63 computed_at=2026-09-13 03:20:28.884433+00:00 elapsed=0.111s
+
+MISS source=db value=item-64 computed_at=2026-09-13 03:20:29.051641+00:00 elapsed=0.110s
+
+MISS source=db value=item-65 computed_at=2026-09-13 03:20:29.218075+00:00 elapsed=0.112s
+
+MISS source=db value=item-66 computed_at=2026-09-13 03:20:29.386622+00:00 elapsed=0.114s
+
+MISS source=db value=item-67 computed_at=2026-09-13 03:20:29.558287+00:00 elapsed=0.114s
+
+MISS source=db value=item-68 computed_at=2026-09-13 03:20:29.726071+00:00 elapsed=0.111s
+
+MISS source=db value=item-69 computed_at=2026-09-13 03:20:29.896060+00:00 elapsed=0.114s
+
+MISS source=db value=item-70 computed_at=2026-09-13 03:20:30.059110+00:00 elapsed=0.112s
+
+MISS source=db value=item-71 computed_at=2026-09-13 03:20:30.220782+00:00 elapsed=0.112s
+
+MISS source=db value=item-72 computed_at=2026-09-13 03:20:30.406837+00:00 elapsed=0.113s
+
+MISS source=db value=item-73 computed_at=2026-09-13 03:20:30.578016+00:00 elapsed=0.115s
+
+MISS source=db value=item-74 computed_at=2026-09-13 03:20:30.735457+00:00 elapsed=0.111s
+
+MISS source=db value=item-75 computed_at=2026-09-13 03:20:30.900255+00:00 elapsed=0.115s
+
+MISS source=db value=item-76 computed_at=2026-09-13 03:20:31.061390+00:00 elapsed=0.112s
+
+MISS source=db value=item-77 computed_at=2026-09-13 03:20:31.230309+00:00 elapsed=0.112s
+
+MISS source=db value=item-78 computed_at=2026-09-13 03:20:31.395006+00:00 elapsed=0.112s
+
+MISS source=db value=item-79 computed_at=2026-09-13 03:20:31.562546+00:00 elapsed=0.113s
+
+MISS source=db value=item-80 computed_at=2026-09-13 03:20:31.729934+00:00 elapsed=0.113s
+
+MISS source=db value=item-81 computed_at=2026-09-13 03:20:31.902958+00:00 elapsed=0.118s
+
+MISS source=db value=item-82 computed_at=2026-09-13 03:20:32.071556+00:00 elapsed=0.113s
+
+MISS source=db value=item-83 computed_at=2026-09-13 03:20:32.237153+00:00 elapsed=0.112s
+
+MISS source=db value=item-84 computed_at=2026-09-13 03:20:32.402645+00:00 elapsed=0.113s
+
+MISS source=db value=item-85 computed_at=2026-09-13 03:20:32.567966+00:00 elapsed=0.110s
+
+MISS source=db value=item-86 computed_at=2026-09-13 03:20:32.731969+00:00 elapsed=0.113s
+
+MISS source=db value=item-87 computed_at=2026-09-13 03:20:32.900450+00:00 elapsed=0.112s
+
+MISS source=db value=item-88 computed_at=2026-09-13 03:20:33.064868+00:00 elapsed=0.112s
+
+MISS source=db value=item-89 computed_at=2026-09-13 03:20:33.227470+00:00 elapsed=0.111s
+
+MISS source=db value=item-90 computed_at=2026-09-13 03:20:33.398647+00:00 elapsed=0.113s
+
+MISS source=db value=item-91 computed_at=2026-09-13 03:20:33.562833+00:00 elapsed=0.113s
+
+MISS source=db value=item-92 computed_at=2026-09-13 03:20:33.730855+00:00 elapsed=0.111s
+
+MISS source=db value=item-93 computed_at=2026-09-13 03:20:33.905599+00:00 elapsed=0.113s
+
+MISS source=db value=item-94 computed_at=2026-09-13 03:20:34.071155+00:00 elapsed=0.112s
+
+MISS source=db value=item-95 computed_at=2026-09-13 03:20:34.238366+00:00 elapsed=0.111s
+
+MISS source=db value=item-96 computed_at=2026-09-13 03:20:34.405310+00:00 elapsed=0.111s
+
+MISS source=db value=item-97 computed_at=2026-09-13 03:20:34.569252+00:00 elapsed=0.112s
+
+MISS source=db value=item-98 computed_at=2026-09-13 03:20:34.730909+00:00 elapsed=0.110s
+
+MISS source=db value=item-99 computed_at=2026-09-13 03:20:34.892511+00:00 elapsed=0.111s
+
+MISS source=db value=item-100 computed_at=2026-09-13 03:20:35.061347+00:00 elapsed=0.113s
+
+MISS source=db value=item-101 computed_at=2026-09-13 03:20:35.228244+00:00 elapsed=0.112s
+
+MISS source=db value=item-102 computed_at=2026-09-13 03:20:35.392730+00:00 elapsed=0.111s
+
+MISS source=db value=item-103 computed_at=2026-09-13 03:20:35.556298+00:00 elapsed=0.111s
+
+MISS source=db value=item-104 computed_at=2026-09-13 03:20:35.716567+00:00 elapsed=0.110s
+
+MISS source=db value=item-105 computed_at=2026-09-13 03:20:35.880901+00:00 elapsed=0.111s
+
+MISS source=db value=item-106 computed_at=2026-09-13 03:20:36.041358+00:00 elapsed=0.111s
+
+MISS source=db value=item-107 computed_at=2026-09-13 03:20:36.209293+00:00 elapsed=0.112s
+
+MISS source=db value=item-108 computed_at=2026-09-13 03:20:36.384162+00:00 elapsed=0.113s
+
+MISS source=db value=item-109 computed_at=2026-09-13 03:20:36.547933+00:00 elapsed=0.111s
+
+MISS source=db value=item-110 computed_at=2026-09-13 03:20:36.708620+00:00 elapsed=0.111s
+
+MISS source=db value=item-111 computed_at=2026-09-13 03:20:36.874359+00:00 elapsed=0.113s
+
+MISS source=db value=item-112 computed_at=2026-09-13 03:20:37.039972+00:00 elapsed=0.113s
+
+MISS source=db value=item-113 computed_at=2026-09-13 03:20:37.205406+00:00 elapsed=0.113s
+
+MISS source=db value=item-114 computed_at=2026-09-13 03:20:37.376839+00:00 elapsed=0.114s
+
+MISS source=db value=item-115 computed_at=2026-09-13 03:20:37.541291+00:00 elapsed=0.110s
+
+MISS source=db value=item-116 computed_at=2026-09-13 03:20:37.699027+00:00 elapsed=0.111s
+
+MISS source=db value=item-117 computed_at=2026-09-13 03:20:37.862551+00:00 elapsed=0.111s
+
+MISS source=db value=item-118 computed_at=2026-09-13 03:20:38.028059+00:00 elapsed=0.111s
+
+MISS source=db value=item-119 computed_at=2026-09-13 03:20:38.192100+00:00 elapsed=0.112s
+
+MISS source=db value=item-120 computed_at=2026-09-13 03:20:38.352513+00:00 elapsed=0.110s
+
+MISS source=db value=item-121 computed_at=2026-09-13 03:20:38.518244+00:00 elapsed=0.112s
+
+MISS source=db value=item-122 computed_at=2026-09-13 03:20:38.679395+00:00 elapsed=0.112s
+
+MISS source=db value=item-123 computed_at=2026-09-13 03:20:38.841294+00:00 elapsed=0.111s
+
+MISS source=db value=item-124 computed_at=2026-09-13 03:20:39.006237+00:00 elapsed=0.113s
+
+MISS source=db value=item-125 computed_at=2026-09-13 03:20:39.169638+00:00 elapsed=0.113s
+
+MISS source=db value=item-126 computed_at=2026-09-13 03:20:39.331560+00:00 elapsed=0.113s
+
+MISS source=db value=item-127 computed_at=2026-09-13 03:20:39.497245+00:00 elapsed=0.112s
+
+MISS source=db value=item-128 computed_at=2026-09-13 03:20:39.684120+00:00 elapsed=0.113s
+
+MISS source=db value=item-129 computed_at=2026-09-13 03:20:39.850368+00:00 elapsed=0.110s
+
+MISS source=db value=item-130 computed_at=2026-09-13 03:20:40.015015+00:00 elapsed=0.110s
+
+MISS source=db value=item-131 computed_at=2026-09-13 03:20:40.174578+00:00 elapsed=0.110s
+
+MISS source=db value=item-132 computed_at=2026-09-13 03:20:40.338972+00:00 elapsed=0.111s
+
+MISS source=db value=item-133 computed_at=2026-09-13 03:20:40.515782+00:00 elapsed=0.112s
+
+MISS source=db value=item-134 computed_at=2026-09-13 03:20:40.678459+00:00 elapsed=0.110s
+
+MISS source=db value=item-135 computed_at=2026-09-13 03:20:40.841163+00:00 elapsed=0.110s
+
+MISS source=db value=item-136 computed_at=2026-09-13 03:20:41.008331+00:00 elapsed=0.111s
+
+MISS source=db value=item-137 computed_at=2026-09-13 03:20:41.175174+00:00 elapsed=0.114s
+
+MISS source=db value=item-138 computed_at=2026-09-13 03:20:41.343454+00:00 elapsed=0.112s
+
+MISS source=db value=item-139 computed_at=2026-09-13 03:20:41.510812+00:00 elapsed=0.112s
+
+MISS source=db value=item-140 computed_at=2026-09-13 03:20:41.701741+00:00 elapsed=0.116s
+
+MISS source=db value=item-141 computed_at=2026-09-13 03:20:41.879540+00:00 elapsed=0.114s
+
+MISS source=db value=item-142 computed_at=2026-09-13 03:20:42.043832+00:00 elapsed=0.114s
+
+MISS source=db value=item-143 computed_at=2026-09-13 03:20:42.212046+00:00 elapsed=0.113s
+
+MISS source=db value=item-144 computed_at=2026-09-13 03:20:42.374267+00:00 elapsed=0.110s
+
+MISS source=db value=item-145 computed_at=2026-09-13 03:20:42.534353+00:00 elapsed=0.110s
+
+MISS source=db value=item-146 computed_at=2026-09-13 03:20:42.694369+00:00 elapsed=0.110s
+
+MISS source=db value=item-147 computed_at=2026-09-13 03:20:42.852790+00:00 elapsed=0.110s
+
+MISS source=db value=item-148 computed_at=2026-09-13 03:20:43.010671+00:00 elapsed=0.109s
+
+MISS source=db value=item-149 computed_at=2026-09-13 03:20:43.175236+00:00 elapsed=0.112s
+
+MISS source=db value=item-150 computed_at=2026-09-13 03:20:43.338231+00:00 elapsed=0.113s
+
+MISS source=db value=item-151 computed_at=2026-09-13 03:20:43.525694+00:00 elapsed=0.115s
+
+MISS source=db value=item-152 computed_at=2026-09-13 03:20:43.700638+00:00 elapsed=0.113s
+
+MISS source=db value=item-153 computed_at=2026-09-13 03:20:43.868382+00:00 elapsed=0.114s
+
+MISS source=db value=item-154 computed_at=2026-09-13 03:20:44.030391+00:00 elapsed=0.111s
+
+MISS source=db value=item-155 computed_at=2026-09-13 03:20:44.206202+00:00 elapsed=0.113s
+
+MISS source=db value=item-156 computed_at=2026-09-13 03:20:44.381136+00:00 elapsed=0.110s
+
+MISS source=db value=item-157 computed_at=2026-09-13 03:20:44.544068+00:00 elapsed=0.112s
+
+MISS source=db value=item-158 computed_at=2026-09-13 03:20:44.709849+00:00 elapsed=0.111s
+
+MISS source=db value=item-159 computed_at=2026-09-13 03:20:44.880107+00:00 elapsed=0.112s
+
+MISS source=db value=item-160 computed_at=2026-09-13 03:20:45.038941+00:00 elapsed=0.110s
+
+MISS source=db value=item-161 computed_at=2026-09-13 03:20:45.207287+00:00 elapsed=0.113s
+
+MISS source=db value=item-162 computed_at=2026-09-13 03:20:45.371498+00:00 elapsed=0.114s
+
+MISS source=db value=item-163 computed_at=2026-09-13 03:20:45.542934+00:00 elapsed=0.112s
+
+MISS source=db value=item-164 computed_at=2026-09-13 03:20:45.717852+00:00 elapsed=0.112s
+
+MISS source=db value=item-165 computed_at=2026-09-13 03:20:45.888554+00:00 elapsed=0.113s
+
+MISS source=db value=item-166 computed_at=2026-09-13 03:20:46.057813+00:00 elapsed=0.112s
+
+MISS source=db value=item-167 computed_at=2026-09-13 03:20:46.232704+00:00 elapsed=0.114s
+
+MISS source=db value=item-168 computed_at=2026-09-13 03:20:46.394669+00:00 elapsed=0.112s
+
+MISS source=db value=item-169 computed_at=2026-09-13 03:20:46.556228+00:00 elapsed=0.112s
+
+MISS source=db value=item-170 computed_at=2026-09-13 03:20:46.725381+00:00 elapsed=0.114s
+
+MISS source=db value=item-171 computed_at=2026-09-13 03:20:46.899060+00:00 elapsed=0.113s
+
+MISS source=db value=item-172 computed_at=2026-09-13 03:20:47.059965+00:00 elapsed=0.110s
+
+MISS source=db value=item-173 computed_at=2026-09-13 03:20:47.224035+00:00 elapsed=0.113s
+
+MISS source=db value=item-174 computed_at=2026-09-13 03:20:47.397566+00:00 elapsed=0.112s
+
+MISS source=db value=item-175 computed_at=2026-09-13 03:20:47.562026+00:00 elapsed=0.112s
+
+MISS source=db value=item-176 computed_at=2026-09-13 03:20:47.728583+00:00 elapsed=0.112s
+
+MISS source=db value=item-177 computed_at=2026-09-13 03:20:47.913647+00:00 elapsed=0.111s
+
+MISS source=db value=item-178 computed_at=2026-09-13 03:20:48.088835+00:00 elapsed=0.110s
+
+MISS source=db value=item-179 computed_at=2026-09-13 03:20:48.259869+00:00 elapsed=0.114s
+
+MISS source=db value=item-180 computed_at=2026-09-13 03:20:48.427692+00:00 elapsed=0.112s
+
+MISS source=db value=item-181 computed_at=2026-09-13 03:20:48.589597+00:00 elapsed=0.110s
+
+MISS source=db value=item-182 computed_at=2026-09-13 03:20:48.760492+00:00 elapsed=0.113s
+
+MISS source=db value=item-183 computed_at=2026-09-13 03:20:48.924726+00:00 elapsed=0.112s
+
+MISS source=db value=item-184 computed_at=2026-09-13 03:20:49.087975+00:00 elapsed=0.110s
+
+MISS source=db value=item-185 computed_at=2026-09-13 03:20:49.250964+00:00 elapsed=0.112s
+
+MISS source=db value=item-186 computed_at=2026-09-13 03:20:49.414902+00:00 elapsed=0.110s
+
+MISS source=db value=item-187 computed_at=2026-09-13 03:20:49.578610+00:00 elapsed=0.111s
+
+MISS source=db value=item-188 computed_at=2026-09-13 03:20:49.739745+00:00 elapsed=0.111s
+
+MISS source=db value=item-189 computed_at=2026-09-13 03:20:49.905433+00:00 elapsed=0.114s
+
+MISS source=db value=item-190 computed_at=2026-09-13 03:20:50.068782+00:00 elapsed=0.113s
+
+MISS source=db value=item-191 computed_at=2026-09-13 03:20:50.237458+00:00 elapsed=0.114s
+
+MISS source=db value=item-192 computed_at=2026-09-13 03:20:50.402949+00:00 elapsed=0.111s
+
+MISS source=db value=item-193 computed_at=2026-09-13 03:20:50.574047+00:00 elapsed=0.113s
+
+MISS source=db value=item-194 computed_at=2026-09-13 03:20:50.732567+00:00 elapsed=0.109s
+
+MISS source=db value=item-195 computed_at=2026-09-13 03:20:50.908072+00:00 elapsed=0.114s
+
+MISS source=db value=item-196 computed_at=2026-09-13 03:20:51.075553+00:00 elapsed=0.113s
+
+MISS source=db value=item-197 computed_at=2026-09-13 03:20:51.240967+00:00 elapsed=0.113s
+
+MISS source=db value=item-198 computed_at=2026-09-13 03:20:51.407875+00:00 elapsed=0.114s
+
+MISS source=db value=item-199 computed_at=2026-09-13 03:20:51.589842+00:00 elapsed=0.117s
+
+MISS source=db value=item-200 computed_at=2026-09-13 03:20:51.759567+00:00 elapsed=0.113s
+
+MISS source=db value=item-1 computed_at=2026-09-13 03:20:51.962078+00:00 elapsed=0.113s
+
+MISS source=db value=item-2 computed_at=2026-09-13 03:20:52.128979+00:00 elapsed=0.112s
+
+MISS source=db value=item-3 computed_at=2026-09-13 03:20:52.297193+00:00 elapsed=0.113s
+
+MISS source=db value=item-4 computed_at=2026-09-13 03:20:52.474542+00:00 elapsed=0.115s
+
+MISS source=db value=item-5 computed_at=2026-09-13 03:20:52.639867+00:00 elapsed=0.111s
+
+MISS source=db value=item-6 computed_at=2026-09-13 03:20:52.804470+00:00 elapsed=0.111s
+
+MISS source=db value=item-7 computed_at=2026-09-13 03:20:52.975428+00:00 elapsed=0.114s
+
+MISS source=db value=item-8 computed_at=2026-09-13 03:20:53.140167+00:00 elapsed=0.112s
+
+MISS source=db value=item-9 computed_at=2026-09-13 03:20:53.304085+00:00 elapsed=0.112s
+
+MISS source=db value=item-10 computed_at=2026-09-13 03:20:53.468863+00:00 elapsed=0.110s
+
+MISS source=db value=item-11 computed_at=2026-09-13 03:20:53.634088+00:00 elapsed=0.113s
+
+MISS source=db value=item-12 computed_at=2026-09-13 03:20:53.807628+00:00 elapsed=0.114s
+
+MISS source=db value=item-13 computed_at=2026-09-13 03:20:53.979601+00:00 elapsed=0.115s
+
+MISS source=db value=item-14 computed_at=2026-09-13 03:20:54.151621+00:00 elapsed=0.113s
+
+MISS source=db value=item-15 computed_at=2026-09-13 03:20:54.318716+00:00 elapsed=0.114s
+
+MISS source=db value=item-16 computed_at=2026-09-13 03:20:54.506145+00:00 elapsed=0.112s
+
+MISS source=db value=item-17 computed_at=2026-09-13 03:20:54.667476+00:00 elapsed=0.111s
+
+MISS source=db value=item-18 computed_at=2026-09-13 03:20:54.827257+00:00 elapsed=0.111s
+
+MISS source=db value=item-19 computed_at=2026-09-13 03:20:54.999143+00:00 elapsed=0.115s
+
+MISS source=db value=item-20 computed_at=2026-09-13 03:20:55.172166+00:00 elapsed=0.113s
+
+MISS source=db value=item-21 computed_at=2026-09-13 03:20:55.342970+00:00 elapsed=0.113s
+
+MISS source=db value=item-22 computed_at=2026-09-13 03:20:55.511222+00:00 elapsed=0.112s
+
+MISS source=db value=item-23 computed_at=2026-09-13 03:20:55.673089+00:00 elapsed=0.110s
+
+MISS source=db value=item-24 computed_at=2026-09-13 03:20:55.859914+00:00 elapsed=0.115s
+
+MISS source=db value=item-25 computed_at=2026-09-13 03:20:56.035562+00:00 elapsed=0.113s
+
+MISS source=db value=item-26 computed_at=2026-09-13 03:20:56.214593+00:00 elapsed=0.114s
+
+MISS source=db value=item-27 computed_at=2026-09-13 03:20:56.385103+00:00 elapsed=0.112s
+
+MISS source=db value=item-28 computed_at=2026-09-13 03:20:56.556663+00:00 elapsed=0.110s
+
+MISS source=db value=item-29 computed_at=2026-09-13 03:20:56.721094+00:00 elapsed=0.112s
+
+MISS source=db value=item-30 computed_at=2026-09-13 03:20:56.881288+00:00 elapsed=0.112s
+
+MISS source=db value=item-31 computed_at=2026-09-13 03:20:57.046840+00:00 elapsed=0.111s
+
+MISS source=db value=item-32 computed_at=2026-09-13 03:20:57.218167+00:00 elapsed=0.115s
+
+MISS source=db value=item-33 computed_at=2026-09-13 03:20:57.386244+00:00 elapsed=0.114s
+
+MISS source=db value=item-34 computed_at=2026-09-13 03:20:57.551123+00:00 elapsed=0.112s
+
+MISS source=db value=item-35 computed_at=2026-09-13 03:20:57.716017+00:00 elapsed=0.111s
+
+MISS source=db value=item-36 computed_at=2026-09-13 03:20:57.889630+00:00 elapsed=0.113s
+
+MISS source=db value=item-37 computed_at=2026-09-13 03:20:58.057807+00:00 elapsed=0.111s
+
+MISS source=db value=item-38 computed_at=2026-09-13 03:20:58.230319+00:00 elapsed=0.116s
+
+MISS source=db value=item-39 computed_at=2026-09-13 03:20:58.405673+00:00 elapsed=0.113s
+
+MISS source=db value=item-40 computed_at=2026-09-13 03:20:58.568684+00:00 elapsed=0.110s
+
+MISS source=db value=item-41 computed_at=2026-09-13 03:20:58.731674+00:00 elapsed=0.112s
+
+MISS source=db value=item-42 computed_at=2026-09-13 03:20:58.892363+00:00 elapsed=0.110s
+
+MISS source=db value=item-43 computed_at=2026-09-13 03:20:59.070171+00:00 elapsed=0.115s
+
+MISS source=db value=item-44 computed_at=2026-09-13 03:20:59.238526+00:00 elapsed=0.111s
+
+MISS source=db value=item-45 computed_at=2026-09-13 03:20:59.409388+00:00 elapsed=0.115s
+
+MISS source=db value=item-46 computed_at=2026-09-13 03:20:59.579249+00:00 elapsed=0.109s
+
+MISS source=db value=item-47 computed_at=2026-09-13 03:20:59.744291+00:00 elapsed=0.112s
+
+MISS source=db value=item-48 computed_at=2026-09-13 03:20:59.917361+00:00 elapsed=0.113s
+
+MISS source=db value=item-49 computed_at=2026-09-13 03:21:00.082194+00:00 elapsed=0.114s
+
+MISS source=db value=item-50 computed_at=2026-09-13 03:21:00.247071+00:00 elapsed=0.111s
+
+MISS source=db value=item-51 computed_at=2026-09-13 03:21:00.423341+00:00 elapsed=0.114s
+
+MISS source=db value=item-52 computed_at=2026-09-13 03:21:00.599654+00:00 elapsed=0.114s
+
+MISS source=db value=item-53 computed_at=2026-09-13 03:21:00.761024+00:00 elapsed=0.111s
+
+MISS source=db value=item-54 computed_at=2026-09-13 03:21:00.935187+00:00 elapsed=0.115s
+
+MISS source=db value=item-55 computed_at=2026-09-13 03:21:01.133698+00:00 elapsed=0.115s
+
+MISS source=db value=item-56 computed_at=2026-09-13 03:21:01.302614+00:00 elapsed=0.113s
+
+MISS source=db value=item-57 computed_at=2026-09-13 03:21:01.481192+00:00 elapsed=0.111s
+
+MISS source=db value=item-58 computed_at=2026-09-13 03:21:01.650193+00:00 elapsed=0.112s
+
+MISS source=db value=item-59 computed_at=2026-09-13 03:21:01.813969+00:00 elapsed=0.114s
+
+MISS source=db value=item-60 computed_at=2026-09-13 03:21:01.985565+00:00 elapsed=0.113s
+
+MISS source=db value=item-61 computed_at=2026-09-13 03:21:02.151481+00:00 elapsed=0.112s
+
+MISS source=db value=item-62 computed_at=2026-09-13 03:21:02.318732+00:00 elapsed=0.112s
+
+MISS source=db value=item-63 computed_at=2026-09-13 03:21:02.479638+00:00 elapsed=0.111s
+
+MISS source=db value=item-64 computed_at=2026-09-13 03:21:02.647884+00:00 elapsed=0.110s
+
+MISS source=db value=item-65 computed_at=2026-09-13 03:21:02.815672+00:00 elapsed=0.110s
+
+MISS source=db value=item-66 computed_at=2026-09-13 03:21:02.980577+00:00 elapsed=0.111s
+
+MISS source=db value=item-67 computed_at=2026-09-13 03:21:03.150228+00:00 elapsed=0.113s
+
+MISS source=db value=item-68 computed_at=2026-09-13 03:21:03.315935+00:00 elapsed=0.112s
+
+MISS source=db value=item-69 computed_at=2026-09-13 03:21:03.482120+00:00 elapsed=0.111s
+
+MISS source=db value=item-70 computed_at=2026-09-13 03:21:03.645987+00:00 elapsed=0.113s
+
+MISS source=db value=item-71 computed_at=2026-09-13 03:21:03.807219+00:00 elapsed=0.111s
+
+MISS source=db value=item-72 computed_at=2026-09-13 03:21:03.973532+00:00 elapsed=0.112s
+
+MISS source=db value=item-73 computed_at=2026-09-13 03:21:04.135197+00:00 elapsed=0.111s
+
+MISS source=db value=item-74 computed_at=2026-09-13 03:21:04.308375+00:00 elapsed=0.113s
+
+MISS source=db value=item-75 computed_at=2026-09-13 03:21:04.500393+00:00 elapsed=0.113s
+
+MISS source=db value=item-76 computed_at=2026-09-13 03:21:04.664977+00:00 elapsed=0.111s
+
+MISS source=db value=item-77 computed_at=2026-09-13 03:21:04.828025+00:00 elapsed=0.112s
+
+MISS source=db value=item-78 computed_at=2026-09-13 03:21:04.999167+00:00 elapsed=0.111s
+
+MISS source=db value=item-79 computed_at=2026-09-13 03:21:05.159167+00:00 elapsed=0.112s
+
+MISS source=db value=item-80 computed_at=2026-09-13 03:21:05.327087+00:00 elapsed=0.114s
+
+MISS source=db value=item-81 computed_at=2026-09-13 03:21:05.492871+00:00 elapsed=0.114s
+
+MISS source=db value=item-82 computed_at=2026-09-13 03:21:05.654532+00:00 elapsed=0.110s
+
+MISS source=db value=item-83 computed_at=2026-09-13 03:21:05.818965+00:00 elapsed=0.111s
+
+MISS source=db value=item-84 computed_at=2026-09-13 03:21:05.980548+00:00 elapsed=0.111s
+
+MISS source=db value=item-85 computed_at=2026-09-13 03:21:06.154621+00:00 elapsed=0.114s
+
+MISS source=db value=item-86 computed_at=2026-09-13 03:21:06.324706+00:00 elapsed=0.112s
+
+MISS source=db value=item-87 computed_at=2026-09-13 03:21:06.508182+00:00 elapsed=0.113s
+
+MISS source=db value=item-88 computed_at=2026-09-13 03:21:06.667080+00:00 elapsed=0.110s
+
+MISS source=db value=item-89 computed_at=2026-09-13 03:21:06.832185+00:00 elapsed=0.111s
+
+MISS source=db value=item-90 computed_at=2026-09-13 03:21:07.000053+00:00 elapsed=0.111s
+
+MISS source=db value=item-91 computed_at=2026-09-13 03:21:07.160497+00:00 elapsed=0.112s
+
+MISS source=db value=item-92 computed_at=2026-09-13 03:21:07.334452+00:00 elapsed=0.116s
+
+MISS source=db value=item-93 computed_at=2026-09-13 03:21:07.500434+00:00 elapsed=0.115s
+
+MISS source=db value=item-94 computed_at=2026-09-13 03:21:07.665292+00:00 elapsed=0.110s
+
+MISS source=db value=item-95 computed_at=2026-09-13 03:21:07.832636+00:00 elapsed=0.113s
+
+MISS source=db value=item-96 computed_at=2026-09-13 03:21:07.994528+00:00 elapsed=0.111s
+
+MISS source=db value=item-97 computed_at=2026-09-13 03:21:08.156848+00:00 elapsed=0.110s
+
+MISS source=db value=item-98 computed_at=2026-09-13 03:21:08.345071+00:00 elapsed=0.115s
+
+MISS source=db value=item-99 computed_at=2026-09-13 03:21:08.512698+00:00 elapsed=0.113s
+
+MISS source=db value=item-100 computed_at=2026-09-13 03:21:08.675600+00:00 elapsed=0.113s
+
+MISS source=db value=item-101 computed_at=2026-09-13 03:21:08.838787+00:00 elapsed=0.112s
+
+MISS source=db value=item-102 computed_at=2026-09-13 03:21:09.005845+00:00 elapsed=0.111s
+
+MISS source=db value=item-103 computed_at=2026-09-13 03:21:09.171271+00:00 elapsed=0.112s
+
+MISS source=db value=item-104 computed_at=2026-09-13 03:21:09.344668+00:00 elapsed=0.115s
+
+MISS source=db value=item-105 computed_at=2026-09-13 03:21:09.514021+00:00 elapsed=0.114s
+
+MISS source=db value=item-106 computed_at=2026-09-13 03:21:09.677072+00:00 elapsed=0.110s
+
+MISS source=db value=item-107 computed_at=2026-09-13 03:21:09.844704+00:00 elapsed=0.114s
+
+MISS source=db value=item-108 computed_at=2026-09-13 03:21:10.010424+00:00 elapsed=0.110s
+
+MISS source=db value=item-109 computed_at=2026-09-13 03:21:10.173226+00:00 elapsed=0.113s
+
+MISS source=db value=item-110 computed_at=2026-09-13 03:21:10.339851+00:00 elapsed=0.111s
+
+MISS source=db value=item-111 computed_at=2026-09-13 03:21:10.507903+00:00 elapsed=0.115s
+
+MISS source=db value=item-112 computed_at=2026-09-13 03:21:10.668625+00:00 elapsed=0.110s
+
+MISS source=db value=item-113 computed_at=2026-09-13 03:21:10.832735+00:00 elapsed=0.110s
+
+MISS source=db value=item-114 computed_at=2026-09-13 03:21:10.999611+00:00 elapsed=0.113s
+
+MISS source=db value=item-115 computed_at=2026-09-13 03:21:11.173007+00:00 elapsed=0.114s
+
+MISS source=db value=item-116 computed_at=2026-09-13 03:21:11.351085+00:00 elapsed=0.112s
+
+MISS source=db value=item-117 computed_at=2026-09-13 03:21:11.526250+00:00 elapsed=0.115s
+
+MISS source=db value=item-118 computed_at=2026-09-13 03:21:11.699142+00:00 elapsed=0.113s
+
+MISS source=db value=item-119 computed_at=2026-09-13 03:21:11.870241+00:00 elapsed=0.113s
+
+MISS source=db value=item-120 computed_at=2026-09-13 03:21:12.039335+00:00 elapsed=0.113s
+
+MISS source=db value=item-121 computed_at=2026-09-13 03:21:12.217380+00:00 elapsed=0.113s
+
+MISS source=db value=item-122 computed_at=2026-09-13 03:21:12.382172+00:00 elapsed=0.112s
+
+MISS source=db value=item-123 computed_at=2026-09-13 03:21:12.552105+00:00 elapsed=0.114s
+
+MISS source=db value=item-124 computed_at=2026-09-13 03:21:12.719977+00:00 elapsed=0.113s
+
+MISS source=db value=item-125 computed_at=2026-09-13 03:21:12.893115+00:00 elapsed=0.113s
+
+MISS source=db value=item-126 computed_at=2026-09-13 03:21:13.058590+00:00 elapsed=0.113s
+
+MISS source=db value=item-127 computed_at=2026-09-13 03:21:13.232991+00:00 elapsed=0.111s
+
+MISS source=db value=item-128 computed_at=2026-09-13 03:21:13.403355+00:00 elapsed=0.111s
+
+MISS source=db value=item-129 computed_at=2026-09-13 03:21:13.568948+00:00 elapsed=0.113s
+
+MISS source=db value=item-130 computed_at=2026-09-13 03:21:13.743979+00:00 elapsed=0.115s
+
+MISS source=db value=item-131 computed_at=2026-09-13 03:21:13.907835+00:00 elapsed=0.113s
+
+MISS source=db value=item-132 computed_at=2026-09-13 03:21:14.074070+00:00 elapsed=0.114s
+
+MISS source=db value=item-133 computed_at=2026-09-13 03:21:14.238719+00:00 elapsed=0.113s
+
+MISS source=db value=item-134 computed_at=2026-09-13 03:21:14.403041+00:00 elapsed=0.111s
+
+MISS source=db value=item-135 computed_at=2026-09-13 03:21:14.571415+00:00 elapsed=0.114s
+
+MISS source=db value=item-136 computed_at=2026-09-13 03:21:14.737870+00:00 elapsed=0.110s
+
+MISS source=db value=item-137 computed_at=2026-09-13 03:21:14.904098+00:00 elapsed=0.114s
+
+MISS source=db value=item-138 computed_at=2026-09-13 03:21:15.071837+00:00 elapsed=0.112s
+
+MISS source=db value=item-139 computed_at=2026-09-13 03:21:15.240505+00:00 elapsed=0.113s
+
+MISS source=db value=item-140 computed_at=2026-09-13 03:21:15.414953+00:00 elapsed=0.113s
+
+MISS source=db value=item-141 computed_at=2026-09-13 03:21:15.589536+00:00 elapsed=0.111s
+
+MISS source=db value=item-142 computed_at=2026-09-13 03:21:15.749886+00:00 elapsed=0.111s
+
+MISS source=db value=item-143 computed_at=2026-09-13 03:21:15.915927+00:00 elapsed=0.113s
+
+MISS source=db value=item-144 computed_at=2026-09-13 03:21:16.081562+00:00 elapsed=0.112s
+
+MISS source=db value=item-145 computed_at=2026-09-13 03:21:16.255248+00:00 elapsed=0.113s
+
+MISS source=db value=item-146 computed_at=2026-09-13 03:21:16.418431+00:00 elapsed=0.111s
+
+MISS source=db value=item-147 computed_at=2026-09-13 03:21:16.589123+00:00 elapsed=0.115s
+
+MISS source=db value=item-148 computed_at=2026-09-13 03:21:16.759933+00:00 elapsed=0.110s
+
+MISS source=db value=item-149 computed_at=2026-09-13 03:21:16.924970+00:00 elapsed=0.113s
+
+MISS source=db value=item-150 computed_at=2026-09-13 03:21:17.100338+00:00 elapsed=0.112s
+
+MISS source=db value=item-151 computed_at=2026-09-13 03:21:17.259577+00:00 elapsed=0.111s
+
+MISS source=db value=item-152 computed_at=2026-09-13 03:21:17.425214+00:00 elapsed=0.114s
+
+MISS source=db value=item-153 computed_at=2026-09-13 03:21:17.585353+00:00 elapsed=0.111s
+
+MISS source=db value=item-154 computed_at=2026-09-13 03:21:17.798258+00:00 elapsed=0.114s
+
+MISS source=db value=item-155 computed_at=2026-09-13 03:21:17.979437+00:00 elapsed=0.117s
+
+MISS source=db value=item-156 computed_at=2026-09-13 03:21:18.144511+00:00 elapsed=0.110s
+
+MISS source=db value=item-157 computed_at=2026-09-13 03:21:18.314150+00:00 elapsed=0.114s
+
+MISS source=db value=item-158 computed_at=2026-09-13 03:21:18.481904+00:00 elapsed=0.111s
+
+MISS source=db value=item-159 computed_at=2026-09-13 03:21:18.681800+00:00 elapsed=0.115s
+
+MISS source=db value=item-160 computed_at=2026-09-13 03:21:18.850704+00:00 elapsed=0.111s
+
+MISS source=db value=item-161 computed_at=2026-09-13 03:21:19.023997+00:00 elapsed=0.112s
+
+MISS source=db value=item-162 computed_at=2026-09-13 03:21:19.184899+00:00 elapsed=0.110s
+
+MISS source=db value=item-163 computed_at=2026-09-13 03:21:19.348682+00:00 elapsed=0.113s
+
+MISS source=db value=item-164 computed_at=2026-09-13 03:21:19.519968+00:00 elapsed=0.110s
+
+MISS source=db value=item-165 computed_at=2026-09-13 03:21:19.681112+00:00 elapsed=0.112s
+
+MISS source=db value=item-166 computed_at=2026-09-13 03:21:19.850539+00:00 elapsed=0.111s
+
+MISS source=db value=item-167 computed_at=2026-09-13 03:21:20.018999+00:00 elapsed=0.112s
+
+MISS source=db value=item-168 computed_at=2026-09-13 03:21:20.189959+00:00 elapsed=0.111s
+
+MISS source=db value=item-169 computed_at=2026-09-13 03:21:20.362257+00:00 elapsed=0.112s
+
+MISS source=db value=item-170 computed_at=2026-09-13 03:21:20.527416+00:00 elapsed=0.112s
+
+MISS source=db value=item-171 computed_at=2026-09-13 03:21:20.693015+00:00 elapsed=0.113s
+
+MISS source=db value=item-172 computed_at=2026-09-13 03:21:20.855669+00:00 elapsed=0.112s
+
+MISS source=db value=item-173 computed_at=2026-09-13 03:21:21.020559+00:00 elapsed=0.113s
+
+MISS source=db value=item-174 computed_at=2026-09-13 03:21:21.193120+00:00 elapsed=0.114s
+
+MISS source=db value=item-175 computed_at=2026-09-13 03:21:21.359691+00:00 elapsed=0.112s
+
+MISS source=db value=item-176 computed_at=2026-09-13 03:21:21.525946+00:00 elapsed=0.111s
+
+MISS source=db value=item-177 computed_at=2026-09-13 03:21:21.686309+00:00 elapsed=0.112s
+
+MISS source=db value=item-178 computed_at=2026-09-13 03:21:21.848479+00:00 elapsed=0.113s
+
+MISS source=db value=item-179 computed_at=2026-09-13 03:21:22.014760+00:00 elapsed=0.114s
+
+MISS source=db value=item-180 computed_at=2026-09-13 03:21:22.180625+00:00 elapsed=0.114s
+
+MISS source=db value=item-181 computed_at=2026-09-13 03:21:22.351308+00:00 elapsed=0.114s
+
+MISS source=db value=item-182 computed_at=2026-09-13 03:21:22.515505+00:00 elapsed=0.110s
+
+MISS source=db value=item-183 computed_at=2026-09-13 03:21:22.683862+00:00 elapsed=0.112s
+
+MISS source=db value=item-184 computed_at=2026-09-13 03:21:22.844075+00:00 elapsed=0.112s
+
+MISS source=db value=item-185 computed_at=2026-09-13 03:21:23.015013+00:00 elapsed=0.113s
+
+MISS source=db value=item-186 computed_at=2026-09-13 03:21:23.181062+00:00 elapsed=0.111s
+
+MISS source=db value=item-187 computed_at=2026-09-13 03:21:23.346525+00:00 elapsed=0.113s
+
+MISS source=db value=item-188 computed_at=2026-09-13 03:21:23.527356+00:00 elapsed=0.112s
+
+MISS source=db value=item-189 computed_at=2026-09-13 03:21:23.698753+00:00 elapsed=0.111s
+
+MISS source=db value=item-190 computed_at=2026-09-13 03:21:23.870174+00:00 elapsed=0.117s
+
+MISS source=db value=item-191 computed_at=2026-09-13 03:21:24.040131+00:00 elapsed=0.114s
+
+MISS source=db value=item-192 computed_at=2026-09-13 03:21:24.220156+00:00 elapsed=0.112s
+
+MISS source=db value=item-193 computed_at=2026-09-13 03:21:24.397175+00:00 elapsed=0.114s
+
+MISS source=db value=item-194 computed_at=2026-09-13 03:21:24.563798+00:00 elapsed=0.110s
+
+MISS source=db value=item-195 computed_at=2026-09-13 03:21:24.731346+00:00 elapsed=0.113s
+
+MISS source=db value=item-196 computed_at=2026-09-13 03:21:24.894774+00:00 elapsed=0.112s
+
+MISS source=db value=item-197 computed_at=2026-09-13 03:21:25.064076+00:00 elapsed=0.113s
+
+MISS source=db value=item-198 computed_at=2026-09-13 03:21:25.227528+00:00 elapsed=0.111s
+
+MISS source=db value=item-199 computed_at=2026-09-13 03:21:25.393868+00:00 elapsed=0.113s
+
+MISS source=db value=item-200 computed_at=2026-09-13 03:21:25.563512+00:00 elapsed=0.113s
+

@@ -1,0 +1,46 @@
+=== R14-07 FULL CLUSTER-LOSS DR DRILL ===
+CREATE TABLE
+ id |         tag         |          written_at           
+----+---------------------+-------------------------------
+  1 | before-cluster-loss | 2026-09-13 05:49:17.302054+00
+(1 row)
+
+INSERT 0 1
+ id |         tag         |          written_at           
+----+---------------------+-------------------------------
+  1 | before-cluster-loss | 2026-09-13 05:49:17.302054+00
+(1 row)
+
+Backup request "dr-backup-1" submitted successfully.
+Waiting for backup to complete. You may safely press ctrl-c to stop waiting - your backup will continue in the background.
+............
+Backup completed with status: PartiallyFailed. You may check for more information using the commands `velero backup describe dr-backup-1` and `velero backup logs dr-backup-1`.
+backup: 2026-09-13 11:24:05.316349000 -> 2026-09-13 11:24:18.226345400
+Backup request "dr-backup-2" submitted successfully.
+Waiting for backup to complete. You may safely press ctrl-c to stop waiting - your backup will continue in the background.
+
+Backup completed with status: PartiallyFailed. You may check for more information using the commands `velero backup describe dr-backup-2` and `velero backup logs dr-backup-2`.
+backup2: 2026-09-13 11:26:44.861815200 -> 2026-09-13 11:26:45.744444100
+Backup request "dr-backup-3" submitted successfully.
+Waiting for backup to complete. You may safely press ctrl-c to stop waiting - your backup will continue in the background.
+.
+Backup completed with status: Completed. You may check for more information using the commands `velero backup describe dr-backup-3` and `velero backup logs dr-backup-3`.
+backup3: 2026-09-13 11:27:22.511958300 -> 2026-09-13 11:27:23.665628100
+Backup request "dr-backup-final" submitted successfully.
+Waiting for backup to complete. You may safely press ctrl-c to stop waiting - your backup will continue in the background.
+.
+Backup completed with status: Completed. You may check for more information using the commands `velero backup describe dr-backup-final` and `velero backup logs dr-backup-final`.
+backup-final: 2026-09-13 11:29:20.197785200 -> 2026-09-13 11:29:21.351549400
+T0 (disaster begins - destroying the ENTIRE kind cluster): 2026-09-13 11:29:25.478136100
+Restore request "dr-restore-1" submitted successfully.
+Waiting for restore to complete. You may safely press ctrl-c to stop waiting - your restore will continue in the background.
+
+Restore completed with status: Completed. You may check for more information using the commands `velero restore describe dr-restore-1` and `velero restore logs dr-restore-1`.
+T3 (restore completed, checking data): 2026-09-13 11:32:03.129601600
+psql: error: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: No such file or directory
+	Is the server running locally and accepting connections on that socket?
+command terminated with exit code 2
+ERROR:  relation "dr_events" does not exist
+LINE 1: select * from dr_events;
+                      ^
+command terminated with exit code 1

@@ -1,0 +1,23 @@
+=== R9-03 APP CIRCUIT BREAKER OPENS, 19:31:54 (DB still hanging with 5s latency toxic) ===
+--- request 1 ---
+{"error": "connection to server at \"toxiproxy\" (172.22.0.8), port 6432 failed: timeout expired\n", "protected": true, "breaker_state": "closed", "elapsed": 3.004}
+(HTTP 500, 3.008830s)
+--- request 2 ---
+{"error": "connection to server at \"toxiproxy\" (172.22.0.8), port 6432 failed: timeout expired\n", "protected": true, "breaker_state": "closed", "elapsed": 3.004}
+(HTTP 500, 3.008057s)
+--- request 3 ---
+{"error": "circuit_open", "detail": "Failures threshold reached, circuit breaker opened", "protected": true, "breaker_state": "open", "elapsed": 3.004}
+(HTTP 503, 3.007141s)
+--- request 4 ---
+{"error": "circuit_open", "detail": "Timeout not elapsed yet, circuit breaker still open", "protected": true, "breaker_state": "open", "elapsed": 0.0}
+(HTTP 503, 0.002695s)
+--- request 5 ---
+{"error": "circuit_open", "detail": "Timeout not elapsed yet, circuit breaker still open", "protected": true, "breaker_state": "open", "elapsed": 0.0}
+(HTTP 503, 0.002390s)
+--- breaker status ---
+{
+    "state": "open",
+    "fail_counter": 3,
+    "fail_max": 3,
+    "reset_timeout": 10
+}

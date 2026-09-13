@@ -1,0 +1,108 @@
+# R7 - Async messaging reliability (SQS/DLQ-equivalent) simulation, $0, local.
+# Reused unmodified: rabbitmq:4-management-alpine (real broker + real bundled
+# Management UI + built-in rabbitmq_prometheus plugin - no custom dashboard,
+# no third-party/archived exporter), ghcr.io/shopify/toxiproxy (R4/R5/R6
+# pattern, new target: AMQP port), prom/prometheus, grafana/grafana,
+# amir20/dozzle.
+# Adapted: producer.py/consumer.py (~130 lines total) - thin pika adapters.
+# All retry-delay/DLQ/redelivery behavior is real RabbitMQ mechanics (real
+# per-queue TTL, real dead-lettering, real unacked-message requeue on a
+# dropped connection) driven by this thin glue, not a custom broker.
+version: "3.8"
+
+services:
+  rabbitmq:
+    image: rabbitmq:4-management-alpine
+    volumes:
+      - ./rabbitmq/enabled_plugins:/etc/rabbitmq/enabled_plugins:ro
+      - ./rabbitmq/rabbitmq.conf:/etc/rabbitmq/conf.d/10-prometheus.conf:ro
+    ports:
+      - "59672:15672"   # Management UI
+      - "59692:15692"   # built-in Prometheus metrics
+    networks: [r7net]
+
+  toxiproxy:
+    image: ghcr.io/shopify/toxiproxy:2.9.0
+    ports:
+      - "59474:8474"    # control API
+    depends_on: [rabbitmq]
+    networks: [r7net]
+
+  # R13-03 addition, reusing R4's exact postgres image/pattern unmodified:
+  # the consumer's "normal" message now does one real DB write through this
+  # DB, fronted by the SAME toxiproxy instance (a second proxy entry, not a
+  # new toxiproxy deployment) - lets R13-03 throttle consumer throughput
+  # without touching the AMQP path at all.
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: appdb
+      POSTGRES_USER: appuser
+      POSTGRES_PASSWORD: apppass
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U appuser -d appdb"]
+      interval: 2s
+      timeout: 2s
+      retries: 15
+    networks: [r7net]
+
+  producer:
+    build: ./producer
+    environment:
+      RABBIT_HOST: toxiproxy
+      RABBIT_PORT: "5672"
+    depends_on: [toxiproxy]
+    networks: [r7net]
+
+  consumer:
+    build: ./consumer
+    environment:
+      RABBIT_HOST: toxiproxy
+      RABBIT_PORT: "5672"
+      CONSUMER_ID: consumer-1
+      DB_HOST: toxiproxy
+      DB_PORT: "5433"
+      DB_NAME: appdb
+      DB_USER: appuser
+      DB_PASSWORD: apppass
+      PYTHONUNBUFFERED: "1"
+    volumes:
+      - ./data:/data
+    depends_on:
+      toxiproxy:
+        condition: service_started
+      postgres:
+        condition: service_healthy
+    restart: always
+    networks: [r7net]
+
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    ports:
+      - "59090:9090"
+    networks: [r7net]
+
+  grafana:
+    image: grafana/grafana:latest
+    environment:
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: "Admin"
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+    ports:
+      - "59300:3000"
+    networks: [r7net]
+
+  dozzle:
+    image: amir20/dozzle:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    ports:
+      - "59888:8080"
+    networks: [r7net]
+
+networks:
+  r7net:
+    driver: bridge

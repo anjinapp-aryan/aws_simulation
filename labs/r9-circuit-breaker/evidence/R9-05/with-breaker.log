@@ -1,0 +1,24 @@
+=== R9-05 THUNDERING-HERD, WITH breaker (/order), 19:32:57 (breaker was reset to closed by R9-04; DB still hanging) ===
+{"state": "closed", "fail_counter": 0, "fail_max": 3, "reset_timeout": 10}
+Requests      [total, rate, throughput]         60, 10.17, 0.00
+Duration      [total, attack, wait]             9.042s, 5.9s, 3.142s
+Latencies     [min, mean, 50, 90, 95, 99, max]  3.009s, 5.933s, 5.924s, 8.274s, 8.574s, 8.814s, 8.824s
+Bytes In      [total, mean]                     9136, 152.27
+Bytes Out     [total, mean]                     0, 0.00
+Success       [ratio]                           0.00%
+Status Codes  [code:count]                      500:2  503:58  
+Error Set:
+500 Internal Server Error
+503 Service Unavailable
+--- final breaker status ---
+{"state": "open", "fail_counter": 3, "fail_max": 3, "reset_timeout": 10}=== R9-05 investigation: is the 5.93s mean a client-side connection-queuing artifact? ===
+Hypothesis: vegeta's default connection reuse serialized fast 503s behind the 2 slow in-flight 500s on the same keep-alive connections.
+Requests      [total, rate, throughput]         60, 10.17, 0.00
+Duration      [total, attack, wait]             5.903s, 5.9s, 2.606ms
+Latencies     [min, mean, 50, 90, 95, 99, max]  1.557ms, 787.877ms, 75.841ms, 2.466s, 2.766s, 3.003s, 3.012s
+Bytes In      [total, mean]                     9047, 150.78
+Bytes Out     [total, mean]                     0, 0.00
+Success       [ratio]                           0.00%
+Status Codes  [code:count]                      503:60  
+Error Set:
+503 Service Unavailable

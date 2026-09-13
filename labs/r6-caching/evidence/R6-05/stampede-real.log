@@ -1,0 +1,18 @@
+=== R6-05 CACHE STAMPEDE (real, 2nd attempt), 07:14:57 ===
+--- warm cache first, confirm baseline behaves normally ---
+--- flush + burst: rate=300/s for 1s ---
+1
+07:14:58 hot key flushed, firing concurrent load: rate=300/s duration=1s
+Requests      [total, rate, throughput]         300, 301.01, 300.20
+Duration      [total, attack, wait]             999.339ms, 996.661ms, 2.678ms
+Latencies     [min, mean, 50, 90, 95, 99, max]  1.955ms, 18.342ms, 2.39ms, 119.275ms, 147.591ms, 176.055ms, 179.649ms
+Bytes In      [total, mean]                     26934, 89.78
+Bytes Out     [total, mean]                     0, 0.00
+Success       [ratio]                           100.00%
+Status Codes  [code:count]                      200:300  
+Error Set:
+--- MISS vs HIT count in app logs during this run ---
+=== R6-05 real DB-commit evidence ===
+Postgres xact_commit before stampede: 2660
+Postgres xact_commit after stampede:  2784
+delta (real DB queries caused by the stampede): 124

@@ -1,0 +1,12 @@
+=== R6-01 NORMAL CACHE-ASIDE, 07:13:37 ===
+--- flush to guarantee a real cold start ---
+OK
+--- first request (expect MISS, ~100ms+ from pg_sleep) ---
+MISS source=db value=item-1 computed_at=2026-09-12 01:43:37.637890+00:00 elapsed=0.114s
+ (HTTP 200)
+--- second request (expect HIT, fast) ---
+HIT source=cache value=item-1 computed_at=2026-09-12 01:43:37.637890+00:00 elapsed=0.002s
+ (HTTP 200)
+--- third request (expect HIT, fast) ---
+HIT source=cache value=item-1 computed_at=2026-09-12 01:43:37.637890+00:00 elapsed=0.002s
+ (HTTP 200)

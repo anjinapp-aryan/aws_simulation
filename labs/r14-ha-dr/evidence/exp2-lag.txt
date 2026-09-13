@@ -1,0 +1,42 @@
+=== R14-02 REPLICATION LAG 11:04:24 ===
+--- generating 300 rapid writes ---
+--- checking lag immediately after burst ---
++ Cluster: demo (7684888192200712225) --------+----+-------------+-----+------------+-----+
+| Member   | Host       | Role    | State     | TL | Receive LSN | Lag | Replay LSN | Lag |
++----------+------------+---------+-----------+----+-------------+-----+------------+-----+
+| patroni1 | 172.22.0.3 | Replica | streaming |  1 |   0/408D6D8 |   0 |  0/408D6D8 |   0 |
+| patroni2 | 172.22.0.4 | Leader  | running   |  1 |             |     |            |     |
+| patroni3 | 172.22.0.7 | Replica | streaming |  1 |   0/408D6D8 |   0 |  0/408D6D8 |   0 |
++----------+------------+---------+-----------+----+-------------+-----+------------+-----+
+--- pausing patroni1 (replica) to stall its replication connection ---
+--- writing 200 more rows while patroni1 is paused ---
+--- lag while paused (checked from patroni3, since patroni1 itself is frozen) ---
++ Cluster: demo (7684888192200712225) --------+----+-------------+-----+------------+-----+
+| Member   | Host       | Role    | State     | TL | Receive LSN | Lag | Replay LSN | Lag |
++----------+------------+---------+-----------+----+-------------+-----+------------+-----+
+| patroni1 | 172.22.0.3 | Replica | streaming |  1 |   0/40964B0 |   0 |  0/40964B0 |   0 |
+| patroni2 | 172.22.0.4 | Leader  | running   |  1 |             |     |            |     |
+| patroni3 | 172.22.0.7 | Replica | streaming |  1 |   0/409E118 |   0 |  0/409E118 |   0 |
++----------+------------+---------+-----------+----+-------------+-----+------------+-----+
+--- REAL LAG COMPUTED FROM RAW LSN (patronictl's own Lag column was stale for the frozen member): patroni3=0x409E118, patroni1=0x40964B0, lag=31848 bytes ---
+--- unpausing patroni1, watching it catch up ---
+t+1s:
+| patroni1 | 172.22.0.3 | Replica | streaming |  1 |   0/40A3FE8 |   0 |  0/40A3FE8 |   0 |
+t+2s:
+| patroni1 | 172.22.0.3 | Replica | streaming |  1 |   0/40A3FE8 |   0 |  0/40A3FE8 |   0 |
+t+3s:
+| patroni1 | 172.22.0.3 | Replica | streaming |  1 |   0/40A4038 |   0 |  0/40A4038 |   0 |
+t+4s:
+| patroni1 | 172.22.0.3 | Replica | streaming |  1 |   0/40A4038 |   0 |  0/40A4038 |   0 |
+t+5s:
+| patroni1 | 172.22.0.3 | Replica | streaming |  1 |   0/40A4038 |   0 |  0/40A4038 |   0 |
+unpause time: 11:05:24.448811600
++ Cluster: demo (7684888192200712225) --------+----+-------------+-----+------------+-----+
+| Member   | Host       | Role    | State     | TL | Receive LSN | Lag | Replay LSN | Lag |
++----------+------------+---------+-----------+----+-------------+-----+------------+-----+
+| patroni1 | 172.22.0.3 | Replica | streaming |  1 |   0/40A4038 |   0 |  0/40A4038 |   0 |
+| patroni2 | 172.22.0.4 | Leader  | running   |  1 |             |     |            |     |
+| patroni3 | 172.22.0.7 | Replica | streaming |  1 |   0/40A4038 |   0 |  0/40A4038 |   0 |
++----------+------------+---------+-----------+----+-------------+-----+------------+-----+
+replica_max_id=501 in_recovery=True elapsed=0.006s
+

@@ -1,0 +1,4 @@
+consumer-1  | [consumer-1] 03:12:23 NORMAL id=base1 - processed, db_write=0.014s
+consumer-1  | [consumer-1] 03:12:37 NORMAL id=order-3 - processed, db_write=6.508s
+consumer-1  | [consumer-1] 03:12:44 NORMAL id=order-2 - processed, db_write=6.254s
+consumer-1  | [consumer-1] 03:12:50 NORMAL id=order-4 - processed, db_write=6.544s

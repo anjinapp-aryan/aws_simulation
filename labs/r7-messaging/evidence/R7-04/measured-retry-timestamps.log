@@ -1,0 +1,8 @@
+consumer-1  | [consumer-1] 13:10:39 POISON id=poison-1789218639 attempt=0 - deliberately failing
+consumer-1  | [consumer-1] 13:10:39 POISON id=poison-1789218639 - routing to orders-retry-1 (ttl=3000ms) for attempt 1
+consumer-1  | [consumer-1] 13:10:42 POISON id=poison-1789218639 attempt=1 - deliberately failing
+consumer-1  | [consumer-1] 13:10:42 POISON id=poison-1789218639 - routing to orders-retry-2 (ttl=6000ms) for attempt 2
+consumer-1  | [consumer-1] 13:10:48 POISON id=poison-1789218639 attempt=2 - deliberately failing
+consumer-1  | [consumer-1] 13:10:48 POISON id=poison-1789218639 - routing to orders-retry-3 (ttl=12000ms) for attempt 3
+consumer-1  | [consumer-1] 13:11:00 POISON id=poison-1789218639 attempt=3 - deliberately failing
+consumer-1  | [consumer-1] 13:11:00 POISON id=poison-1789218639 - exhausted 3 attempts, routing to orders-dlq

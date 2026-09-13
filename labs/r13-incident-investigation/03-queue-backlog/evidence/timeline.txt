@@ -1,0 +1,9 @@
+=== BASELINE 08:42:29 queue=0 consumers=1 db_write=0.014s ===
+08:43:21 [fix] removing DB latency toxic
+
+08:43:21 [fix] waiting for backlog to drain...
+  08:43:22 queue depth = 53
+  08:43:25 queue depth = 53
+  08:43:28 queue depth = 53
+  08:43:31 queue depth = 53
+  08:43:34 queue depth = 0

@@ -1,0 +1,13 @@
+    State:          Running
+      Started:      Sun, 13 Sep 2026 08:57:59 +0530
+    Last State:     Terminated
+      Reason:       OOMKilled
+      Exit Code:    137
+      Started:      Sun, 13 Sep 2026 08:57:52 +0530
+      Finished:     Sun, 13 Sep 2026 08:57:58 +0530
+    Ready:          True
+    Restart Count:  1
+    Limits:
+      cpu:     250m
+      memory:  128Mi
+    Requests:

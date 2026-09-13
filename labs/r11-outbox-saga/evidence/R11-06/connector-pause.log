@@ -1,0 +1,30 @@
+=== R11-06 DEBEZIUM CONNECTOR PAUSE + RECOVERY, 21:06:19 ===
+21:06:19 pause order-outbox-connector
+
+state: PAUSED
+--- placing 3 orders WHILE connector is paused ---
+{"order_id": "order-pause1", "status": "CREATED", "outbox_event_id": "c292b439-9093-462b-864b-e96afad45641", "fail_payment": false}
+{"order_id": "order-pause2", "status": "CREATED", "outbox_event_id": "897faa10-2c6a-48ae-a503-91aa5ff75124", "fail_payment": false}
+{"order_id": "order-pause3", "status": "CREATED", "outbox_event_id": "a20dca04-32a9-44c1-a1b3-bbfed51558b2", "fail_payment": false}
+--- order statuses (expect all still CREATED - CDC not relaying) ---
+order-pause1 CREATED
+order-pause2 CREATED
+order-pause3 CREATED
+--- outbox rows accumulated durably in Postgres ---
+ aggregateid  |     type     
+--------------+--------------
+ order-pause1 | OrderCreated
+ order-pause2 | OrderCreated
+ order-pause3 | OrderCreated
+(3 rows)
+
+21:06:30 resume order-outbox-connector
+
+--- order statuses after resume (expect all CONFIRMED now - real backlog drain) ---
+order-pause1 CREATED
+order-pause2 CREATED
+order-pause3 CREATED
+--- final order statuses (real backlog drain confirmed) ---
+order-pause1 CONFIRMED
+order-pause2 CONFIRMED
+order-pause3 CONFIRMED

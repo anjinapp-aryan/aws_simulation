@@ -1,0 +1,4 @@
+--- original backend pod (tier=backend) ---
+ALLOWED
+--- backend-v2 pod (tier=backend-v2, the new rollout) ---
+DENIED timed out

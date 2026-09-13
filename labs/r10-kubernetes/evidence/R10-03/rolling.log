@@ -1,0 +1,129 @@
+=== R10-03 ROLLING DEPLOYMENT ===
+--- generating continuous traffic during rollout for 15s ---
+20:17:44.194 Hello from pod=r10-app-65fd65fcb5-j8d5z version=v1 time=1789224464.148
+ HTTP=200
+20:17:44.795 Hello from pod=r10-app-65fd65fcb5-j8d5z version=v1 time=1789224464.748
+ HTTP=200
+20:17:45.399 Hello from pod=r10-app-65fd65fcb5-rwttf version=v1 time=1789224465.352
+ HTTP=200
+20:17:46.014 Hello from pod=r10-app-65fd65fcb5-rwttf version=v1 time=1789224465.964
+ HTTP=200
+20:17:46.630 Hello from pod=r10-app-65fd65fcb5-j8d5z version=v1 time=1789224466.586
+ HTTP=200
+20:17:47.222 Hello from pod=r10-app-65fd65fcb5-j8d5z version=v1 time=1789224467.173
+ HTTP=200
+20:17:47.815 Hello from pod=r10-app-65fd65fcb5-rwttf version=v1 time=1789224467.760
+ HTTP=200
+20:17:48.436 Hello from pod=r10-app-65fd65fcb5-rwttf version=v1 time=1789224468.381
+ HTTP=200
+20:17:49.059 Hello from pod=r10-app-65fd65fcb5-rwttf version=v1 time=1789224468.998
+ HTTP=200
+20:17:49.681 Hello from pod=r10-app-66fd5b64bf-7bqr4 version=v2 time=1789224469.632
+ HTTP=200
+20:17:50.283 Hello from pod=r10-app-66fd5b64bf-7bqr4 version=v2 time=1789224470.236
+ HTTP=200
+20:17:50.906 Hello from pod=r10-app-66fd5b64bf-7bqr4 version=v2 time=1789224470.853
+ HTTP=200
+20:17:51.506 Hello from pod=r10-app-66fd5b64bf-7bqr4 version=v2 time=1789224471.454
+ HTTP=200
+20:17:52.121 Hello from pod=r10-app-66fd5b64bf-7bqr4 version=v2 time=1789224472.073
+ HTTP=200
+20:17:52.713 Hello from pod=r10-app-66fd5b64bf-7bqr4 version=v2 time=1789224472.663
+ HTTP=200
+20:17:53.313 Hello from pod=r10-app-66fd5b64bf-7bqr4 version=v2 time=1789224473.266
+ HTTP=200
+20:17:53.917 Hello from pod=r10-app-66fd5b64bf-6pjfc version=v2 time=1789224473.872
+ HTTP=200
+20:17:54.505 Hello from pod=r10-app-66fd5b64bf-7bqr4 version=v2 time=1789224474.458
+ HTTP=200
+20:17:55.124 Hello from pod=r10-app-66fd5b64bf-6pjfc version=v2 time=1789224475.074
+ HTTP=200
+20:17:55.744 Hello from pod=r10-app-66fd5b64bf-7bqr4 version=v2 time=1789224475.689
+ HTTP=200
+20:17:56.358 Hello from pod=r10-app-66fd5b64bf-6pjfc version=v2 time=1789224476.306
+ HTTP=200
+20:17:56.972 Hello from pod=r10-app-66fd5b64bf-6pjfc version=v2 time=1789224476.924
+ HTTP=200
+20:17:57.594 Hello from pod=r10-app-66fd5b64bf-7bqr4 version=v2 time=1789224477.546
+ HTTP=200
+20:17:58.214 Hello from pod=r10-app-66fd5b64bf-7bqr4 version=v2 time=1789224478.164
+ HTTP=200
+20:17:58.826 Hello from pod=r10-app-66fd5b64bf-7bqr4 version=v2 time=1789224478.778
+ HTTP=200
+--- HTTP status code distribution during rollout ---
+20:17:59.434 Hello from pod=r10-app-66fd5b64bf-6pjfc version=v2 time=1789224479.383
+ HTTP=200
+20:18:00.053 Hello from pod=r10-app-66fd5b64bf-7bqr4 version=v2 time=1789224480.005
+ HTTP=200
+20:18:00.660 Hello from pod=r10-app-66fd5b64bf-7bqr4 version=v2 time=1789224480.609
+ HTTP=200
+20:18:01.283 Hello from pod=r10-app-66fd5b64bf-7bqr4 version=v2 time=1789224481.238
+ HTTP=200
+20:18:01.890 Hello from pod=r10-app-66fd5b64bf-7bqr4 version=v2 time=1789224481.842
+ HTTP=200
+20:18:02.494 Hello from pod=r10-app-66fd5b64bf-7bqr4 version=v2 time=1789224482.445
+ HTTP=200
+20:18:03.084 Hello from pod=r10-app-66fd5b64bf-6pjfc version=v2 time=1789224483.034
+ HTTP=200
+20:18:03.687 Hello from pod=r10-app-66fd5b64bf-6pjfc version=v2 time=1789224483.636
+ HTTP=200
+20:18:04.300 Hello from pod=r10-app-66fd5b64bf-6pjfc version=v2 time=1789224484.257
+ HTTP=200
+20:18:04.893 Hello from pod=r10-app-66fd5b64bf-6pjfc version=v2 time=1789224484.843
+ HTTP=200
+20:18:05.506 Hello from pod=r10-app-66fd5b64bf-6pjfc version=v2 time=1789224485.457
+ HTTP=200
+20:18:06.095 Hello from pod=r10-app-66fd5b64bf-6pjfc version=v2 time=1789224486.049
+ HTTP=200
+20:18:06.697 Hello from pod=r10-app-66fd5b64bf-7bqr4 version=v2 time=1789224486.653
+ HTTP=200
+20:18:07.300 Hello from pod=r10-app-66fd5b64bf-7bqr4 version=v2 time=1789224487.255
+ HTTP=200
+20:18:07.911 Hello from pod=r10-app-66fd5b64bf-7bqr4 version=v2 time=1789224487.856
+ HTTP=200
+20:18:08.525 Hello from pod=r10-app-66fd5b64bf-6pjfc version=v2 time=1789224488.471
+ HTTP=200
+20:18:09.124 Hello from pod=r10-app-66fd5b64bf-7bqr4 version=v2 time=1789224489.077
+ HTTP=200
+20:18:09.731 Hello from pod=r10-app-66fd5b64bf-7bqr4 version=v2 time=1789224489.679
+ HTTP=200
+20:18:10.346 Hello from pod=r10-app-66fd5b64bf-6pjfc version=v2 time=1789224490.294
+ HTTP=200
+20:18:10.947 Hello from pod=r10-app-66fd5b64bf-6pjfc version=v2 time=1789224490.897
+ HTTP=200
+20:18:11.567 Hello from pod=r10-app-66fd5b64bf-7bqr4 version=v2 time=1789224491.515
+ HTTP=200
+20:18:12.176 Hello from pod=r10-app-66fd5b64bf-6pjfc version=v2 time=1789224492.120
+ HTTP=200
+
+--- final HTTP status distribution ---
+     47 HTTP=200
+--- version transition (v1 -> v2) ---
+      9 version=v1
+     38 version=v2
+20:18:12.798 Hello from pod=r10-app-66fd5b64bf-7bqr4 version=v2 time=1789224492.743
+ HTTP=200
+20:18:13.404 Hello from pod=r10-app-66fd5b64bf-7bqr4 version=v2 time=1789224493.351
+ HTTP=200
+20:18:14.038 Hello from pod=r10-app-66fd5b64bf-6pjfc version=v2 time=1789224493.984
+ HTTP=200
+20:18:14.643 Hello from pod=r10-app-66fd5b64bf-6pjfc version=v2 time=1789224494.590
+ HTTP=200
+20:18:15.279 Hello from pod=r10-app-66fd5b64bf-6pjfc version=v2 time=1789224495.225
+ HTTP=200
+20:18:15.895 Hello from pod=r10-app-66fd5b64bf-7bqr4 version=v2 time=1789224495.851
+ HTTP=200
+20:18:16.501 Hello from pod=r10-app-66fd5b64bf-7bqr4 version=v2 time=1789224496.455
+ HTTP=200
+20:18:17.094 Hello from pod=r10-app-66fd5b64bf-6pjfc version=v2 time=1789224497.042
+ HTTP=200
+20:18:17.680 Hello from pod=r10-app-66fd5b64bf-7bqr4 version=v2 time=1789224497.631
+ HTTP=200
+20:18:18.295 Hello from pod=r10-app-66fd5b64bf-6pjfc version=v2 time=1789224498.240
+ HTTP=200
+20:18:18.912 Hello from pod=r10-app-66fd5b64bf-6pjfc version=v2 time=1789224498.862
+ HTTP=200
+20:18:19.527 Hello from pod=r10-app-66fd5b64bf-7bqr4 version=v2 time=1789224499.482
+ HTTP=200
+20:18:20.165 Hello from pod=r10-app-66fd5b64bf-7bqr4 version=v2 time=1789224500.111
+ HTTP=200

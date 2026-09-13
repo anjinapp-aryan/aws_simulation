@@ -1,0 +1,17 @@
+[
+    {
+        "payload_bytes": 45,
+        "redelivered": false,
+        "exchange": "",
+        "routing_key": "orders-dlq",
+        "message_count": 0,
+        "properties": {
+            "delivery_mode": 2,
+            "headers": {
+                "x-retry-attempt": 4
+            }
+        },
+        "payload": "{\"id\": \"poison-1789218639\", \"type\": \"poison\"}",
+        "payload_encoding": "string"
+    }
+]

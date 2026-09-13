@@ -1,0 +1,36 @@
+﻿=== R10-06 NODE CORDON + DRAIN ===
+--- BEFORE ---
+NAME                STATUS   ROLES           AGE     VERSION
+r10-control-plane   Ready    control-plane   5m26s   v1.31.0
+r10-worker          Ready    <none>          5m14s   v1.31.0
+r10-worker2         Ready    <none>          5m14s   v1.31.0
+NAME                       READY   STATUS    RESTARTS      AGE    IP           NODE          NOMINATED NODE   READINESS GATES
+r10-app-66fd5b64bf-6pjfc   1/1     Running   2 (16s ago)   2m7s   10.244.1.6   r10-worker2   <none>           <none>
+r10-app-66fd5b64bf-7bqr4   1/1     Running   0             2m9s   10.244.2.6   r10-worker    <none>           <none>
+--- cordoning r10-worker2 ---
+node/r10-worker2 cordoned
+NAME                STATUS                     ROLES           AGE     VERSION
+r10-control-plane   Ready                      control-plane   5m26s   v1.31.0
+r10-worker          Ready                      <none>          5m14s   v1.31.0
+r10-worker2         Ready,SchedulingDisabled   <none>          5m14s   v1.31.0
+NAME      READY   UP-TO-DATE   AVAILABLE   AGE
+r10-app   2/2     2            2           4m17s
+--- draining r10-worker2 (evicts pods) ---
+node/r10-worker2 already cordoned
+evicting pod kube-system/metrics-server-594f6d74c5-txrq2
+evicting pod default/prometheus-599d468cb8-srjzn
+evicting pod default/r10-app-66fd5b64bf-6pjfc
+pod/prometheus-599d468cb8-srjzn evicted
+pod/metrics-server-594f6d74c5-txrq2 evicted
+pod/r10-app-66fd5b64bf-6pjfc evicted
+node/r10-worker2 drained
+--- AFTER drain: pods rescheduled to remaining node ---
+NAME                       READY   STATUS    RESTARTS   AGE     IP           NODE         NOMINATED NODE   READINESS GATES
+r10-app-66fd5b64bf-7bqr4   1/1     Running   0          2m53s   10.244.2.6   r10-worker   <none>           <none>
+r10-app-66fd5b64bf-wxgvf   1/1     Running   0          37s     10.244.2.9   r10-worker   <none>           <none>
+--- uncordoning r10-worker2 (recovery) ---
+node/r10-worker2 uncordoned
+NAME                STATUS   ROLES           AGE     VERSION
+r10-control-plane   Ready    control-plane   6m15s   v1.31.0
+r10-worker          Ready    <none>          6m3s    v1.31.0
+r10-worker2         Ready    <none>          6m3s    v1.31.0

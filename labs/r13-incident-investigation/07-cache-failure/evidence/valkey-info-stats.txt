@@ -1,0 +1,3 @@
+evicted_keys:0
+keyspace_hits:1
+keyspace_misses:601

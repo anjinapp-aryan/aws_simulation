@@ -1,0 +1,14 @@
+=== R8-10 SERVICE DEPENDENCY GRAPH, 19:18:40 ===
+{
+    "data": [
+        {
+            "parent": "r8-app",
+            "child": "r8-consumer",
+            "callCount": 36
+        }
+    ],
+    "total": 0,
+    "limit": 0,
+    "offset": 0,
+    "errors": null
+}

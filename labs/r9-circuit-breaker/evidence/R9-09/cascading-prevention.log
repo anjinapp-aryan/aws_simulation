@@ -1,0 +1,19 @@
+=== R9-09 CASCADING-FAILURE PREVENTION, 19:35:38 ===
+--- WITHOUT protection: heavy load on /order-raw + concurrent /health checks ---
+  /health during unprotected load: HTTP 200 (0.004625s)
+  /health during unprotected load: HTTP 200 (0.004511s)
+  /health during unprotected load: HTTP 200 (0.003004s)
+done
+--- heavier unprotected load (rate=40) + pgbouncer pool state + thread count ---
+docker stats snapshot (app container thread/CPU/mem):
+CONTAINER ID   NAME                       CPU %     MEM USAGE / LIMIT     MEM %     NET I/O         BLOCK I/O        PIDS
+1dfb3b8fc8cf   r9-circuit-breaker-app-1   7.20%     27.85MiB / 15.43GiB   0.18%     524kB / 584kB   176kB / 57.3kB   121
+app container thread count:
+121
+done
+--- SAME heavy load through PROTECTED /order path ---
+docker stats snapshot (app container thread/CPU/mem) WITH breaker protecting:
+CONTAINER ID   NAME                       CPU %     MEM USAGE / LIMIT     MEM %     NET I/O         BLOCK I/O         PIDS
+1dfb3b8fc8cf   r9-circuit-breaker-app-1   6.58%     21.21MiB / 15.43GiB   0.13%     741kB / 893kB   1.73MB / 57.3kB   2
+1
+done

@@ -1,0 +1,11 @@
+=== R14-08 CAPACITY/COST ===
+--- current: leader + 1 replica (patroni3 lost earlier in Exp3/4 chaos, never rejoined) + 3-node etcd + haproxy ---
+r14-ha-dr-app-1	0.01%	12.01MiB / 15.43GiB
+r14-ha-dr-dozzle-1	0.00%	12.15MiB / 15.43GiB
+r14-ha-dr-pgweb-1	0.00%	6.703MiB / 15.43GiB
+demo-etcd2	2.03%	30.7MiB / 15.43GiB
+demo-etcd1	2.08%	21.95MiB / 15.43GiB
+demo-patroni1	0.02%	72.16MiB / 15.43GiB
+demo-patroni2	0.18%	57.62MiB / 15.43GiB
+demo-haproxy	0.04%	83.51MiB / 15.43GiB
+demo-etcd3	1.46%	19.77MiB / 15.43GiB

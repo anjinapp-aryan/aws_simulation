@@ -1,0 +1,53 @@
+=== R12-01 BASELINE (retry, fixed TCP probe), 22:52:13 ===
+real bug found: image's /bin/sh (dash) doesn't support bash's /dev/tcp pseudo-device.
+fixed with a python3 socket-based TCP probe instead.
+--- frontend -> backend (expected allowed) ---
+HTTP 200 (0.001662s)
+--- backend -> database (expected allowed, real TCP probe) ---
+TCP connect OK
+--- frontend -> database DIRECT (expected DENIED - zero trust) ---
+TCP connect OK
+--- real Hubble flow evidence (same data Hubble UI renders graphically) ---
+error: Internal error occurred: Internal error occurred: error executing command in container: failed to exec in container: failed to start exec "1b691fdb01e3e5767971efc3496ee5e2c60ed38248dc13a10a17bd33bdc075ce": OCI runtime exec failed: exec failed: unable to start container process: exec: "true": executable file not found in $PATH: unknown
+Sep 12 17:22:15.780: 10.244.0.233:44052 (host) -> kube-system/coredns-6f6b679f8f-52nmd:8181 (ID:33960) to-endpoint FORWARDED (TCP Flags: ACK, PSH)
+Sep 12 17:22:15.781: 10.244.0.233:34492 (host) -> kube-system/coredns-6f6b679f8f-52nmd:8080 (ID:33960) to-endpoint FORWARDED (TCP Flags: ACK, FIN)
+Sep 12 17:22:15.781: 10.244.0.233:34492 (host) <- kube-system/coredns-6f6b679f8f-52nmd:8080 (ID:33960) to-stack FORWARDED (TCP Flags: ACK, FIN)
+Sep 12 17:22:15.781: 10.244.0.233:34492 (host) -> kube-system/coredns-6f6b679f8f-52nmd:8080 (ID:33960) to-endpoint FORWARDED (TCP Flags: ACK)
+Sep 12 17:22:15.781: 10.244.0.233:44052 (host) <- kube-system/coredns-6f6b679f8f-52nmd:8181 (ID:33960) to-stack FORWARDED (TCP Flags: ACK, PSH)
+Sep 12 17:22:15.781: 10.244.0.233:44052 (host) -> kube-system/coredns-6f6b679f8f-52nmd:8181 (ID:33960) to-endpoint FORWARDED (TCP Flags: ACK, FIN)
+Sep 12 17:22:15.781: 10.244.0.233:44052 (host) <- kube-system/coredns-6f6b679f8f-52nmd:8181 (ID:33960) to-stack FORWARDED (TCP Flags: ACK, FIN)
+Sep 12 17:22:15.781: 10.244.0.233:44052 (host) <- kube-system/coredns-6f6b679f8f-52nmd:8181 (ID:33960) to-stack FORWARDED (TCP Flags: ACK)
+Sep 12 17:22:15.782: 10.244.0.233:44052 (host) -> kube-system/coredns-6f6b679f8f-52nmd:8181 (ID:33960) to-endpoint FORWARDED (TCP Flags: ACK)
+Sep 12 17:22:15.951: kube-system/coredns-6f6b679f8f-52nmd:40790 (ID:33960) <- 172.22.0.2:443 (host) to-endpoint FORWARDED (TCP Flags: ACK, PSH)
+Sep 12 17:22:15.952: kube-system/coredns-6f6b679f8f-fnpj2:57274 (ID:33960) <- 172.22.0.2:443 (host) to-endpoint FORWARDED (TCP Flags: ACK, PSH)
+Sep 12 17:22:15.993: kube-system/coredns-6f6b679f8f-fnpj2:57274 (ID:33960) -> 172.22.0.2:6443 (host) to-stack FORWARDED (TCP Flags: ACK)
+Sep 12 17:22:15.993: kube-system/coredns-6f6b679f8f-52nmd:40790 (ID:33960) -> 172.22.0.2:6443 (host) to-stack FORWARDED (TCP Flags: ACK)
+Sep 12 17:22:16.001: local-path-storage/local-path-provisioner-57c5987fd4-k8gh4:43940 (ID:318) <- 172.22.0.2:443 (host) to-endpoint FORWARDED (TCP Flags: ACK, PSH)
+Sep 12 17:22:16.001: local-path-storage/local-path-provisioner-57c5987fd4-k8gh4:43940 (ID:318) -> 172.22.0.2:6443 (host) to-stack FORWARDED (TCP Flags: ACK)
+Sep 12 17:21:55.216: default/frontend-64c7797d9f-ntxh6:60587 (ID:9268) -> kube-system/coredns-6f6b679f8f-fnpj2:53 (ID:33960) to-endpoint FORWARDED (UDP)
+Sep 12 17:21:55.216: default/frontend-64c7797d9f-ntxh6:60587 (ID:9268) <- kube-system/coredns-6f6b679f8f-fnpj2:53 (ID:33960) to-overlay FORWARDED (UDP)
+Sep 12 17:22:13.538: default/frontend-64c7797d9f-ntxh6:36306 (ID:9268) -> kube-system/coredns-6f6b679f8f-fnpj2:53 (ID:33960) to-endpoint FORWARDED (UDP)
+Sep 12 17:22:13.539: default/frontend-64c7797d9f-ntxh6:36306 (ID:9268) <- kube-system/coredns-6f6b679f8f-fnpj2:53 (ID:33960) to-overlay FORWARDED (UDP)
+Sep 12 17:22:13.691: default/backend-7987656979-zkvsr:53919 (ID:11748) -> kube-system/coredns-6f6b679f8f-52nmd:53 (ID:33960) to-endpoint FORWARDED (UDP)
+Sep 12 17:22:13.692: default/backend-7987656979-zkvsr:53919 (ID:11748) <- kube-system/coredns-6f6b679f8f-52nmd:53 (ID:33960) to-overlay FORWARDED (UDP)
+Sep 12 17:22:13.841: default/frontend-64c7797d9f-ntxh6:53542 (ID:9268) -> kube-system/coredns-6f6b679f8f-fnpj2:53 (ID:33960) to-endpoint FORWARDED (UDP)
+Sep 12 17:22:13.841: default/frontend-64c7797d9f-ntxh6:53542 (ID:9268) <- kube-system/coredns-6f6b679f8f-fnpj2:53 (ID:33960) to-overlay FORWARDED (UDP)
+real root cause: kubectl exec ds/cilium picked the control-plane node's agent (each Cilium
+agent only observes flows local to its own node); our app pods run on r12-worker. Fixed by
+targeting the correct per-node agent (cilium-7b75n) directly.
+Sep 12 17:22:54.161: default/frontend-64c7797d9f-ntxh6:37404 (ID:9268) -> default/backend-7987656979-zkvsr:8000 (ID:11748) to-endpoint FORWARDED (TCP Flags: SYN)
+Sep 12 17:22:54.161: default/frontend-64c7797d9f-ntxh6:37404 (ID:9268) -> default/backend-7987656979-zkvsr:8000 (ID:11748) to-endpoint FORWARDED (TCP Flags: ACK)
+Sep 12 17:22:54.161: default/frontend-64c7797d9f-ntxh6:37404 (ID:9268) -> default/backend-7987656979-zkvsr:8000 (ID:11748) to-endpoint FORWARDED (TCP Flags: ACK, PSH)
+Sep 12 17:22:54.162: default/frontend-64c7797d9f-ntxh6:37404 (ID:9268) -> default/backend-7987656979-zkvsr:8000 (ID:11748) to-endpoint FORWARDED (TCP Flags: ACK, FIN)
+Sep 12 17:22:54.312: default/backend-7987656979-zkvsr:38048 (ID:11748) -> default/database-6d64fd885d-jzngt:5432 (ID:26264) to-endpoint FORWARDED (TCP Flags: SYN)
+Sep 12 17:22:54.312: default/backend-7987656979-zkvsr:38048 (ID:11748) <- default/database-6d64fd885d-jzngt:5432 (ID:26264) to-endpoint FORWARDED (TCP Flags: SYN, ACK)
+Sep 12 17:22:54.312: default/backend-7987656979-zkvsr:38048 (ID:11748) -> default/database-6d64fd885d-jzngt:5432 (ID:26264) to-endpoint FORWARDED (TCP Flags: ACK)
+Sep 12 17:22:54.313: default/backend-7987656979-zkvsr:38048 (ID:11748) -> default/database-6d64fd885d-jzngt:5432 (ID:26264) to-endpoint FORWARDED (TCP Flags: ACK, FIN)
+Sep 12 17:22:54.314: default/backend-7987656979-zkvsr:38048 (ID:11748) <- default/database-6d64fd885d-jzngt:5432 (ID:26264) to-endpoint FORWARDED (TCP Flags: ACK, FIN)
+Sep 12 17:22:54.314: default/backend-7987656979-zkvsr:38048 (ID:11748) -> default/database-6d64fd885d-jzngt:5432 (ID:26264) to-endpoint FORWARDED (TCP Flags: ACK)
+Sep 12 17:22:54.468: default/frontend-64c7797d9f-ntxh6:56522 (ID:9268) -> default/database-6d64fd885d-jzngt:5432 (ID:26264) to-endpoint FORWARDED (TCP Flags: SYN)
+Sep 12 17:22:54.468: default/frontend-64c7797d9f-ntxh6:56522 (ID:9268) <- default/database-6d64fd885d-jzngt:5432 (ID:26264) to-endpoint FORWARDED (TCP Flags: SYN, ACK)
+Sep 12 17:22:54.468: default/frontend-64c7797d9f-ntxh6:56522 (ID:9268) -> default/database-6d64fd885d-jzngt:5432 (ID:26264) to-endpoint FORWARDED (TCP Flags: ACK)
+Sep 12 17:22:54.468: default/frontend-64c7797d9f-ntxh6:56522 (ID:9268) -> default/database-6d64fd885d-jzngt:5432 (ID:26264) to-endpoint FORWARDED (TCP Flags: ACK, FIN)
+Sep 12 17:22:54.470: default/frontend-64c7797d9f-ntxh6:56522 (ID:9268) <- default/database-6d64fd885d-jzngt:5432 (ID:26264) to-endpoint FORWARDED (TCP Flags: ACK, FIN)
+Sep 12 17:22:54.470: default/frontend-64c7797d9f-ntxh6:56522 (ID:9268) -> default/database-6d64fd885d-jzngt:5432 (ID:26264) to-endpoint FORWARDED (TCP Flags: ACK)

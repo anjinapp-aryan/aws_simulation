@@ -1,0 +1,62 @@
+07:20:28 killing valkey-primary container
+3c6cb346c97bc1fcd89fc15f28b76cb22f58713bcf0bdea82f3f87cbe668882b
+watching Sentinel's view of the master for up to 20s...
+07:20:29 sentinel master-addr: time="2026-09-12T07:20:29+05:30" level=warning msg="D:\\WORK_SPACE\\aws_simulation\\labs\\r6-caching\\docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+172.28.0.10
+6379
+07:20:32 sentinel master-addr: time="2026-09-12T07:20:32+05:30" level=warning msg="D:\\WORK_SPACE\\aws_simulation\\labs\\r6-caching\\docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+172.28.0.10
+6379
+07:20:34 sentinel master-addr: time="2026-09-12T07:20:34+05:30" level=warning msg="D:\\WORK_SPACE\\aws_simulation\\labs\\r6-caching\\docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+172.28.0.6
+6379
+07:20:37 sentinel master-addr: time="2026-09-12T07:20:37+05:30" level=warning msg="D:\\WORK_SPACE\\aws_simulation\\labs\\r6-caching\\docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+172.28.0.6
+6379
+07:20:39 sentinel master-addr: time="2026-09-12T07:20:39+05:30" level=warning msg="D:\\WORK_SPACE\\aws_simulation\\labs\\r6-caching\\docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+172.28.0.6
+6379
+07:20:42 sentinel master-addr: time="2026-09-12T07:20:41+05:30" level=warning msg="D:\\WORK_SPACE\\aws_simulation\\labs\\r6-caching\\docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+172.28.0.6
+6379
+07:20:44 sentinel master-addr: time="2026-09-12T07:20:44+05:30" level=warning msg="D:\\WORK_SPACE\\aws_simulation\\labs\\r6-caching\\docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+172.28.0.6
+6379
+07:20:47 sentinel master-addr: time="2026-09-12T07:20:46+05:30" level=warning msg="D:\\WORK_SPACE\\aws_simulation\\labs\\r6-caching\\docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+172.28.0.6
+6379
+07:20:49 sentinel master-addr: time="2026-09-12T07:20:49+05:30" level=warning msg="D:\\WORK_SPACE\\aws_simulation\\labs\\r6-caching\\docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+172.28.0.6
+6379
+07:20:51 sentinel master-addr: time="2026-09-12T07:20:51+05:30" level=warning msg="D:\\WORK_SPACE\\aws_simulation\\labs\\r6-caching\\docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+172.28.0.6
+6379
+7:X 12 Sep 2026 01:50:09.627 * oO0OoO0OoO0Oo Valkey is starting oO0OoO0OoO0Oo
+7:X 12 Sep 2026 01:50:09.627 * Valkey version=8.1.10, bits=64, commit=00000000, modified=1, pid=7, just started
+7:X 12 Sep 2026 01:50:09.627 * Configuration loaded
+7:X 12 Sep 2026 01:50:09.627 * monotonic clock: POSIX clock_gettime
+7:X 12 Sep 2026 01:50:09.627 * Running mode=sentinel, port=26379.
+7:X 12 Sep 2026 01:50:09.633 * Sentinel new configuration saved on disk
+7:X 12 Sep 2026 01:50:09.633 * Sentinel ID is 73c82b3d81017e89e9f034c3e373700df1bc4ca0
+7:X 12 Sep 2026 01:50:09.633 # +monitor master mymaster 172.28.0.10 6379 quorum 1
+7:X 12 Sep 2026 01:50:09.634 * +slave slave 172.28.0.6:6379 172.28.0.6 6379 @ mymaster 172.28.0.10 6379
+7:X 12 Sep 2026 01:50:09.643 * Sentinel new configuration saved on disk
+7:X 12 Sep 2026 01:50:32.052 # +sdown master mymaster 172.28.0.10 6379
+7:X 12 Sep 2026 01:50:32.052 # +odown master mymaster 172.28.0.10 6379 #quorum 1/1
+7:X 12 Sep 2026 01:50:32.052 # +new-epoch 1
+7:X 12 Sep 2026 01:50:32.052 # +try-failover master mymaster 172.28.0.10 6379
+7:X 12 Sep 2026 01:50:32.059 * Sentinel new configuration saved on disk
+7:X 12 Sep 2026 01:50:32.059 # +vote-for-leader 73c82b3d81017e89e9f034c3e373700df1bc4ca0 1
+7:X 12 Sep 2026 01:50:32.059 # +elected-leader master mymaster 172.28.0.10 6379
+7:X 12 Sep 2026 01:50:32.059 # +failover-state-select-slave master mymaster 172.28.0.10 6379
+7:X 12 Sep 2026 01:50:32.136 # +selected-slave slave 172.28.0.6:6379 172.28.0.6 6379 @ mymaster 172.28.0.10 6379
+7:X 12 Sep 2026 01:50:32.136 * +failover-state-send-slaveof-noone slave 172.28.0.6:6379 172.28.0.6 6379 @ mymaster 172.28.0.10 6379
+7:X 12 Sep 2026 01:50:32.192 * +failover-state-wait-promotion slave 172.28.0.6:6379 172.28.0.6 6379 @ mymaster 172.28.0.10 6379
+7:X 12 Sep 2026 01:50:33.114 * Sentinel new configuration saved on disk
+7:X 12 Sep 2026 01:50:33.114 # +promoted-slave slave 172.28.0.6:6379 172.28.0.6 6379 @ mymaster 172.28.0.10 6379
+7:X 12 Sep 2026 01:50:33.114 # +failover-state-reconf-slaves master mymaster 172.28.0.10 6379
+7:X 12 Sep 2026 01:50:33.179 # +failover-end master mymaster 172.28.0.10 6379
+7:X 12 Sep 2026 01:50:33.179 # +switch-master mymaster 172.28.0.10 6379 172.28.0.6 6379
+7:X 12 Sep 2026 01:50:33.179 * +slave slave 172.28.0.10:6379 172.28.0.10 6379 @ mymaster 172.28.0.6 6379
+7:X 12 Sep 2026 01:50:33.193 * Sentinel new configuration saved on disk
+7:X 12 Sep 2026 01:50:36.225 # +sdown slave 172.28.0.10:6379 172.28.0.10 6379 @ mymaster 172.28.0.6 6379

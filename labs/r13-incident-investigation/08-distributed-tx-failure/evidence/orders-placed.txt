@@ -1,0 +1,3 @@
+{"order_id": "order-stuck1", "status": "CREATED", "outbox_event_id": "6bfa8f48-4f6e-4cb1-a31d-cc8653ce2c98", "fail_payment": false}
+{"order_id": "order-stuck2", "status": "CREATED", "outbox_event_id": "50709bf6-3d87-4f53-8006-77df9a8526fd", "fail_payment": false}
+{"order_id": "order-stuck3", "status": "CREATED", "outbox_event_id": "bd1c385a-5256-478a-936b-22884870c90e", "fail_payment": false}

@@ -1,0 +1,79 @@
+=== R14-04 RPO — CASE A: healthy async replication ===
+WROTE id=529 tag=rpoA written_at=2026-09-13 05:39:05.241322+00:00 backend_pid=481 elapsed=0.007s
+
+ERROR:  column "r14_events.tag" must appear in the GROUP BY clause or be used in an aggregate function
+LINE 1: select max(id), tag from r14_events where tag='rpoA';
+                        ^
+ERROR:  column "r14_events.tag" must appear in the GROUP BY clause or be used in an aggregate function
+LINE 1: select max(id), tag from r14_events where tag='rpoA';
+                        ^
+ id  | tag  |          written_at           
+-----+------+-------------------------------
+ 529 | rpoA | 2026-09-13 05:39:05.241322+00
+(1 row)
+
+ id  | tag  |          written_at           
+-----+------+-------------------------------
+ 529 | rpoA | 2026-09-13 05:39:05.241322+00
+(1 row)
+
+=== CASE B: engineered loss (both replicas frozen when write commits) ===
+paused patroni2 + patroni3
+WROTE id=530 tag=rpoB-lost written_at=2026-09-13 05:39:30.323652+00:00 backend_pid=482 elapsed=0.006s
+
+T0 (leader with unreplicated row 530 killed): 2026-09-13 11:09:36.135470900
+--- cluster state with 0 available replicas (both still paused) ---
+
+--- confirmed total outage with 0 available Postgres members: DB_ERROR after 3.004s: connection timeout (real, complete unavailability) ---
+unpausing patroni3 only (the designated recovery path): 2026-09-13 11:09:59.086595100
++ Cluster: demo (7684888192200712225) -----+----+-------------+-----+------------+-----+
+| Member   | Host       | Role   | State   | TL | Receive LSN | Lag | Replay LSN | Lag |
++----------+------------+--------+---------+----+-------------+-----+------------+-----+
+| patroni3 | 172.22.0.7 | Leader | running |  3 |             |     |            |     |
++----------+------------+--------+---------+----+-------------+-----+------------+-----+
+T3 (patroni3 promoted, TL 2->3): 2026-09-13 11:10:16.175996800
+--- checking for the lost row (id=530, tag=rpoB-lost) on the newly promoted leader ---
+ id  |    tag    |          written_at           
+-----+-----------+-------------------------------
+ 530 | rpoB-lost | 2026-09-13 05:39:30.323652+00
+(1 row)
+
+--- max id present on promoted leader (should be 529, not 530) ---
+ max 
+-----
+ 530
+(1 row)
+
+=== CASE B (retry) — real network partition, not docker pause ===
+root cause of Case B v1 failure: docker pause freezes CPU scheduling (cgroup freezer) but NOT the kernel's TCP receive buffer - already-in-flight WAL bytes can still be accepted into the paused replica's kernel socket buffer before pause takes full effect, and get applied on unpause. Fix: sever the actual network path instead.
+disconnected patroni1 + patroni2 from the network entirely (real network partition)
+WROTE id=562 tag=rpoB-v2-lost written_at=2026-09-13 05:41:15.637976+00:00 backend_pid=135 elapsed=0.006s
+
+ id  |     tag      
+-----+--------------
+ 562 | rpoB-v2-lost
+(1 row)
+
+T0 (leader patroni3, holding unreplicated row 562, killed): 2026-09-13 11:11:21.954038200
+reconnected patroni1+patroni2 to network at: 2026-09-13 11:11:28.213648400
++ Cluster: demo (7684888192200712225) --------+----+-------------+-----+------------+-----+
+| Member   | Host       | Role    | State     | TL | Receive LSN | Lag | Replay LSN | Lag |
++----------+------------+---------+-----------+----+-------------+-----+------------+-----+
+| patroni1 | 172.22.0.3 | Replica | streaming |  3 |   0/40B08F8 |   0 |  0/40B08F8 |   0 |
+| patroni2 | 172.22.0.4 | Replica | streaming |  3 |   0/40B08F8 |   0 |  0/40B08F8 |   0 |
+| patroni3 | 172.22.0.7 | Leader  | running   |  3 |             |     |            |     |
++----------+------------+---------+-----------+----+-------------+-----+------------+-----+
+T3 (patroni1 promoted, TL 3->4): 2026-09-13 11:11:47.977966
+--- checking for the truly-partitioned row (id=562, tag=rpoB-v2-lost) on the NEW leader ---
+ id | tag 
+----+-----
+(0 rows)
+
+--- max id on new leader (should be 561, since 562 never crossed the network partition) ---
+ max 
+-----
+ 530
+(1 row)
+
+leader=True server_addr=172.22.0.3 elapsed=0.005s
+

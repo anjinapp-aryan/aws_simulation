@@ -4,3 +4,4 @@ target/
 *.tfstate.backup
 .terraform/
 candidates/
+labs/r14-ha-dr/patroni-src/

@@ -1,0 +1,54 @@
+=== R11-02 DUAL-WRITE PROBLEM PROOF, 21:02:56 ===
+21:02:56 cutting Debezium's connection to Kafka
+{"name":"kafka","listen":"[::]:19092","upstream":"kafka:9092","enabled":false,"Logger":{},"toxics":[]}
+--- placing order WHILE Kafka is unreachable (via Debezium's path) ---
+{"order_id": "order-dualwrite1", "status": "CREATED", "outbox_event_id": "cb4a9d93-e378-48d5-ab78-df63807f37d0", "fail_payment": false}
+--- order status (should be CREATED, DB write succeeded despite Kafka being down) ---
+{
+    "id": "order-dualwrite1",
+    "status": "CONFIRMED",
+    "fail_payment": false,
+    "created_at": "2026-09-12 15:32:57.367056",
+    "updated_at": "2026-09-12 15:32:58.283207"
+}
+--- outbox row durably exists in Postgres despite Kafka outage ---
+                  id                  |   aggregateid    |     type     
+--------------------------------------+------------------+--------------
+ cb4a9d93-e378-48d5-ab78-df63807f37d0 | order-dualwrite1 | OrderCreated
+(1 row)
+
+real finding: Toxiproxy 'enabled:false' blocks NEW connections but doesn't kill Debezium's
+already-established Kafka producer connection - the first order-dualwrite1 test still
+succeeded because Debezium kept using its pre-existing connection through the disabled proxy
+(a real Toxiproxy behavioral nuance, not a bug in our lab). Fixed by restarting Debezium so
+its fresh reconnection attempt actually hits the disabled proxy.
+--- Debezium Connect REST API while Kafka path is cut (expect unreachable/unhealthy) ---
+
+--- placing order while Kafka path is genuinely cut ---
+{"order_id": "order-dualwrite2", "status": "CREATED", "outbox_event_id": "b5cb45f5-3fab-4386-8076-f169bb142268", "fail_payment": false}
+--- order status (expect still CREATED - not yet relayed) ---
+{
+    "id": "order-dualwrite2",
+    "status": "CREATED",
+    "fail_payment": false,
+    "created_at": "2026-09-12 15:33:36.056412",
+    "updated_at": "2026-09-12 15:33:36.056412"
+}
+--- outbox row durably present in Postgres despite Kafka outage ---
+                  id                  |   aggregateid    |     type     |         createdat          
+--------------------------------------+------------------+--------------+----------------------------
+ b5cb45f5-3fab-4386-8076-f169bb142268 | order-dualwrite2 | OrderCreated | 2026-09-12 15:33:36.056412
+(1 row)
+
+21:03:45 restoring Debezium's Kafka connection
+{"name":"kafka","listen":"[::]:19092","upstream":"kafka:9092","enabled":true,"Logger":{},"toxics":[]}
+waiting for Debezium Connect to reconnect...
+21:03:48 Debezium Connect REST API back up
+--- order status after recovery (should now be relayed and CONFIRMED) ---
+{
+    "id": "order-dualwrite2",
+    "status": "CONFIRMED",
+    "fail_payment": false,
+    "created_at": "2026-09-12 15:33:36.056412",
+    "updated_at": "2026-09-12 15:33:48.471695"
+}

@@ -1,0 +1,12 @@
+=== R8-04 CACHE FAILURE, 19:15:57 ===
+{"name":"cache","listen":"[::]:6379","upstream":"valkey:6379","enabled":false,"Logger":{},"toxics":[]}
+--- request during cache outage (fail-open or fail-hard? not assumed) ---
+{"order_id": "cachefail1", "value": "order-cachefail1 computed_at=2026-09-12 13:45:59.009905+00:00", "trace_id": "333a7c0ef6eb61831252b26188ca3c8a", "elapsed": 0.068}
+HTTP=200
+trace_id=333a7c0ef6eb61831252b26188ca3c8a
+  cache-lookup         error=True events=['exception']
+  checkout             error=? events=['exception', 'cache_failed_open_to_db']
+  db-query             error=? events=[]
+  queue-publish        error=? events=[]
+  consume-order        error=? events=[]
+{"name":"cache","listen":"[::]:6379","upstream":"valkey:6379","enabled":true,"Logger":{},"toxics":[]}

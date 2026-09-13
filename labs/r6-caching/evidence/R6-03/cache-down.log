@@ -1,0 +1,18 @@
+=== R6-03 CACHE FAILURE, 07:13:50 ===
+--- warm the cache first ---
+--- cut cache connectivity ---
+07:13:50 cutting cache connectivity (disabling proxy)
+{"name":"valkey","listen":"[::]:6379","upstream":"valkey-primary:6379","enabled":false,"Logger":{},"toxics":[]}
+--- generate traffic while cache is down (5 requests) ---
+DEGRADED source=db (cache error: ConnectionError: Error 111 connecting to toxiproxy:6379. Connection refused.) value=item-1 computed_at=2026-09-12 01:43:51.772169+00:00 elapsed=0.110s
+ (HTTP 200)
+DEGRADED source=db (cache error: ConnectionError: Error 111 connecting to toxiproxy:6379. Connection refused.) value=item-1 computed_at=2026-09-12 01:43:51.945480+00:00 elapsed=0.110s
+ (HTTP 200)
+DEGRADED source=db (cache error: ConnectionError: Error 111 connecting to toxiproxy:6379. Connection refused.) value=item-1 computed_at=2026-09-12 01:43:52.112531+00:00 elapsed=0.112s
+ (HTTP 200)
+DEGRADED source=db (cache error: ConnectionError: Error 111 connecting to toxiproxy:6379. Connection refused.) value=item-1 computed_at=2026-09-12 01:43:52.278825+00:00 elapsed=0.109s
+ (HTTP 200)
+DEGRADED source=db (cache error: ConnectionError: Error 111 connecting to toxiproxy:6379. Connection refused.) value=item-1 computed_at=2026-09-12 01:43:52.437767+00:00 elapsed=0.109s
+ (HTTP 200)
+--- postgres query count after (should have jumped, since every request now hits DB) ---
+[{'metric': {'__name__': 'pg_stat_database_xact_commit', 'datid': '16384', 'datname': 'appdb', 'instance': 'postgres_exporter:9187', 'job': 'postgres'}, 'value': [1789177432.587, '1395']}]

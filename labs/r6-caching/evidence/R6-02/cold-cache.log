@@ -1,0 +1,16 @@
+=== R6-02 COLD CACHE, 07:13:43 ===
+--- postgres query count before flush ---
+[{'metric': {'__name__': 'pg_stat_database_xact_commit', 'datid': '16384', 'datname': 'appdb', 'instance': 'postgres_exporter:9187', 'job': 'postgres'}, 'value': [1789177423.364, '1237']}]
+07:13:43 flushing valkey-primary
+OK
+--- 5 requests right after flush (first = MISS, rest = HIT) ---
+MISS source=db value=item-1 computed_at=2026-09-12 01:43:43.981011+00:00 elapsed=0.112s
+ (HTTP 200)
+HIT source=cache value=item-1 computed_at=2026-09-12 01:43:43.981011+00:00 elapsed=0.002s
+ (HTTP 200)
+HIT source=cache value=item-1 computed_at=2026-09-12 01:43:43.981011+00:00 elapsed=0.002s
+ (HTTP 200)
+HIT source=cache value=item-1 computed_at=2026-09-12 01:43:43.981011+00:00 elapsed=0.002s
+ (HTTP 200)
+HIT source=cache value=item-1 computed_at=2026-09-12 01:43:43.981011+00:00 elapsed=0.002s
+ (HTTP 200)

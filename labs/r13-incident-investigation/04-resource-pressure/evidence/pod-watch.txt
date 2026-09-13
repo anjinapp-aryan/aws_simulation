@@ -1,0 +1,60 @@
+--- 08:57:58 ---
+NAME                       READY   STATUS    RESTARTS   AGE   IP           NODE            NOMINATED NODE   READINESS GATES
+r10-app-76f9494cd7-5tvkk   1/1     Running   0          7s    10.244.1.3   r13-04-worker   <none>           <none>
+r10-app-76f9494cd7-qsl9d   1/1     Running   0          7s    10.244.1.2   r13-04-worker   <none>           <none>
+--- 08:58:01 ---
+NAME                       READY   STATUS    RESTARTS     AGE   IP           NODE            NOMINATED NODE   READINESS GATES
+r10-app-76f9494cd7-5tvkk   1/1     Running   1 (3s ago)   10s   10.244.1.3   r13-04-worker   <none>           <none>
+r10-app-76f9494cd7-qsl9d   1/1     Running   0            10s   10.244.1.2   r13-04-worker   <none>           <none>
+--- 08:58:04 ---
+NAME                       READY   STATUS    RESTARTS     AGE   IP           NODE            NOMINATED NODE   READINESS GATES
+r10-app-76f9494cd7-5tvkk   1/1     Running   1 (6s ago)   13s   10.244.1.3   r13-04-worker   <none>           <none>
+r10-app-76f9494cd7-qsl9d   1/1     Running   0            13s   10.244.1.2   r13-04-worker   <none>           <none>
+--- 08:58:07 ---
+NAME                       READY   STATUS    RESTARTS      AGE   IP           NODE            NOMINATED NODE   READINESS GATES
+r10-app-76f9494cd7-5tvkk   1/1     Running   1 (10s ago)   17s   10.244.1.3   r13-04-worker   <none>           <none>
+r10-app-76f9494cd7-qsl9d   1/1     Running   0             17s   10.244.1.2   r13-04-worker   <none>           <none>
+--- 08:58:11 ---
+NAME                       READY   STATUS    RESTARTS      AGE   IP           NODE            NOMINATED NODE   READINESS GATES
+r10-app-76f9494cd7-5tvkk   1/1     Running   1 (13s ago)   20s   10.244.1.3   r13-04-worker   <none>           <none>
+r10-app-76f9494cd7-qsl9d   1/1     Running   0             20s   10.244.1.2   r13-04-worker   <none>           <none>
+--- 08:58:14 ---
+NAME                       READY   STATUS    RESTARTS      AGE   IP           NODE            NOMINATED NODE   READINESS GATES
+r10-app-76f9494cd7-5tvkk   1/1     Running   1 (16s ago)   23s   10.244.1.3   r13-04-worker   <none>           <none>
+r10-app-76f9494cd7-qsl9d   1/1     Running   0             23s   10.244.1.2   r13-04-worker   <none>           <none>
+--- 08:58:17 ---
+NAME                       READY   STATUS    RESTARTS      AGE   IP           NODE            NOMINATED NODE   READINESS GATES
+r10-app-76f9494cd7-5tvkk   1/1     Running   1 (19s ago)   26s   10.244.1.3   r13-04-worker   <none>           <none>
+r10-app-76f9494cd7-qsl9d   1/1     Running   0             26s   10.244.1.2   r13-04-worker   <none>           <none>
+--- 08:58:20 ---
+NAME                       READY   STATUS    RESTARTS      AGE   IP           NODE            NOMINATED NODE   READINESS GATES
+r10-app-76f9494cd7-5tvkk   1/1     Running   1 (22s ago)   29s   10.244.1.3   r13-04-worker   <none>           <none>
+r10-app-76f9494cd7-qsl9d   1/1     Running   0             29s   10.244.1.2   r13-04-worker   <none>           <none>
+--- 08:58:23 ---
+NAME                       READY   STATUS    RESTARTS      AGE   IP           NODE            NOMINATED NODE   READINESS GATES
+r10-app-76f9494cd7-5tvkk   1/1     Running   1 (25s ago)   32s   10.244.1.3   r13-04-worker   <none>           <none>
+r10-app-76f9494cd7-qsl9d   1/1     Running   0             32s   10.244.1.2   r13-04-worker   <none>           <none>
+--- 08:58:27 ---
+NAME                       READY   STATUS    RESTARTS      AGE   IP           NODE            NOMINATED NODE   READINESS GATES
+r10-app-76f9494cd7-5tvkk   1/1     Running   1 (29s ago)   36s   10.244.1.3   r13-04-worker   <none>           <none>
+r10-app-76f9494cd7-qsl9d   1/1     Running   0             36s   10.244.1.2   r13-04-worker   <none>           <none>
+--- 08:58:30 ---
+NAME                       READY   STATUS    RESTARTS      AGE   IP           NODE            NOMINATED NODE   READINESS GATES
+r10-app-76f9494cd7-5tvkk   1/1     Running   1 (32s ago)   39s   10.244.1.3   r13-04-worker   <none>           <none>
+r10-app-76f9494cd7-qsl9d   1/1     Running   0             39s   10.244.1.2   r13-04-worker   <none>           <none>
+--- 08:58:33 ---
+NAME                       READY   STATUS    RESTARTS      AGE   IP           NODE            NOMINATED NODE   READINESS GATES
+r10-app-76f9494cd7-5tvkk   1/1     Running   1 (35s ago)   42s   10.244.1.3   r13-04-worker   <none>           <none>
+r10-app-76f9494cd7-qsl9d   1/1     Running   0             42s   10.244.1.2   r13-04-worker   <none>           <none>
+--- 08:58:36 ---
+NAME                       READY   STATUS    RESTARTS      AGE   IP           NODE            NOMINATED NODE   READINESS GATES
+r10-app-76f9494cd7-5tvkk   1/1     Running   1 (38s ago)   45s   10.244.1.3   r13-04-worker   <none>           <none>
+r10-app-76f9494cd7-qsl9d   1/1     Running   0             45s   10.244.1.2   r13-04-worker   <none>           <none>
+--- 08:58:39 ---
+NAME                       READY   STATUS    RESTARTS      AGE   IP           NODE            NOMINATED NODE   READINESS GATES
+r10-app-76f9494cd7-5tvkk   1/1     Running   1 (41s ago)   48s   10.244.1.3   r13-04-worker   <none>           <none>
+r10-app-76f9494cd7-qsl9d   1/1     Running   0             48s   10.244.1.2   r13-04-worker   <none>           <none>
+--- 08:58:42 ---
+NAME                       READY   STATUS    RESTARTS      AGE   IP           NODE            NOMINATED NODE   READINESS GATES
+r10-app-76f9494cd7-5tvkk   1/1     Running   1 (44s ago)   51s   10.244.1.3   r13-04-worker   <none>           <none>
+r10-app-76f9494cd7-qsl9d   1/1     Running   0             51s   10.244.1.2   r13-04-worker   <none>           <none>

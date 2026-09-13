@@ -1,0 +1,10 @@
+=== R11-04 SAGA COMPENSATION, 21:05:36 ===
+{"order_id": "order-fail1", "status": "CREATED", "outbox_event_id": "c33f3125-c1f0-4ffe-b449-71964e6b0882", "fail_payment": true}
+--- order status (expect CANCELLED - real compensation) ---
+{
+    "id": "order-fail1",
+    "status": "CANCELLED",
+    "fail_payment": true,
+    "created_at": "2026-09-12 15:35:36.764680",
+    "updated_at": "2026-09-12 15:35:37.831530"
+}

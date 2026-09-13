@@ -1,0 +1,39 @@
+# R14 additions on top of the OFFICIAL, unmodified patroni/patroni demo
+# compose (patroni-src/docker-compose.yml) - joins its real "demo" network
+# rather than editing that file, so the reused project stays byte-for-byte
+# official. Reuses R4's exact minimal-server app pattern (adapted for
+# HAProxy/Patroni instead of PgBouncer) and R4/R11's pgweb/Dozzle pattern.
+version: "3.8"
+services:
+  app:
+    build: ./app
+    environment:
+      DB_HOST: haproxy
+      DB_PORT: "5000"
+      DB_NAME: postgres
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+    ports:
+      - "58500:8000"
+    networks: [demo]
+
+  pgweb:
+    image: sosedoff/pgweb:latest
+    environment:
+      PGWEB_DATABASE_URL: "postgres://postgres:postgres@haproxy:5000/postgres?sslmode=disable"
+    ports:
+      - "58501:8081"
+    networks: [demo]
+
+  dozzle:
+    image: amir20/dozzle:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    ports:
+      - "58502:8080"
+    networks: [demo]
+
+networks:
+  demo:
+    external: true
+    name: patroni-src_demo

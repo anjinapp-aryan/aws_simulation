@@ -1,0 +1,22 @@
+=== R9-06 retry: poll cluster health CONCURRENTLY while firing requests, 19:34:20 ===
+19:34:21 app_cluster::172.22.0.9:8000::health_flags::healthy
+19:34:22 app_cluster::172.22.0.9:8000::health_flags::healthy
+19:34:24 app_cluster::172.22.0.9:8000::health_flags::healthy
+19:34:25 app_cluster::172.22.0.9:8000::health_flags::healthy
+19:34:26 app_cluster::172.22.0.9:8000::health_flags::healthy
+19:34:27 app_cluster::172.22.0.9:8000::health_flags::healthy
+19:34:28 app_cluster::172.22.0.9:8000::health_flags::healthy
+19:34:29 app_cluster::172.22.0.9:8000::health_flags::healthy
+19:34:30 app_cluster::172.22.0.9:8000::health_flags::healthy
+19:34:32 app_cluster::172.22.0.9:8000::health_flags::healthy
+=== R9-06 real root cause (confirmed via Envoy's own counters, not guessed) ===
+ejections_enforced_total incremented 3->5 during the test - Envoy DID detect and eject the host.
+But health_flags in /clusters stayed 'healthy' and lb_healthy_panic incremented (62 occurrences).
+ROOT CAUSE: app_cluster has exactly ONE host. Ejecting it would leave 0% healthy hosts, which is
+below Envoy's default panic threshold (50%). Envoy's panic-routing safety mechanism then routes
+to ALL hosts regardless of ejection state, rather than serving zero traffic.
+REAL LESSON: outlier detection with a single-instance backend is observable via stats
+(ejections_enforced_total, lb_healthy_panic) but does NOT actually remove traffic from that host -
+you need >=2 replicas for outlier ejection to have a real traffic-shifting effect. This directly
+maps to a real AWS best practice: an ALB/App Mesh target group needs multiple healthy targets
+for unhealthy-target removal to matter operationally.

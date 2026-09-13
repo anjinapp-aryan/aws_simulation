@@ -1,0 +1,7 @@
+07:21:16 restarting the old primary (Sentinel should reconfigure it as a replica)
+ Container r6-caching-valkey-primary-1 Starting 
+ Container r6-caching-valkey-primary-1 Started 
+07:21:20 Sentinel reports current master: 172.28.0.6
+07:21:20 repointing Toxiproxy's real upstream at the current master
+{"name":"valkey","listen":"[::]:6379","upstream":"172.28.0.6:6379","enabled":true,"Logger":{},"toxics":[]}
+fix applied - app's cache endpoint now points at the real current master

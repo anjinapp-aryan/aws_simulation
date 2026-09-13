@@ -1,0 +1,54 @@
+=== R10-08 SERVICE DISCOVERY, 20:24:21 ===
+--- continuous traffic while scaling 2 -> 4 -> 1 replicas ---
+20:24:21.470 Hello from pod=r10-app-66fd5b64bf-whzsn version=v2 time=1789224861.417
+20:24:22.118 Hello from pod=r10-app-66fd5b64bf-7bqr4 version=v2 time=1789224862.069
+20:24:22.769 Hello from pod=r10-app-66fd5b64bf-7bqr4 version=v2 time=1789224862.719
+20:24:23.429 Hello from pod=r10-app-66fd5b64bf-7bqr4 version=v2 time=1789224863.382
+20:24:24.077 Hello from pod=r10-app-66fd5b64bf-whzsn version=v2 time=1789224864.028
+20:24:24.745 Hello from pod=r10-app-66fd5b64bf-7bqr4 version=v2 time=1789224864.694
+20:24:25.384 Hello from pod=r10-app-66fd5b64bf-whzsn version=v2 time=1789224865.331
+20:24:26.028 Hello from pod=r10-app-66fd5b64bf-whzsn version=v2 time=1789224865.979
+20:24:26.711 Hello from pod=r10-app-66fd5b64bf-whzsn version=v2 time=1789224866.657
+20:24:27.357 Hello from pod=r10-app-66fd5b64bf-whzsn version=v2 time=1789224867.311
+20:24:28.041 Hello from pod=r10-app-66fd5b64bf-whzsn version=v2 time=1789224867.982
+20:24:28.694 Hello from pod=r10-app-66fd5b64bf-7bqr4 version=v2 time=1789224868.649
+20:24:29.344 Hello from pod=r10-app-66fd5b64bf-whzsn version=v2 time=1789224869.296
+20:24:29.993 Hello from pod=r10-app-66fd5b64bf-whzsn version=v2 time=1789224869.944
+20:24:30.655 Hello from pod=r10-app-66fd5b64bf-5qqtf version=v2 time=1789224870.608
+20:24:31.307 Hello from pod=r10-app-66fd5b64bf-whzsn version=v2 time=1789224871.255
+20:24:31.965 Hello from pod=r10-app-66fd5b64bf-7bqr4 version=v2 time=1789224871.915
+20:24:32.632 Hello from pod=r10-app-66fd5b64bf-7bqr4 version=v2 time=1789224872.581
+20:24:33.298 Hello from pod=r10-app-66fd5b64bf-7bqr4 version=v2 time=1789224873.249
+20:24:33.958 Hello from pod=r10-app-66fd5b64bf-7bqr4 version=v2 time=1789224873.912
+20:24:34.629 Hello from pod=r10-app-66fd5b64bf-7bqr4 version=v2 time=1789224874.570
+20:24:35.282 Hello from pod=r10-app-66fd5b64bf-t4xmp version=v2 time=1789224875.238
+20:24:35.945 Hello from pod=r10-app-66fd5b64bf-7bqr4 version=v2 time=1789224875.896
+20:24:36.611 Hello from pod=r10-app-66fd5b64bf-t4xmp version=v2 time=1789224876.559
+20:24:37.274 Hello from pod=r10-app-66fd5b64bf-t4xmp version=v2 time=1789224877.224
+20:24:37.941 Hello from pod=r10-app-66fd5b64bf-7bqr4 version=v2 time=1789224877.884
+20:24:38.584 Hello from pod=r10-app-66fd5b64bf-7bqr4 version=v2 time=1789224878.536
+20:24:39.247 Hello from pod=r10-app-66fd5b64bf-7bqr4 version=v2 time=1789224879.197
+20:24:39.911 Hello from pod=r10-app-66fd5b64bf-t4xmp version=v2 time=1789224879.861
+20:24:40.577 Hello from pod=r10-app-66fd5b64bf-7bqr4 version=v2 time=1789224880.526
+20:24:41.236 Hello from pod=r10-app-66fd5b64bf-t4xmp version=v2 time=1789224881.188
+20:24:41.882 Hello from pod=r10-app-66fd5b64bf-7bqr4 version=v2 time=1789224881.837
+20:24:42.546 Hello from pod=r10-app-66fd5b64bf-t4xmp version=v2 time=1789224882.499
+20:24:43.197 Hello from pod=r10-app-66fd5b64bf-t4xmp version=v2 time=1789224883.149
+20:24:43.843 Hello from pod=r10-app-66fd5b64bf-t4xmp version=v2 time=1789224883.799
+20:24:44.493 Hello from pod=r10-app-66fd5b64bf-t4xmp version=v2 time=1789224884.445
+20:24:45.153 Hello from pod=r10-app-66fd5b64bf-t4xmp version=v2 time=1789224885.105
+20:24:45.803 Hello from pod=r10-app-66fd5b64bf-t4xmp version=v2 time=1789224885.758
+20:24:46.452 Hello from pod=r10-app-66fd5b64bf-t4xmp version=v2 time=1789224886.403
+20:24:47.114 Hello from pod=r10-app-66fd5b64bf-7bqr4 version=v2 time=1789224887.067
+
+=== real finding: manual 'kubectl scale --replicas=1' was overridden back to 2 ===
+HPA (minReplicas=2) continuously reconciles and wins over a one-off manual kubectl scale -
+the endpoints list never dropped to 1 because the HPA controller's next sync cycle re-asserted
+its desired replica count. Real, valuable lesson: HPA and manual scaling are not independent;
+HPA will fight and override manual scaling on every reconcile loop while it's active.
+
+--- distinct pods that actually served traffic (real load balancing across changing endpoints) ---
+      1 pod=r10-app-66fd5b64bf-5qqtf
+     17 pod=r10-app-66fd5b64bf-7bqr4
+     12 pod=r10-app-66fd5b64bf-t4xmp
+     10 pod=r10-app-66fd5b64bf-whzsn

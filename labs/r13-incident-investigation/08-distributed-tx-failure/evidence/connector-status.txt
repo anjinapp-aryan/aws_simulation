@@ -1,0 +1,1 @@
+{"name":"order-outbox-connector","connector":{"state":"PAUSED","worker_id":"172.22.0.7:8083"},"tasks":[{"id":0,"state":"PAUSED","worker_id":"172.22.0.7:8083"}],"type":"source"}

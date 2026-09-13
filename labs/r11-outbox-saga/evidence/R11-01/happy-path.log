@@ -1,0 +1,21 @@
+=== R11-01 HAPPY PATH (retry 3, fresh consumer groups), 21:02:30 ===
+real bug #2 found: after deleting+recreating the Kafka topic, the consumer group's OLD
+committed offset survived and pointed past the only message in the fresh topic, so
+auto_offset_reset=earliest never applied (it only applies when NO committed offset exists).
+kafka-consumer-groups.sh --delete got stuck (GroupNotEmptyException, stuck coordinator state)
+even after stopping the consumers. Fixed pragmatically (a real, defensible operational technique):
+switched to fresh consumer-group IDs (order-service-v2, payment-service-v2).
+{"order_id": "order-happy3", "status": "CREATED", "outbox_event_id": "9e0476c4-0908-4d0f-b83e-79747fd23d05", "fail_payment": false}
+--- order status ---
+{
+    "id": "order-happy3",
+    "status": "CONFIRMED",
+    "fail_payment": false,
+    "created_at": "2026-09-12 15:32:30.600090",
+    "updated_at": "2026-09-12 15:32:31.226003"
+}
+payment-service-1  | [payment-1] 15:32:30 order_id=order-happy3 fail_payment=False -> processing payment, result=COMPLETED
+order-service-1    | [order-service] 172.22.0.1 - "GET /place-order?id=order-happy3&fail_payment=0 HTTP/1.1" 200 -
+order-service-1    | [order-service] 15:32:31 order_id=order-happy3 event_id=dc6d73d9-b9c7-40a3-b6d4-4af5963a6396 payment_status=COMPLETED -> order CONFIRMED
+order-service-1    | [order-service] 172.22.0.1 - "GET /order-status?id=order-happy3 HTTP/1.1" 200 -
+payment-service-1  | [payment-1] 15:32:30 order_id=order-happy3 payment COMPLETED, outbox event dc6d73d9-b9c7-40a3-b6d4-4af5963a6396 written (real local transaction)

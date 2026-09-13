@@ -1,0 +1,12 @@
+=== BASELINE 08:45:46 CREATED->CONFIRMED in ~1.2s ===
+08:45:46 [inject] adding 800ms latency toxic to order-service's OWN DB path only (order-db proxy); Debezium's direct connection to order-db is untouched
+{"attributes":{"latency":800,"jitter":100},"name":"latency","type":"latency","stream":"downstream","toxicity":1}
+08:45:46 [inject] placing order-fault1
+{"order_id": "order-fault1", "status": "CREATED", "outbox_event_id": "76dd9f26-967f-4eb5-97b4-9c9ed83c9104", "fail_payment": false}
+08:45:53 [inject] polling order-status and payment-db every 1s for 20s
+08:47:53 [inject] done, see evidence/poll.txt
+08:48:31 [fix] removing latency toxic from order-service's DB path
+
+08:48:32 [fix] verifying recovery: placing order-fix1
+{"order_id": "order-fix1", "status": "CREATED", "outbox_event_id": "b9d80cb7-b91d-4ae4-ba97-b3c619428f36", "fail_payment": false}
+{"id": "order-fix1", "status": "CONFIRMED", "fail_payment": false, "created_at": "2026-09-13 03:18:32.067868", "updated_at": "2026-09-13 03:18:33.395009"}

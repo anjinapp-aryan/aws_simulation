@@ -1,0 +1,55 @@
+=== R11-09 END-TO-END VISUALIZATION WALKTHROUGH, 21:10:01 ===
+--- kafka-ui: real topic list ---
+--- kafka-ui: real consumer groups ---
+--- kafka-ui: real Debezium Kafka Connect integration ---
+[
+    {
+        "name": "debezium",
+        "address": "http://debezium:8083",
+        "connectorsCount": null,
+        "failedConnectorsCount": null,
+        "tasksCount": null,
+        "failedTasksCount": null,
+        "version": "3.8.0",
+        "commit": null,
+        "clusterId": null,
+        "consumerNamePattern": "connect-%s"
+    }
+]
+--- kafka-ui real topics (paginated response, correctly parsed) ---
+ - debezium_configs partitions: 1
+ - debezium_offsets partitions: 25
+ - debezium_status partitions: 5
+ - outbox.event.Order partitions: 1
+ - outbox.event.Payment partitions: 1
+
+--- CAPSTONE: one order's real full lifecycle, all 3 data sources agree ---
+{"order_id": "order-e2e-walkthrough", "status": "CREATED", "outbox_event_id": "d11d3449-798f-4754-b553-e9a04faea37b", "fail_payment": false}
+1) order-db (order-service's own DB):
+          id           |  status   
+-----------------------+-----------
+ order-e2e-walkthrough | CONFIRMED
+(1 row)
+
+2) order-db outbox table (source of the CDC event):
+      aggregateid      |     type     
+-----------------------+--------------
+ order-e2e-walkthrough | OrderCreated
+(1 row)
+
+3) Kafka topic outbox.event.Order (real CDC-relayed message):
+"order-e2e-walkthrough"	{"event_id":"d11d3449-798f-4754-b553-e9a04faea37b","order_id":"order-e2e-walkthrough","fail_payment":false}
+4) payment-db (payment-service's own DB, independently owned):
+            id             |       order_id        |  status   
+---------------------------+-----------------------+-----------
+ pay-order-e2e-walkthrough | order-e2e-walkthrough | COMPLETED
+(1 row)
+
+5) Kafka topic outbox.event.Payment (the return leg):
+"order-e2e-walkthrough"	{"status":"COMPLETED","event_id":"643d1cfa-56be-405a-8b0e-395d44491455","order_id":"order-e2e-walkthrough"}
+6) order-db final Saga state (confirmed by the return leg):
+          id           |  status   |        created_at         |         updated_at         
+-----------------------+-----------+---------------------------+----------------------------
+ order-e2e-walkthrough | CONFIRMED | 2026-09-12 15:40:14.52765 | 2026-09-12 15:40:15.387194
+(1 row)
+

@@ -1,0 +1,4 @@
+=== R8-07 ERROR TRACE, 19:17:21 ===
+{"error": "simulated business logic failure", "trace_id": "31e098ca6c2e11e63cdbe198a5d642c9", "elapsed": 0.0}
+HTTP=500
+  checkout     error=True status=ERROR desc=simulated business logic failure

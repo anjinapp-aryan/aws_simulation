@@ -1,0 +1,9 @@
+=== BASELINE 08:39:43 ===
+08:40:51 [fix] removing timeout toxic from app2's DB path (db2 proxy)
+
+08:40:51 [fix] waiting for Envoy's next health/outlier check cycle...
+08:41:03 [fix] verifying recovery (20 requests)
+     20 200
+08:41:05 [fix] final cluster health:
+app_cluster::172.22.0.10:8000::health_flags::healthy
+app_cluster::172.22.0.9:8000::health_flags::healthy

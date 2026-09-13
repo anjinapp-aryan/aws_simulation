@@ -1,0 +1,16 @@
+=== R8-08 TRACE + METRIC + LOG CORRELATION, 19:17:36 ===
+scenario: 'something is slow' - investigate like a production on-call engineer
+{"attributes":{"latency":800,"jitter":50},"name":"latency","type":"latency","stream":"downstream","toxicity":1}
+1. SYMPTOM (client observation): {"order_id": "corr1", "value": "order-corr1 computed_at=2026-09-12 13:47:40.169060+00:00", "trace_id": "7d79172df7a6789c1a2461de38535d73", "elapsed": 4.103}
+HTTP=200
+2. TRACE (Jaeger) - which span is slow?
+   cache-lookup    duration_us=3045
+   consume-order   duration_us=50441
+   queue-publish   duration_us=7801
+   db-query        duration_us=4091995
+   checkout        duration_us=4103364
+3. METRIC (Prometheus) - real Postgres active connections at the time
+   [('active', '0'), ('disabled', '0'), ('fastpath function call', '0'), ('idle in transaction', '0'), ('idle in transaction (aborted)', '0'), ('active', '0'), ('disabled', '0'), ('fastpath function call', '0'), ('idle', '0'), ('idle in transaction', '0'), ('idle in transaction (aborted)', '0'), ('active', '0'), ('disabled', '0'), ('fastpath function call', '0'), ('idle', '0'), ('idle in transaction', '0'), ('idle in transaction (aborted)', '0'), ('active', '0'), ('disabled', '0'), ('fastpath function call', '0'), ('idle', '0'), ('idle in transaction', '0'), ('idle in transaction (aborted)', '0'), ('idle', '1')]
+4. LOG (app container stdout, correlated by order_id=corr1)
+app-1  | [app] 172.22.0.14 - "GET /checkout?id=corr1 HTTP/1.1" 200 -
+

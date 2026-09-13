@@ -1,0 +1,147 @@
+# R8 - Distributed tracing simulation, $0, entirely local.
+# Reused unmodified: traefik:v3.1 (R2/R3/R5/R6/R7 file-provider pattern),
+# postgres:16-alpine, edoburu/pgbouncer, prometheuscommunity/postgres-exporter
+# (R4 config), valkey/valkey:8-alpine (R6 config, single node), rabbitmq:4-
+# management-alpine (R7 config), ghcr.io/shopify/toxiproxy (R4-R7 pattern),
+# prom/prometheus, grafana/grafana, amir20/dozzle.
+# NEW: jaegertracing/all-in-one (real tracing backend + real UI, Apache-2.0).
+# Adapted: app/server.py, consumer/consumer.py - existing R4/R6/R7 pattern +
+# real OpenTelemetry SDK instrumentation (~90 lines added total).
+version: "3.8"
+
+services:
+  traefik:
+    image: traefik:v3.1
+    command:
+      - "--api.insecure=true"
+      - "--providers.file.filename=/etc/traefik/dynamic.yml"
+      - "--providers.file.watch=true"
+      - "--entrypoints.web.address=:80"
+      - "--log.level=INFO"
+      - "--accesslog=true"
+    ports:
+      - "57080:80"
+      - "57081:8080"
+    volumes:
+      - ./traefik-dynamic.yml:/etc/traefik/dynamic.yml:ro
+    networks: [r8net]
+    depends_on: [app]
+
+  jaeger:
+    image: jaegertracing/all-in-one:1.60
+    environment:
+      COLLECTOR_OTLP_ENABLED: "true"
+    ports:
+      - "57686:16686"   # Jaeger UI
+    networks: [r8net]
+
+  app:
+    build: ./app
+    environment:
+      DB_HOST: toxiproxy
+      DB_PORT: "6432"
+      DB_NAME: appdb
+      DB_USER: appuser
+      DB_PASSWORD: apppass
+      CACHE_HOST: toxiproxy
+      CACHE_PORT: "5779"
+      RABBIT_HOST: rabbitmq
+      RABBIT_PORT: "5672"
+      OTLP_ENDPOINT: "http://jaeger:4318/v1/traces"
+      SAMPLE_RATIO: "${SAMPLE_RATIO:-1.0}"
+      PYTHONUNBUFFERED: "1"
+    ports:
+      - "57000:8000"
+    depends_on: [toxiproxy, jaeger, rabbitmq]
+    networks: [r8net]
+
+  consumer:
+    build: ./consumer
+    environment:
+      RABBIT_HOST: rabbitmq
+      RABBIT_PORT: "5672"
+      OTLP_ENDPOINT: "http://jaeger:4318/v1/traces"
+      PYTHONUNBUFFERED: "1"
+    depends_on: [rabbitmq, jaeger]
+    restart: always
+    networks: [r8net]
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: appdb
+      POSTGRES_USER: appuser
+      POSTGRES_PASSWORD: apppass
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U appuser -d appdb"]
+      interval: 2s
+      timeout: 2s
+      retries: 15
+    networks: [r8net]
+
+  pgbouncer:
+    image: edoburu/pgbouncer:latest
+    volumes:
+      - ./pgbouncer/pgbouncer.ini:/etc/pgbouncer/pgbouncer.ini:ro
+      - ./pgbouncer/userlist.txt:/etc/pgbouncer/userlist.txt:ro
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks: [r8net]
+
+  postgres_exporter:
+    image: prometheuscommunity/postgres-exporter:latest
+    environment:
+      DATA_SOURCE_NAME: "postgresql://appuser:apppass@postgres:5432/appdb?sslmode=disable"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks: [r8net]
+
+  valkey:
+    image: valkey/valkey:8-alpine
+    networks: [r8net]
+
+  rabbitmq:
+    image: rabbitmq:4-management-alpine
+    ports:
+      - "57672:15672"
+    networks: [r8net]
+
+  toxiproxy:
+    image: ghcr.io/shopify/toxiproxy:2.9.0
+    ports:
+      - "57474:8474"
+    depends_on: [pgbouncer, valkey]
+    networks: [r8net]
+
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    ports:
+      - "57090:9090"
+    networks: [r8net]
+
+  grafana:
+    image: grafana/grafana:latest
+    environment:
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: "Admin"
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+    ports:
+      - "57300:3000"
+    networks: [r8net]
+
+  dozzle:
+    image: amir20/dozzle:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    ports:
+      - "57888:8080"
+    networks: [r8net]
+
+networks:
+  r8net:
+    driver: bridge

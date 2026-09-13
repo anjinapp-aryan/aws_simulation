@@ -1,0 +1,25 @@
+=== R9-08 APPLICATION BREAKER vs ENVOY - comparison from ACTUAL experiments already run ===
+
+Where does failure get detected?
+  App breaker: inside the app process itself, per-call, after fail_max consecutive real DB exceptions (R9-03: 3 failures observed)
+  Envoy: at the proxy, per-request, watching HTTP status codes only (consecutive_5xx=3, confirmed via ejections_enforced_total incrementing in R9-06)
+
+Where does traffic stop?
+  App breaker: stops BEFORE attempting the DB connection at all once open (R9-03: 0.002s fail-fast, confirmed)
+  Envoy: with a single-host cluster, does NOT actually stop traffic due to panic-threshold routing (R9-06 real finding, lb_healthy_panic=62) - needs >=2 replicas to matter
+
+What does the application know?
+  App breaker: exact failure reason (real psycopg2 exception), exposed via /breaker-status
+  Envoy: nothing about WHY the app is failing, only that it returned 5xx
+
+What happens to latency?
+  App breaker: dramatic real improvement once open, 3.0s -> 0.002s (R9-03)
+  Envoy (this single-host config): no improvement, panic routing still sends every request to the failing host (R9-06)
+
+What happens to dependency load?
+  App breaker: real DB connection attempts stop entirely once open
+  Envoy (this config): does NOT reduce backend load with only one host
+
+What happens during recovery?
+  App breaker: real HALF-OPEN probe after reset_timeout, one real test call (R9-04)
+  Envoy: base_ejection_time-based re-inclusion, but was already receiving traffic throughout due to panic mode (R9-07)

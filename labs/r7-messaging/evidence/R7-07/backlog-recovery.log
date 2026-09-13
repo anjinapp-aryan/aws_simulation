@@ -1,0 +1,14 @@
+=== R7-07 BACKLOG RECOVERY, 18:43:25 ===
+18:43:26 consumer stopped
+--- producing 30 messages while consumer down ---
+backlog before recovery: ready= 30
+18:44:01 consumer started
+polling drain...
+t+2s queue depth: 30
+t+3s queue depth: 30
+t+4s queue depth: 30
+t+5s queue depth: 30
+t+6s queue depth: 30
+t+8s queue depth: 30
+t+9s queue depth: 30
+t+10s queue depth: 0

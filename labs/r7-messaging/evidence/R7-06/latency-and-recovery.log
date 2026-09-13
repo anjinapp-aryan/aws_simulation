@@ -1,0 +1,17 @@
+=== R7-06 LATENCY, 18:42:50 ===
+18:42:50 injecting 1000ms RabbitMQ latency
+{"attributes":{"latency":1000,"jitter":100},"name":"latency","type":"latency","stream":"downstream","toxicity":1}
+--- publish with 1000ms latency injected ---
+ Container r7-messaging-rabbitmq-1 Running 
+ Container r7-messaging-toxiproxy-1 Running 
+ Container r7-messaging-producer-run-049f2c7745a2 Creating 
+ Container r7-messaging-producer-run-049f2c7745a2 Created 
+published id=net-test-3 type=normal seq=None
+18:42:59 restoring RabbitMQ connectivity
+{"name":"rabbitmq","listen":"[::]:5672","upstream":"rabbitmq:5672","enabled":true,"Logger":{},"toxics":[]}
+--- verify recovered: publish should be fast again ---
+ Container r7-messaging-rabbitmq-1 Running 
+ Container r7-messaging-toxiproxy-1 Running 
+ Container r7-messaging-producer-run-50cce6580688 Creating 
+ Container r7-messaging-producer-run-50cce6580688 Created 
+published id=net-test-4 type=normal seq=None

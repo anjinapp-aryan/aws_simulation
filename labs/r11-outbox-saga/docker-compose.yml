@@ -1,0 +1,150 @@
+# R11 - Transactional Outbox + CDC + Saga, $0, entirely local.
+# Reused unmodified: postgres:16-alpine (x2, real wal_level=logical for CDC),
+# apache/kafka (official, KRaft mode, real broker), debezium/connect (official,
+# real WAL-based CDC engine + the real, official EventRouter outbox SMT -
+# not a custom CDC implementation), kafbat/kafka-ui (real topic/consumer-group
+# browser, the actively-maintained continuation of provectus/kafka-ui), pgweb
+# (R4 pattern, x2), ghcr.io/shopify/toxiproxy (R4-R10 pattern).
+# Adapted: order-service/payment-service (~110+70 lines) - existing minimal-
+# server pattern + the outbox-table write + a Kafka consumer using the
+# official kafka-python client. Saga compensation logic is the one piece
+# genuinely BUILT (justified in R11/REUSE-AUDIT.md - inherently business-
+# specific, no generic library fits this minimal-app pattern).
+version: "3.8"
+
+services:
+  kafka:
+    image: apache/kafka:3.8.0
+    environment:
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093,EXTERNAL://0.0.0.0:9094
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,EXTERNAL://localhost:55092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:9093
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      CLUSTER_ID: r11kafkaclusterid1
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+    ports:
+      - "55092:9094"
+    networks: [r11net]
+
+  kafka-ui:
+    image: ghcr.io/kafbat/kafka-ui:latest
+    environment:
+      KAFKA_CLUSTERS_0_NAME: r11
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9092
+      KAFKA_CLUSTERS_0_KAFKACONNECT_0_NAME: debezium
+      KAFKA_CLUSTERS_0_KAFKACONNECT_0_ADDRESS: http://debezium:8083
+    ports:
+      - "55080:8080"
+    depends_on: [kafka]
+    networks: [r11net]
+
+  order-db:
+    image: postgres:16-alpine
+    command: ["postgres", "-c", "wal_level=logical"]
+    environment:
+      POSTGRES_DB: orderdb
+      POSTGRES_USER: appuser
+      POSTGRES_PASSWORD: apppass
+    volumes:
+      - ./order-db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U appuser -d orderdb"]
+      interval: 2s
+      timeout: 2s
+      retries: 15
+    networks: [r11net]
+
+  payment-db:
+    image: postgres:16-alpine
+    command: ["postgres", "-c", "wal_level=logical"]
+    environment:
+      POSTGRES_DB: paymentdb
+      POSTGRES_USER: appuser
+      POSTGRES_PASSWORD: apppass
+    volumes:
+      - ./payment-db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U appuser -d paymentdb"]
+      interval: 2s
+      timeout: 2s
+      retries: 15
+    networks: [r11net]
+
+  toxiproxy:
+    image: ghcr.io/shopify/toxiproxy:2.9.0
+    ports:
+      - "55474:8474"
+    depends_on: [kafka]
+    networks: [r11net]
+
+  debezium:
+    image: debezium/connect:3.0.0.Final
+    environment:
+      # Routed through Toxiproxy so we can cut/slow Debezium's real
+      # Kafka-publish path independently of the app services - this is
+      # the exact hook R11-02/R11-03 need (the app never talks to Kafka
+      # directly; Debezium is the only real producer in this system).
+      BOOTSTRAP_SERVERS: toxiproxy:19092
+      GROUP_ID: debezium-connect
+      CONFIG_STORAGE_TOPIC: debezium_configs
+      OFFSET_STORAGE_TOPIC: debezium_offsets
+      STATUS_STORAGE_TOPIC: debezium_status
+    ports:
+      - "55083:8083"
+    depends_on: [kafka, order-db, payment-db]
+    networks: [r11net]
+
+  order-service:
+    build: ./order-service
+    environment:
+      DB_HOST: order-db
+      DB_NAME: orderdb
+      DB_USER: appuser
+      DB_PASSWORD: apppass
+      KAFKA_BOOTSTRAP: kafka:9092
+      PYTHONUNBUFFERED: "1"
+    ports:
+      - "55000:8000"
+    depends_on: [kafka, order-db]
+    networks: [r11net]
+
+  payment-service:
+    build: ./payment-service
+    environment:
+      DB_HOST: payment-db
+      DB_NAME: paymentdb
+      DB_USER: appuser
+      DB_PASSWORD: apppass
+      KAFKA_BOOTSTRAP: kafka:9092
+      CONSUMER_ID: payment-1
+      PYTHONUNBUFFERED: "1"
+    depends_on: [kafka, payment-db]
+    restart: always
+    networks: [r11net]
+
+  pgweb-order:
+    image: sosedoff/pgweb:latest
+    environment:
+      PGWEB_DATABASE_URL: "postgres://appuser:apppass@order-db:5432/orderdb?sslmode=disable"
+    ports:
+      - "55081:8081"
+    depends_on: [order-db]
+    networks: [r11net]
+
+  pgweb-payment:
+    image: sosedoff/pgweb:latest
+    environment:
+      PGWEB_DATABASE_URL: "postgres://appuser:apppass@payment-db:5432/paymentdb?sslmode=disable"
+    ports:
+      - "55082:8081"
+    depends_on: [payment-db]
+    networks: [r11net]
+
+networks:
+  r11net:
+    driver: bridge
