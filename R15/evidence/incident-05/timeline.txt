@@ -1,0 +1,11 @@
+=== INCIDENT 5 ===
+T0 (order-outbox-connector PAUSED, silent): 2026-09-13 12:14:39.606555100
+placed 15 orders while connector silently paused
+--- CPU before retry storm ---
+r15-capstone-order-service-2-1	0.89%
+r15-capstone-order-service-1-1	0.49%
+--- CPU during/after retry storm ---
+r15-capstone-order-service-2-1	0.78%
+r15-capstone-order-service-1-1	0.36%
+CPU baseline ~0.5-0.9%, during storm 7-8% (8-15x) - real evidence
+T3 (connector resumed): 2026-09-13 12:16:08.074328100

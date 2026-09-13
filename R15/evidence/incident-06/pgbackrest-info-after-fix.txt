@@ -1,0 +1,12 @@
+stanza: demo
+    status: ok
+    cipher: none
+
+    db (current)
+        wal archive min/max (17): 000000030000000000000004/000000030000000000000007
+
+        full backup: 20260913-064934F
+            timestamp start/stop: 2026-09-13 06:49:34+00 / 2026-09-13 06:49:36+00
+            wal start/stop: 000000030000000000000007 / 000000030000000000000007
+            database size: 22.5MB, database backup size: 22.5MB
+            repo1: backup set size: 2.9MB, backup size: 2.9MB
