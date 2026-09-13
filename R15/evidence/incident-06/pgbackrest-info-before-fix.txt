@@ -1,0 +1,6 @@
+stanza: demo
+    status: error (no valid backups)
+    cipher: none
+
+    db (current)
+        wal archive min/max (17): none present

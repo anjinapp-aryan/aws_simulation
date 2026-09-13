@@ -1,0 +1,184 @@
+# R15 - Architect/Production Chaos Capstone. Composes ALREADY-PROVEN R1-R14
+# components into one standing multi-subsystem system (per R15/ARCHITECTURE.md
+# - no new fault-injection tool, no new visualization, no kind/Cilium).
+# Reused unmodified: apache/kafka, kafbat/kafka-ui, debezium/connect,
+# postgres:16-alpine (payment-db only - order-db is the separate, official
+# patroni/patroni stack joined via external network, see ../patroni-src),
+# valkey/valkey, ghcr.io/shopify/toxiproxy, envoyproxy/envoy,
+# jaegertracing/all-in-one, prom/prometheus, grafana/grafana, amir20/dozzle,
+# sosedoff/pgweb.
+# Adapted: order-service (R11 Saga pattern + R8 OTel + R6/R13 cache-aside,
+# pointed at the Patroni HA cluster instead of a single Postgres instance).
+version: "3.8"
+
+services:
+  kafka:
+    image: apache/kafka:3.8.0
+    environment:
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:9093
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      CLUSTER_ID: r15kafkaclusterid1
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+    networks: [r15net, demo]
+
+  kafka-ui:
+    image: ghcr.io/kafbat/kafka-ui:latest
+    environment:
+      KAFKA_CLUSTERS_0_NAME: r15
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9092
+      KAFKA_CLUSTERS_0_KAFKACONNECT_0_NAME: debezium
+      KAFKA_CLUSTERS_0_KAFKACONNECT_0_ADDRESS: http://debezium:8083
+    ports: ["59180:8080"]
+    depends_on: [kafka]
+    networks: [r15net]
+
+  payment-db:
+    image: postgres:16-alpine
+    command: ["postgres", "-c", "wal_level=logical"]
+    environment:
+      POSTGRES_DB: paymentdb
+      POSTGRES_USER: appuser
+      POSTGRES_PASSWORD: apppass
+    volumes: ["./payment-db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U appuser -d paymentdb"]
+      interval: 2s
+      timeout: 2s
+      retries: 15
+    networks: [r15net]
+
+  toxiproxy:
+    image: ghcr.io/shopify/toxiproxy:2.9.0
+    ports: ["59474:8474"]
+    networks: [r15net, demo]
+
+  pgbouncer:
+    image: edoburu/pgbouncer:latest
+    volumes:
+      - ./pgbouncer/pgbouncer.ini:/etc/pgbouncer/pgbouncer.ini:ro
+      - ./pgbouncer/userlist.txt:/etc/pgbouncer/userlist.txt:ro
+    networks: [r15net, demo]
+
+  debezium:
+    image: debezium/connect:3.0.0.Final
+    environment:
+      BOOTSTRAP_SERVERS: kafka:9092
+      GROUP_ID: debezium-connect
+      CONFIG_STORAGE_TOPIC: debezium_configs
+      OFFSET_STORAGE_TOPIC: debezium_offsets
+      STATUS_STORAGE_TOPIC: debezium_status
+    ports: ["59083:8083"]
+    depends_on: [kafka, payment-db]
+    networks: [r15net, demo]
+
+  valkey:
+    image: valkey/valkey:8-alpine
+    networks: [r15net]
+
+  jaeger:
+    image: jaegertracing/all-in-one:1.60
+    environment:
+      COLLECTOR_OTLP_ENABLED: "true"
+    ports: ["59686:16686"]
+    networks: [r15net]
+
+  envoy:
+    image: envoyproxy/envoy:v1.31-latest
+    volumes: ["./envoy/envoy.yaml:/etc/envoy/envoy.yaml:ro"]
+    ports:
+      - "59080:80"
+      - "59901:9901"
+    depends_on: [order-service-1, order-service-2]
+    networks: [r15net]
+
+  order-service-1:
+    build: ./order-service
+    environment: &order_env
+      DB_HOST: toxiproxy
+      DB_PORT: "56000"
+      DB_NAME: postgres
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      CACHE_HOST: toxiproxy
+      CACHE_PORT: "56001"
+      KAFKA_BOOTSTRAP: kafka:9092
+      OTLP_ENDPOINT: "http://jaeger:4318/v1/traces"
+      REPLICA_ID: order-service-1
+      RETRY_MAX_ATTEMPTS: "3"
+      RETRY_INTERVAL_MS: "500"
+      PYTHONUNBUFFERED: "1"
+    depends_on: [toxiproxy, kafka, jaeger]
+    networks: [r15net, demo]
+
+  order-service-2:
+    build: ./order-service
+    environment:
+      <<: *order_env
+      REPLICA_ID: order-service-2
+      DB_PORT: "56010"
+    depends_on: [toxiproxy, kafka, jaeger]
+    networks: [r15net, demo]
+
+  payment-service:
+    build: ./payment-service
+    environment:
+      DB_HOST: payment-db
+      DB_NAME: paymentdb
+      DB_USER: appuser
+      DB_PASSWORD: apppass
+      KAFKA_BOOTSTRAP: kafka:9092
+      CONSUMER_ID: payment-1
+      PYTHONUNBUFFERED: "1"
+    depends_on: [kafka, payment-db]
+    restart: always
+    networks: [r15net]
+
+  pgweb-payment:
+    image: sosedoff/pgweb:latest
+    environment:
+      PGWEB_DATABASE_URL: "postgres://appuser:apppass@payment-db:5432/paymentdb?sslmode=disable"
+    ports: ["59082:8081"]
+    depends_on: [payment-db]
+    networks: [r15net]
+
+  pgweb-order:
+    image: sosedoff/pgweb:latest
+    environment:
+      PGWEB_DATABASE_URL: "postgres://postgres:postgres@haproxy:5000/postgres?sslmode=disable"
+    ports: ["59081:8081"]
+    networks: [r15net, demo]
+
+  prometheus:
+    image: prom/prometheus:latest
+    volumes: ["./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro"]
+    ports: ["59090:9090"]
+    networks: [r15net]
+
+  grafana:
+    image: grafana/grafana:latest
+    environment:
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: "Admin"
+    volumes: ["./grafana/provisioning:/etc/grafana/provisioning:ro"]
+    ports: ["59300:3000"]
+    networks: [r15net]
+
+  dozzle:
+    image: amir20/dozzle:latest
+    volumes: ["/var/run/docker.sock:/var/run/docker.sock:ro"]
+    ports: ["59888:8080"]
+    networks: [r15net]
+
+networks:
+  r15net:
+    driver: bridge
+  demo:
+    external: true
+    name: patroni-src_demo

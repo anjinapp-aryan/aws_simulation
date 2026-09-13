@@ -1,0 +1,5 @@
+{"name":"order-outbox-connector","connector":{"state":"PAUSED","worker_id":"172.23.0.15:8083"},"tasks":[{"id":0,"state":"PAUSED","worker_id":"172.23.0.15:8083"}],"type":"source"} count 
+-------
+    71
+(1 row)
+

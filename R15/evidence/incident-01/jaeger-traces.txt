@@ -1,0 +1,12 @@
+order-status 5766.8 ms
+cache-get 1.7 ms
+order-status-db-read 5761.5 ms
+---
+order-status 5665.2 ms
+cache-get 1.8 ms
+order-status-db-read 5657.8 ms
+---
+order-status 6270.9 ms
+cache-get 1.6 ms
+order-status-db-read 6264.2 ms
+---

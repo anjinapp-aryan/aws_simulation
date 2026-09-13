@@ -1,0 +1,6 @@
+T0 (fault injected): 2026-09-13 12:04:54.668626900
+12:04:54 generating 30 concurrent order-status reads (cache mostly cold on new ids)
+T3 (fix applied): 2026-09-13 12:05:36.461176700
+HTTP 200 time=0.008838s
+HTTP 200 time=0.016911s
+HTTP 200 time=0.015033s

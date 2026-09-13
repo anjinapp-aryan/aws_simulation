@@ -1,0 +1,19 @@
+=== R15 BASELINE 2026-09-13 12:03:29 ===
++ Cluster: demo (7684903142304657441) --------+----+-------------+-----+------------+-----+
+| Member   | Host       | Role    | State     | TL | Receive LSN | Lag | Replay LSN | Lag |
++----------+------------+---------+-----------+----+-------------+-----+------------+-----+
+| patroni1 | 172.22.0.5 | Leader  | running   |  1 |             |     |            |     |
+| patroni2 | 172.22.0.3 | Replica | streaming |  1 |   0/40ED818 |   0 |  0/40ED818 |   0 |
+| patroni3 | 172.22.0.4 | Replica | streaming |  1 |   0/40ED818 |   0 |  0/40ED818 |   0 |
++----------+------------+---------+-----------+----+-------------+-----+------------+-----+
+{"name":"order-outbox-connector","connector":{"state":"RUNNING","worker_id":"172.23.0.15:8083"},"tasks":[{"id":0,"state":"RUNNING","worker_id":"172.23.0.15:8083"}],"type":"source"}
+{"name":"payment-outbox-connector","connector":{"state":"RUNNING","worker_id":"172.23.0.15:8083"},"tasks":[{"id":0,"state":"RUNNING","worker_id":"172.23.0.15:8083"}],"type":"source"}
+app_cluster::172.23.0.16:8000::health_flags::healthy
+app_cluster::172.23.0.14:8000::health_flags::healthy
+order-status 10.571 ms
+cache-get 2.012 ms
+order-status-db-read 6.407 ms
+---
+order-status 2.403 ms
+cache-get 2.178 ms
+---
