@@ -1,0 +1,25 @@
+# Real Cilium L7 (HTTP-aware) policy - not possible with vanilla K8s NetworkPolicy.
+# Only GET /health and GET / are allowed from frontend to backend; anything
+# else (e.g. a POST, or any other path) is denied at the HTTP layer even
+# though the underlying TCP connection is otherwise permitted by 03-allow-least-privilege.yaml.
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: l7-http-backend
+spec:
+  endpointSelector:
+    matchLabels: { tier: backend }
+  ingress:
+    - fromEndpoints:
+        - matchLabels: { tier: frontend }
+      toPorts:
+        - ports:
+            - { port: "8000", protocol: TCP }
+          rules:
+            # Real bug found and fixed: Cilium's http.path field is a REGEX,
+            # not an exact string match. An unanchored "/" matches every
+            # path as a substring (since every path contains "/"), which
+            # made the policy accidentally allow-all. Anchored with ^...$.
+            http:
+              - { method: "GET", path: "^/health$" }
+              - { method: "GET", path: "^/$" }

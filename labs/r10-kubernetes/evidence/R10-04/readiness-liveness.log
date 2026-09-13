@@ -1,0 +1,37 @@
+﻿=== R10-04 READINESS vs LIVENESS ===
+--- BEFORE ---
+NAME                       READY   STATUS        RESTARTS   AGE     IP           NODE          NOMINATED NODE   READINESS GATES
+r10-app-65fd65fcb5-j8d5z   1/1     Terminating   0          2m32s   10.244.2.4   r10-worker    <none>           <none>
+r10-app-65fd65fcb5-rwttf   1/1     Terminating   0          2m32s   10.244.1.4   r10-worker2   <none>           <none>
+r10-app-66fd5b64bf-6pjfc   1/1     Running       0          29s     10.244.1.6   r10-worker2   <none>           <none>
+r10-app-66fd5b64bf-7bqr4   1/1     Running       0          31s     10.244.2.6   r10-worker    <none>           <none>
+target pod: r10-app-65fd65fcb5-j8d5z
+real target pod: r10-app-66fd5b64bf-6pjfc
+--- injecting READINESS failure only (touch /tmp/unhealthy-ready) ---
+--- pod state after readiness failure (should be Running, NOT Ready, NOT restarted) ---
+NAME                       READY   STATUS    RESTARTS   AGE   IP           NODE          NOMINATED NODE   READINESS GATES
+r10-app-66fd5b64bf-6pjfc   0/1     Running   0          46s   10.244.1.6   r10-worker2   <none>           <none>
+NAME      ENDPOINTS         AGE
+r10-app   10.244.2.6:8000   2m49s
+--- fixing readiness, now injecting LIVENESS failure ---
+--- pod state after liveness failure (expect RESTARTS to increment) ---
+NAME                       READY   STATUS    RESTARTS   AGE   IP           NODE          NOMINATED NODE   READINESS GATES
+r10-app-66fd5b64bf-6pjfc   1/1     Running   0          61s   10.244.1.6   r10-worker2   <none>           <none>
+LAST SEEN   TYPE      REASON      OBJECT                         MESSAGE
+61s         Normal    Scheduled   pod/r10-app-66fd5b64bf-6pjfc   Successfully assigned default/r10-app-66fd5b64bf-6pjfc to r10-worker2
+61s         Normal    Pulled      pod/r10-app-66fd5b64bf-6pjfc   Container image "r10-app:v2" already present on machine
+61s         Normal    Created     pod/r10-app-66fd5b64bf-6pjfc   Created container app
+61s         Normal    Started     pod/r10-app-66fd5b64bf-6pjfc   Started container app
+60s         Warning   Unhealthy   pod/r10-app-66fd5b64bf-6pjfc   Readiness probe failed: Get "http://10.244.1.6:8000/ready": dial tcp 10.244.1.6:8000: connect: connection refused
+9s          Warning   Unhealthy   pod/r10-app-66fd5b64bf-6pjfc   Readiness probe failed: HTTP probe failed with statuscode: 500
+5s          Warning   Unhealthy   pod/r10-app-66fd5b64bf-6pjfc   Liveness probe failed: HTTP probe failed with statuscode: 500
+5s          Normal    Killing     pod/r10-app-66fd5b64bf-6pjfc   Container app failed liveness probe, will be restarted
+NAME                       READY   STATUS    RESTARTS   AGE   IP           NODE          NOMINATED NODE   READINESS GATES
+r10-app-66fd5b64bf-6pjfc   1/1     Running   0          72s   10.244.1.6   r10-worker2   <none>           <none>
+NAME                       READY   STATUS    RESTARTS      AGE   IP           NODE          NOMINATED NODE   READINESS GATES
+r10-app-66fd5b64bf-6pjfc   1/1     Running   1 (13s ago)   99s   10.244.1.6   r10-worker2   <none>           <none>
+
+=== SUMMARY (real, proven) ===
+READINESS failure: pod stayed Running (0/1), RestartCount stayed 0, removed from Service endpoints (traffic stopped, container kept running).
+LIVENESS failure: pod's container was actually killed and recreated by kubelet, RestartCount incremented 0->1, confirmed via 'Killing...will be restarted' event + real restartCount field change.
+This is the experimentally-proven distinction: READINESS = should this pod receive traffic (Service-level), LIVENESS = should this container be restarted (kubelet-level).

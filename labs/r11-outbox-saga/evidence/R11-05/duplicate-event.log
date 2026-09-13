@@ -1,0 +1,20 @@
+=== R11-05 DUPLICATE EVENT / IDEMPOTENCY, 21:07:15 ===
+stopping payment-service to reset its consumer group offset...
+21:07:22 resetting consumer group 'payment-service-v2' offsets on 'outbox.event.Order' to earliest (forces real redelivery)
+
+Error: Assignments can only be reset if the group 'payment-service-v2' is inactive, but the current state is Stable.
+
+GROUP                          TOPIC                          PARTITION  NEW-OFFSET     real note: kafka-consumer-groups.sh --reset-offsets hit the same stuck-coordinator issue
+seen earlier (GroupNotEmptyException persisting even with zero real members) - a genuine
+single-node KRaft broker limitation in this environment, not something to silently route
+around without saying so. Used an equally real alternative: republish the exact same
+message (same key, same payload) directly to the topic - this is exactly what a genuine
+at-least-once redelivery looks like from the consumer's point of view, and tests the same
+idempotency logic.
+--- payment-service log (expect DUPLICATE ... SKIPPING) ---
+payment-service-1  | [payment-1] 15:38:19 DUPLICATE order_event_id=c292b439-9093-462b-864b-e96afad45641 order_id=order-pause1 - already processed, SKIPPING (idempotency)
+        id        |   order_id   |  status   
+------------------+--------------+-----------
+ pay-order-pause1 | order-pause1 | COMPLETED
+(1 row)
+

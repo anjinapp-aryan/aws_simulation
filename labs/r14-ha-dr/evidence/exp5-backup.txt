@@ -1,0 +1,56 @@
+=== R14-05 BACKUP/RESTORE ===
+WROTE id=562 tag=before-backup written_at=2026-09-13 05:44:44.500108+00:00 backend_pid=349 elapsed=0.008s
+
+2026-09-13 05:44:44.779 P00   INFO: backup command begin 2.59.1: --exec-id=356-ddc05159 --log-level-console=info --pg1-path=/home/postgres/data --pg1-port=5432 --pg1-socket-path=/var/run/postgresql --repo1-path=/var/lib/pgbackrest --repo1-retention-full=2 --stanza=demo --type=full
+2026-09-13 05:44:44.785 P00   INFO: execute backup start: backup begins after the next regular checkpoint completes
+2026-09-13 05:44:45.246 P00   INFO: backup start archive = 000000040000000000000005, lsn = 0/5000028
+2026-09-13 05:44:45.246 P00   INFO: check archive for prior segment 000000040000000000000004
+2026-09-13 05:44:48.283 P00   INFO: execute backup stop and wait for all WAL segments to archive
+2026-09-13 05:44:48.293 P00   INFO: backup stop archive = 000000040000000000000005, lsn = 0/5000120
+2026-09-13 05:44:48.305 P00   INFO: check archive for segment(s) 000000040000000000000005:000000040000000000000005
+2026-09-13 05:44:48.413 P00   INFO: new backup label = 20260913-054444F
+2026-09-13 05:44:48.442 P00   INFO: full backup size = 22.4MB, file total = 978
+2026-09-13 05:44:48.442 P00   INFO: backup command end: completed successfully (3664ms)
+2026-09-13 05:44:48.442 P00   INFO: expire command begin 2.59.1: --exec-id=356-ddc05159 --log-level-console=info --repo1-path=/var/lib/pgbackrest --repo1-retention-full=2 --stanza=demo
+2026-09-13 05:44:48.442 P00   INFO: expire command end: completed successfully (0ms)
+backup start: 2026-09-13 11:14:44.565317200  backup end: 2026-09-13 11:14:48.491190300
+WROTE id=563 tag=after-backup-1 written_at=2026-09-13 05:44:54.398868+00:00 backend_pid=365 elapsed=0.020s
+
+WROTE id=564 tag=after-backup-2 written_at=2026-09-13 05:44:54.495639+00:00 backend_pid=366 elapsed=0.006s
+
+stanza: demo
+    status: ok
+    cipher: none
+
+    db (current)
+        wal archive min/max (17): 000000040000000000000004/000000040000000000000005
+
+        full backup: 20260913-054444F
+            timestamp start/stop: 2026-09-13 05:44:44+00 / 2026-09-13 05:44:48+00
+            wal start/stop: 000000040000000000000005 / 000000040000000000000005
+            database size: 22.4MB, database backup size: 22.4MB
+            repo1: backup set size: 2.9MB, backup size: 2.9MB
+T0 (disaster: simulating total loss of all live Postgres instances, only pgBackRest repo survives): 2026-09-13 11:15:20.387922900
+2026-09-13 05:45:20.681 P00   INFO: restore command begin 2.59.1: --exec-id=380-0802393b --log-level-console=info --pg1-path=/tmp/restored --repo1-path=/var/lib/pgbackrest --stanza=demo
+2026-09-13 05:45:20.686 P00   INFO: repo1: restore backup set 20260913-054444F, recovery will start at 2026-09-13 05:44:44
+2026-09-13 05:45:20.686 P00   INFO: remap data directory to '/tmp/restored'
+2026-09-13 05:45:22.729 P00   INFO: write updated /tmp/restored/postgresql.auto.conf
+2026-09-13 05:45:22.739 P00   INFO: restore global/pg_control (performed last to ensure aborted restores cannot be started)
+2026-09-13 05:45:22.740 P00   INFO: restore size = 22.4MB, file total = 978
+2026-09-13 05:45:22.740 P00   INFO: restore command end: completed successfully (2061ms)
+T3 (restored Postgres accepting connections): 2026-09-13 11:15:35.527622800
+ id  |      tag      |          written_at           
+-----+---------------+-------------------------------
+ 562 | before-backup | 2026-09-13 05:44:44.500108+00
+ 530 | rpoB-lost     | 2026-09-13 05:39:30.323652+00
+ 529 | rpoA          | 2026-09-13 05:39:05.241322+00
+ 501 | paused200     | 2026-09-13 05:34:59.149347+00
+ 500 | paused199     | 2026-09-13 05:34:59.075618+00
+ 499 | paused198     | 2026-09-13 05:34:58.993431+00
+(6 rows)
+
+ max 
+-----
+ 562
+(1 row)
+

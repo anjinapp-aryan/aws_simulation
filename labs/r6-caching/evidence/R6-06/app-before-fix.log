@@ -1,0 +1,3 @@
+=== R6-06 app behavior WITHOUT the manual endpoint fix (the honest gap) ===
+DEGRADED source=db (cache error: TimeoutError: Timeout reading from socket) value=item-1 computed_at=2026-09-12 01:51:12.019508+00:00 elapsed=1.112s
+ (HTTP 200)

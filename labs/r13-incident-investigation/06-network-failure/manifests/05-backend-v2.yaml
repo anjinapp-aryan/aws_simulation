@@ -1,0 +1,26 @@
+# R13-06 hidden fault: a "new rollout" of backend with a real label typo
+# (tier: backend-v2 instead of tier: backend). The existing NetworkPolicy
+# selectors in 03-allow-least-privilege.yaml only match tier: backend, so
+# this replica silently has NO allow rule for egress to the database -
+# a real, common "rollout forgot to carry over network config" incident.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-v2
+  labels: { app: backend, tier: backend-v2 }
+spec:
+  replicas: 1
+  # Same "app: backend" label as the original Deployment's pod template,
+  # so the existing "backend" Service (selector: {app: backend}) genuinely
+  # load-balances real frontend traffic to this replica too - the typo is
+  # ONLY in "tier", the label the NetworkPolicy selectors actually key on.
+  selector: { matchLabels: { app: backend, rollout: v2 } }
+  template:
+    metadata: { labels: { app: backend, tier: backend-v2, rollout: v2 } }
+    spec:
+      containers:
+        - name: app
+          image: r13-06-app:v1
+          imagePullPolicy: IfNotPresent
+          ports: [{ containerPort: 8000 }]
+          env: [{ name: APP_VERSION, value: backend-v2 }]

@@ -1,0 +1,107 @@
+# R9 - Circuit breaking / service resilience simulation, $0, entirely local.
+# Reused unmodified: postgres:16-alpine, edoburu/pgbouncer, prometheuscommunity/
+# postgres-exporter (R4 config), ghcr.io/shopify/toxiproxy (R4-R8 pattern),
+# prom/prometheus, grafana/grafana, amir20/dozzle, envoyproxy/envoy (real
+# outlier-detection engine, official image).
+# Adapted: app/server.py - R4's server.py pattern + pybreaker (real,
+# official-recommended Python circuit-breaker library) wrapping the DB call.
+# No custom circuit breaker, no custom dashboard, no reimplemented Envoy
+# functionality.
+version: "3.8"
+
+services:
+  envoy:
+    image: envoyproxy/envoy:v1.31-latest
+    volumes:
+      - ./config/envoy.yaml:/etc/envoy/envoy.yaml:ro
+    ports:
+      - "64080:80"      # traffic entrypoint
+      - "64901:9901"    # Envoy admin interface - real outlier/cluster state
+    depends_on: [app]
+    networks: [r9net]
+
+  app:
+    build: ./app
+    environment:
+      DB_HOST: toxiproxy
+      DB_PORT: "6432"
+      DB_NAME: appdb
+      DB_USER: appuser
+      DB_PASSWORD: apppass
+      BREAKER_FAIL_MAX: "3"
+      BREAKER_RESET_TIMEOUT: "10"
+      PYTHONUNBUFFERED: "1"
+    ports:
+      - "64000:8000"    # direct app access, bypasses Envoy - for app-breaker-only tests
+    depends_on: [toxiproxy]
+    networks: [r9net]
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: appdb
+      POSTGRES_USER: appuser
+      POSTGRES_PASSWORD: apppass
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U appuser -d appdb"]
+      interval: 2s
+      timeout: 2s
+      retries: 15
+    networks: [r9net]
+
+  pgbouncer:
+    image: edoburu/pgbouncer:latest
+    volumes:
+      - ./pgbouncer/pgbouncer.ini:/etc/pgbouncer/pgbouncer.ini:ro
+      - ./pgbouncer/userlist.txt:/etc/pgbouncer/userlist.txt:ro
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks: [r9net]
+
+  postgres_exporter:
+    image: prometheuscommunity/postgres-exporter:latest
+    environment:
+      DATA_SOURCE_NAME: "postgresql://appuser:apppass@postgres:5432/appdb?sslmode=disable"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks: [r9net]
+
+  toxiproxy:
+    image: ghcr.io/shopify/toxiproxy:2.9.0
+    ports:
+      - "64474:8474"
+    depends_on: [pgbouncer]
+    networks: [r9net]
+
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    ports:
+      - "64090:9090"
+    networks: [r9net]
+
+  grafana:
+    image: grafana/grafana:latest
+    environment:
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: "Admin"
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+    ports:
+      - "64300:3000"
+    networks: [r9net]
+
+  dozzle:
+    image: amir20/dozzle:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    ports:
+      - "64888:8080"
+    networks: [r9net]
+
+networks:
+  r9net:
+    driver: bridge

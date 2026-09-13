@@ -1,0 +1,76 @@
+=== R12-04 L7 HTTP-AWARE POLICY, 22:54:51 ===
+ciliumnetworkpolicy.cilium.io/l7-http-backend created
+--- allowed: GET /health ---
+HTTP 200
+--- denied at L7: POST / (TCP allowed, HTTP method not in the L7 policy) ---
+HTTP 501
+investigating: HTTP 501 could be Cilium's real L7 deny, OR our own app's default
+BaseHTTPRequestHandler returning 501 Not Implemented because do_POST was never defined -
+checking Hubble to see whether Cilium actually intercepted/denied this at L7.
+Sep 12 17:24:55.537: 10.244.1.133:49526 (host) <- default/backend-7987656979-zkvsr:8000 (ID:11748) to-stack FORWARDED (TCP Flags: SYN, ACK)
+Sep 12 17:24:55.537: 10.244.1.133:49526 (ID:9268) -> default/backend-7987656979-zkvsr:8000 (ID:11748) to-endpoint FORWARDED (TCP Flags: ACK)
+Sep 12 17:24:55.537: 10.244.1.133:49526 (ID:9268) -> default/backend-7987656979-zkvsr:8000 (ID:11748) to-endpoint FORWARDED (TCP Flags: ACK, PSH)
+Sep 12 17:24:55.538: 10.244.1.133:49526 (host) <- default/backend-7987656979-zkvsr:8000 (ID:11748) to-stack FORWARDED (TCP Flags: ACK, PSH)
+Sep 12 17:24:55.538: 10.244.1.133:49526 (host) <- default/backend-7987656979-zkvsr:8000 (ID:11748) to-stack FORWARDED (TCP Flags: ACK, FIN)
+Sep 12 17:24:55.538: 10.244.1.133:49526 (ID:9268) -> default/backend-7987656979-zkvsr:8000 (ID:11748) to-endpoint FORWARDED (TCP Flags: ACK, FIN)
+Sep 12 17:24:55.538: 10.244.1.133:49526 (host) <- default/backend-7987656979-zkvsr:8000 (ID:11748) to-stack FORWARDED (TCP Flags: ACK)
+Sep 12 17:24:55.547: 10.244.1.133:49532 (ID:9268) -> default/backend-7987656979-zkvsr:8000 (ID:11748) to-endpoint FORWARDED (TCP Flags: SYN)
+Sep 12 17:24:55.547: 10.244.1.133:49532 (host) <- default/backend-7987656979-zkvsr:8000 (ID:11748) to-stack FORWARDED (TCP Flags: SYN, ACK)
+Sep 12 17:24:55.547: 10.244.1.133:49532 (ID:9268) -> default/backend-7987656979-zkvsr:8000 (ID:11748) to-endpoint FORWARDED (TCP Flags: ACK)
+Sep 12 17:24:55.547: 10.244.1.133:49532 (ID:9268) -> default/backend-7987656979-zkvsr:8000 (ID:11748) to-endpoint FORWARDED (TCP Flags: ACK, PSH)
+Sep 12 17:24:55.547: 10.244.1.133:49532 (host) <- default/backend-7987656979-zkvsr:8000 (ID:11748) to-stack FORWARDED (TCP Flags: ACK, PSH)
+Sep 12 17:24:55.547: 10.244.1.133:49532 (host) <- default/backend-7987656979-zkvsr:8000 (ID:11748) to-stack FORWARDED (TCP Flags: ACK, FIN)
+Sep 12 17:24:55.547: 10.244.1.133:49532 (ID:9268) -> default/backend-7987656979-zkvsr:8000 (ID:11748) to-endpoint FORWARDED (TCP Flags: ACK, FIN)
+Sep 12 17:24:55.547: 10.244.1.133:49532 (host) <- default/backend-7987656979-zkvsr:8000 (ID:11748) to-stack FORWARDED (TCP Flags: ACK)
+Sep 12 17:24:55.591: 10.244.1.133:49548 (ID:9268) -> default/backend-7987656979-zkvsr:8000 (ID:11748) to-endpoint FORWARDED (TCP Flags: SYN)
+Sep 12 17:24:55.591: 10.244.1.133:49548 (host) <- default/backend-7987656979-zkvsr:8000 (ID:11748) to-stack FORWARDED (TCP Flags: SYN, ACK)
+Sep 12 17:24:55.591: 10.244.1.133:49548 (ID:9268) -> default/backend-7987656979-zkvsr:8000 (ID:11748) to-endpoint FORWARDED (TCP Flags: ACK)
+Sep 12 17:24:55.591: 10.244.1.133:49548 (ID:9268) -> default/backend-7987656979-zkvsr:8000 (ID:11748) to-endpoint FORWARDED (TCP Flags: ACK, PSH)
+Sep 12 17:24:55.592: 10.244.1.133:49548 (host) <- default/backend-7987656979-zkvsr:8000 (ID:11748) to-stack FORWARDED (TCP Flags: ACK, PSH)
+Sep 12 17:24:55.592: 10.244.1.133:49548 (host) <- default/backend-7987656979-zkvsr:8000 (ID:11748) to-stack FORWARDED (TCP Flags: ACK, FIN)
+Sep 12 17:24:55.592: default/frontend-64c7797d9f-ntxh6:57426 (ID:9268) <- default/backend-7987656979-zkvsr:8000 (ID:11748) http-response FORWARDED (HTTP/1.1 501 77ms (POST http://backend/))
+Sep 12 17:24:55.592: 10.244.1.133:49548 (ID:9268) -> default/backend-7987656979-zkvsr:8000 (ID:11748) to-endpoint FORWARDED (TCP Flags: ACK, FIN)
+Sep 12 17:24:55.592: 10.244.1.133:49548 (host) <- default/backend-7987656979-zkvsr:8000 (ID:11748) to-stack FORWARDED (TCP Flags: ACK)
+Sep 12 17:24:55.592: default/frontend-64c7797d9f-ntxh6:57426 (ID:9268) -> default/backend-7987656979-zkvsr:8000 (ID:11748) to-proxy FORWARDED (TCP Flags: ACK, FIN)
+
+real bug: POST / returned 501 from OUR OWN app (BaseHTTPRequestHandler has no do_POST
+defined), NOT from Cilium's L7 policy - confirmed via Hubble showing 'http-response
+FORWARDED ... POST http://backend/' (the request reached the app, wasn't denied at all).
+Invalid test design. Correct L7 test: GET /admin (a real, app-servable path our L7 policy
+does NOT allow, since it only permits GET /health and GET /).
+--- allowed: GET /health (in the L7 allow-list) ---
+HTTP 200
+--- denied at L7: GET /admin (real app-servable path, NOT in the L7 allow-list) ---
+HTTP 200
+ciliumnetworkpolicy.cilium.io/l7-http-backend configured
+--- allowed: GET /health (anchored regex ^/health$) ---
+HTTP 200
+--- allowed: GET / (anchored regex ^/$) ---
+HTTP 200
+--- denied at L7 (real, correctly enforced now): GET /admin ---
+HTTP 200
+
+=== real root cause (confirmed via cilium-dbg endpoint policy JSON) ===
+Both the plain K8s NetworkPolicy 'allow-frontend-to-backend' (no L7 restriction) and the
+CiliumNetworkPolicy 'l7-http-backend' (L7-restricted) simultaneously grant frontend->backend
+ingress. Cilium's policy model is most-permissive-wins across overlapping selectors for the
+same L4 port, so the unrestricted plain NetworkPolicy's l7-rules:null silently overrode the
+CiliumNetworkPolicy's L7 restriction. Fixed by deleting the redundant plain NetworkPolicy so
+ONLY the CiliumNetworkPolicy governs this specific traffic.
+networkpolicy.networking.k8s.io "allow-frontend-to-backend" deleted from default namespace
+--- allowed: GET /health ---
+HTTP 200
+--- allowed: GET / ---
+HTTP 200
+--- denied at L7 (real): GET /admin ---
+HTTP 403
+Sep 12 17:26:24.783: default/frontend-64c7797d9f-ntxh6:35256 (ID:9268) <- default/backend-7987656979-zkvsr:80 (ID:11748) to-endpoint FORWARDED (TCP Flags: SYN, ACK)
+Sep 12 17:26:24.783: default/frontend-64c7797d9f-ntxh6:35256 (ID:9268) -> default/backend-7987656979-zkvsr:8000 (ID:11748) to-proxy FORWARDED (TCP Flags: ACK)
+Sep 12 17:26:24.783: default/frontend-64c7797d9f-ntxh6:35256 (ID:9268) -> default/backend-7987656979-zkvsr:8000 (ID:11748) to-proxy FORWARDED (TCP Flags: ACK, PSH)
+Sep 12 17:26:24.784: default/frontend-64c7797d9f-ntxh6:35256 (ID:9268) -> default/backend-7987656979-zkvsr:8000 (ID:11748) http-request DROPPED (HTTP/1.1 GET http://backend/admin)
+Sep 12 17:26:24.784: default/frontend-64c7797d9f-ntxh6:35256 (ID:9268) <- default/backend-7987656979-zkvsr:8000 (ID:11748) http-response FORWARDED (HTTP/1.1 403 0ms (GET http://backend/admin))
+Sep 12 17:26:24.784: default/frontend-64c7797d9f-ntxh6:35256 (ID:9268) <- default/backend-7987656979-zkvsr:80 (ID:11748) to-endpoint FORWARDED (TCP Flags: ACK, PSH)
+Sep 12 17:26:24.784: default/frontend-64c7797d9f-ntxh6:35256 (ID:9268) -> default/backend-7987656979-zkvsr:8000 (ID:11748) to-proxy FORWARDED (TCP Flags: ACK, FIN)
+Sep 12 17:26:24.784: default/frontend-64c7797d9f-ntxh6:35256 (ID:9268) <- default/backend-7987656979-zkvsr:80 (ID:11748) to-endpoint FORWARDED (TCP Flags: ACK, FIN)
+Sep 12 17:26:25.125: 10.244.0.233:44666 (remote-node) -> 10.244.1.244:4240 (health) to-endpoint FORWARDED (TCP Flags: ACK, FIN)
+Sep 12 17:26:25.126: 10.244.0.233:44666 (remote-node) <- 10.244.1.244:4240 (health) to-overlay FORWARDED (TCP Flags: ACK, FIN)

@@ -1,0 +1,8 @@
+=== R6-06 AFTER (recovered), 07:21:27 ===
+MISS source=db value=item-1 computed_at=2026-09-12 01:51:27.955522+00:00 elapsed=0.110s
+ (HTTP 200)
+HIT source=cache value=item-1 computed_at=2026-09-12 01:51:27.955522+00:00 elapsed=0.001s
+ (HTTP 200)
+--- old primary's real role after restart (Sentinel should have reconfigured it as a replica) ---
+role:slave
+master_link_status:down

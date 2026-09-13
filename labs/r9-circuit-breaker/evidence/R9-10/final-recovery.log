@@ -1,0 +1,11 @@
+=== R9-10 FINAL RECOVERY + CLEAN STATE, 19:36:51 ===
+--- breaker status (should be closed after reset_timeout + successful probe) ---
+{"state": "closed", "fail_counter": 0, "fail_max": 3, "reset_timeout": 10}
+--- envoy cluster health ---
+app_cluster::172.22.0.9:8000::health_flags::healthy
+--- direct app request ---
+{"order_id": "final", "value": "order-final computed_at=2026-09-12 14:06:52.459399+00:00", "protected": true, "breaker_state": "closed", "elapsed": 0.028}
+(HTTP 200, 0.031185s)
+--- via envoy ---
+{"order_id": "final", "value": "order-final computed_at=2026-09-12 14:06:52.534524+00:00", "protected": false, "elapsed": 0.029}
+(HTTP 200, 0.032913s)

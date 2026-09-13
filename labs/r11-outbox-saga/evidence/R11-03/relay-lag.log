@@ -1,0 +1,26 @@
+=== R11-03 DEBEZIUM RELAY LAG (measured), 21:04:00 ===
+21:04:00 injecting 3000ms latency on Debezium's Kafka path
+{"attributes":{"latency":3000,"jitter":200},"name":"latency","type":"latency","stream":"downstream","toxicity":1}
+placing order at DB-commit approx 2026-09-12 15:34:11.283
+{"order_id": "order-lag1", "status": "CREATED", "outbox_event_id": "7afc03e4-bd35-405b-9251-3b8475843b28", "fail_payment": false}
+--- real Postgres commit timestamp ---
+         createdat         
+---------------------------
+ 2026-09-12 15:34:11.33558
+(1 row)
+
+--- real Kafka message timestamp (via kafka-console-consumer --property print.timestamp=true) ---
+not found yet
+--- retry: real Kafka message timestamp ---
+CreateTime:1789227251335	"order-lag1"	{"event_id":"7afc03e4-bd35-405b-9251-3b8475843b28","order_id":"order-lag1","fail_payment":false}
+real finding: Kafka message CreateTime (1789227251335ms = 15:34:11.335) exactly matches
+the Postgres outbox createdat (15:34:11.33558) because our connector config maps
+'transforms.outbox.table.field.event.timestamp: createdat' - the EventRouter uses the
+DB row's own timestamp as the Kafka record timestamp, not real publish wall-clock time.
+This is real, correct Debezium behavior (useful for preserving business event time), but
+means Kafka's own timestamp cannot measure relay lag here. Using the consumer's real
+processing log timestamp instead, which genuinely reflects when the message was actually
+receivable end-to-end (including the injected 3s latency).
+--- payment-service log for order-lag1 ---
+payment-service-1  | [payment-1] 15:34:49 order_id=order-lag1 fail_payment=False -> processing payment, result=COMPLETED
+payment-service-1  | [payment-1] 15:34:49 order_id=order-lag1 payment COMPLETED, outbox event 7cff84d1-e972-46b4-9af8-3f674ef028d1 written (real local transaction)

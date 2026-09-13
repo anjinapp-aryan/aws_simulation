@@ -1,0 +1,52 @@
+=== R7-01 NORMAL FLOW, 18:39:32 ===
+--- before ---
+ready= 0 consumers= 1
+#1 [internal] load local bake definitions
+#1 reading from stdin 591B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 179B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/python:3.12-slim
+#3 DONE 0.4s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 2B done
+#4 DONE 0.0s
+
+#5 [1/3] FROM docker.io/library/python:3.12-slim@sha256:78387bc3881b8273120a12ebe6c1ab22b018ccc2c9adf565ae1ac9b536e184ea
+#5 resolve docker.io/library/python:3.12-slim@sha256:78387bc3881b8273120a12ebe6c1ab22b018ccc2c9adf565ae1ac9b536e184ea 0.0s done
+#5 DONE 0.0s
+
+#6 [2/3] RUN pip install --no-cache-dir pika==1.3.2
+#6 CACHED
+
+#7 [internal] load build context
+#7 transferring context: 1.53kB done
+#7 DONE 0.0s
+
+#8 [3/3] COPY producer.py /producer.py
+#8 DONE 0.2s
+
+#9 exporting to image
+#9 exporting layers 0.0s done
+#9 exporting manifest sha256:0f3fc353f55f7f17156b182642aa20dcbcae37caf667c9a0288c916baea788e9 0.0s done
+#9 exporting config sha256:3aa23c058300f86f17ad87dcd62e9da5e9924ab704bf66393373630a32fc1484 done
+#9 exporting attestation manifest sha256:d3473727244a46d8405dec70490e3a66897e7af61464ea0ce0529e7655f3307d 0.0s done
+#9 exporting manifest list sha256:f2f9a9d5e56bb25ea3606296a1c5ce40ea884e8a5a666b5dfc122d40b4d594ae 0.0s done
+#9 naming to docker.io/library/r7-messaging-producer:latest
+#9 naming to docker.io/library/r7-messaging-producer:latest done
+#9 unpacking to docker.io/library/r7-messaging-producer:latest 0.0s done
+#9 DONE 0.1s
+
+#10 resolving provenance for metadata file
+#10 DONE 0.0s
+published id=order-1 type=normal seq=None
+--- after ---
+ready= 0 consumers= 1
+--- consumer log ---
+consumer-1  | [consumer-1] 13:09:20 starting, connecting to RabbitMQ...
+consumer-1  | [consumer-1] 13:09:20 ready, consuming from 'orders'
+consumer-1  | [consumer-1] 13:09:34 NORMAL id=order-1 - processed

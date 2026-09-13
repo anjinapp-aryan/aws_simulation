@@ -1,0 +1,20 @@
+=== R12-05 ROGUE POD, 22:56:29 ===
+pod/rogue created
+pod/rogue condition met
+--- rogue -> database (expected DENIED) ---
+TCP connect FAILED (correct - rogue pod blocked)
+--- rogue -> backend (expected DENIED) ---
+HTTP 000
+curl failed/timed out (expected)
+
+real bug: same /dev/tcp dash incompatibility as R12-01 - fixed with python3 socket probe.
+--- rogue -> database (real probe) ---
+TCP connect FAILED: TimeoutError: timed out (correct - rogue pod blocked)
+--- legitimate traffic still works while rogue is blocked ---
+--- frontend -> backend (expected allowed) ---
+HTTP 200 (0.004732s)
+--- backend -> database (expected allowed, real TCP probe) ---
+TCP connect OK
+--- frontend -> database DIRECT (expected DENIED - zero trust) ---
+TCP connect FAILED: TimeoutError: timed out
+Sep 12 17:27:05.651: default/rogue:58176 (ID:9694) <> default/database-6d64fd885d-jzngt:5432 (ID:26264) policy-verdict:none EGRESS DENIED (TCP Flags: SYN)

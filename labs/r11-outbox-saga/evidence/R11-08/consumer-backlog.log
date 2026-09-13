@@ -1,0 +1,31 @@
+=== R11-08 CONSUMER-LAYER BACKLOG (distinct from R11-06's CDC-layer pause), 21:08:33 ===
+--- placing 3 orders while the CONSUMER (not Debezium) is down ---
+{"order_id": "order-consumerdown1", "status": "CREATED", "outbox_event_id": "a6c771bb-7160-4f81-9ab2-850f3a1773fd", "fail_payment": false}
+{"order_id": "order-consumerdown2", "status": "CREATED", "outbox_event_id": "ac8df949-5329-42b4-af05-c8deabd0aa38", "fail_payment": false}
+{"order_id": "order-consumerdown3", "status": "CREATED", "outbox_event_id": "8581b6ba-5382-414a-aeb7-567d4a106d60", "fail_payment": false}
+--- real Kafka consumer-group LAG (messages ARE in Kafka now, unlike R11-06) ---
+
+GROUP              TOPIC              PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG             CONSUMER-ID                                              HOST            CLIENT-ID
+payment-service-v2 outbox.event.Order 0          10              13              3               kafka-python-3.0.11-725dfef1-f534-4da9-b4ac-ed9e0e5e0f57 /172.22.0.7     kafka-python-3.0.11--- real consumer-group LAG after restart (expect 0 - drained) ---
+
+GROUP              TOPIC              PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG             CONSUMER-ID     HOST            CLIENT-ID
+payment-service-v2 outbox.event.Order 0          10              13              3               -               -               -
+GROUP              TOPIC              PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG             CONSUMER-ID     HOST            CLIENT-ID
+payment-service-v2 outbox.event.Order 0          10              13              3               -               -               -
+=== corrected, deeper root cause (supersedes earlier 'stuck coordinator' guesses) ===
+Every consumer-group hiccup across R11-01/05/08 traces to ONE real cause: our minimal
+consumer.py does not handle SIGTERM gracefully (no consumer.close() / explicit LeaveGroup).
+docker stop sends SIGTERM then SIGKILL after the grace period, but kafka-python never gets
+a chance to tell the broker it's leaving - so the broker only notices via heartbeat
+expiration, which takes up to the full session timeout (~40s observed) before a rebalance
+can complete and the new consumer instance actually gets its partition assignment and starts
+receiving messages. This explains the apparent 'not processing yet' observations - the
+backlog DID drain, just ~40s after restart, not immediately. A production consumer should
+install a signal handler that calls consumer.close() to avoid this real, common delay.
+--- final consumer-group lag (confirmed 0, real drain) ---
+
+GROUP              TOPIC              PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG             CONSUMER-ID                                              HOST            CLIENT-ID
+payment-service-v2 outbox.event.Order 0          13              13              0               kafka-python-3.0.11-ac6078fd-9d9a-4da0-b1a2-f46717cf578c /172.22.0.7     kafka-python-3.0.11--- final order statuses ---
+order-consumerdown1 CONFIRMED
+order-consumerdown2 CONFIRMED
+order-consumerdown3 CONFIRMED

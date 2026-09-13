@@ -1,0 +1,31 @@
+=== R12-07 DNS/EGRESS MISCONFIGURATION, 22:58:14 ===
+--- STEP 1: baseline before misconfiguration ---
+--- frontend -> backend (expected allowed) ---
+HTTP 200 (0.003670s)
+--- backend -> database (expected allowed, real TCP probe) ---
+TCP connect OK
+--- frontend -> database DIRECT (expected DENIED - zero trust) ---
+TCP connect FAILED: TimeoutError: timed out
+--- STEP 2: introducing the real, common mistake (removing DNS-allow rule) ---
+networkpolicy.networking.k8s.io "allow-dns-egress" deleted from default namespace
+--- attempting DNS-dependent connection (expect failure) ---
+HTTP 000
+FAILED as expected - investigate with scripts/status.sh and hubble
+DNS resolution FAILED (real root cause)
+
+note: nslookup not installed in the minimal image (real, minor tooling gap) - using
+python3's socket.gethostbyname for the DNS diagnostic instead.
+--- STEP 3: investigate root cause ---
+DNS RESOLUTION FAILED: gaierror: [Errno -3] Temporary failure in name resolution
+
+--- STEP 4: FIX - restore the DNS-allow rule ---
+networkpolicy.networking.k8s.io/allow-dns-egress created
+--- verifying recovery ---
+HTTP 200
+--- STEP 5: verify full recovery ---
+--- frontend -> backend (expected allowed) ---
+HTTP 200 (0.003146s)
+--- backend -> database (expected allowed, real TCP probe) ---
+TCP connect OK
+--- frontend -> database DIRECT (expected DENIED - zero trust) ---
+TCP connect FAILED: TimeoutError: timed out

@@ -1,0 +1,188 @@
+11:06:12.697234500 | 
+11:06:12.697234500 ---
+| patroni1 | 172.22.0.3 | Replica | streaming |  1 |   0/40A4038 |   0 |  0/40A4038 |   0 |
+| patroni2 | 172.22.0.4 | Leader  | running   |  1 |             |     |            |     |
+| patroni3 | 172.22.0.7 | Replica | streaming |  1 |   0/40A4038 |   0 |  0/40A4038 |   0 |
+11:06:15.939868700 | 
+11:06:15.939868700 ---
+| patroni1 | 172.22.0.3 | Replica | streaming |  1 |   0/40A4038 |   0 |  0/40A4038 |   0 |
+| patroni2 | 172.22.0.4 | Leader  | running   |  1 |             |     |            |     |
+| patroni3 | 172.22.0.7 | Replica | streaming |  1 |   0/40A4038 |   0 |  0/40A4038 |   0 |
+11:06:19.151098100 | 
+11:06:19.151098100 ---
+| patroni1 | 172.22.0.3 | Replica | running |  1 |   0/40A4090 |   0 |  0/40A4090 |   0 |
+| patroni2 | 172.22.0.4 | Leader  | running |  1 |             |     |            |     |
+| patroni3 | 172.22.0.7 | Replica | running |  1 |   0/40A4090 |   0 |  0/40A4090 |   0 |
+11:06:22.361117300 | 
+11:06:22.361117300 ---
+| patroni1 | 172.22.0.3 | Replica | running |  1 |   0/40A4090 |   0 |  0/40A4090 |   0 |
+| patroni2 | 172.22.0.4 | Leader  | running |  1 |             |     |            |     |
+| patroni3 | 172.22.0.7 | Replica | running |  1 |   0/40A4090 |   0 |  0/40A4090 |   0 |
+11:06:25.564195500 | 
+11:06:25.564195500 ---
+| patroni1 | 172.22.0.3 | Replica | running |  1 |   0/40A4090 |   0 |  0/40A4090 |   0 |
+| patroni2 | 172.22.0.4 | Leader  | running |  1 |             |     |            |     |
+| patroni3 | 172.22.0.7 | Replica | running |  1 |   0/40A4090 |   0 |  0/40A4090 |   0 |
+11:06:28.794187300 | DB_ERROR after 0.001s: OperationalError: connection to server at "haproxy" (172.22.0.6), port 5000 failed: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+11:06:28.794187300 ---
+| patroni1 | 172.22.0.3 | Replica | running |  1 |   0/40A4090 |   0 |  0/40A4090 |   0 |
+| patroni2 | 172.22.0.4 | Leader  | running |  1 |             |     |            |     |
+| patroni3 | 172.22.0.7 | Replica | running |  1 |   0/40A4090 |   0 |  0/40A4090 |   0 |
+11:06:30.015020700 | DB_ERROR after 0.003s: OperationalError: connection to server at "haproxy" (172.22.0.6), port 5000 failed: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+11:06:30.015020700 ---
+| patroni1 | 172.22.0.3 | Replica | running |  1 |   0/40A4090 |   0 |  0/40A4090 |   0 |
+| patroni2 | 172.22.0.4 | Leader  | running |  1 |             |     |            |     |
+| patroni3 | 172.22.0.7 | Replica | running |  1 |   0/40A4090 |   0 |  0/40A4090 |   0 |
+11:06:31.198948100 | DB_ERROR after 0.002s: OperationalError: connection to server at "haproxy" (172.22.0.6), port 5000 failed: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+11:06:31.198948100 ---
+| patroni1 | 172.22.0.3 | Replica | running |  1 |   0/40A4090 |   0 |  0/40A4090 |   0 |
+| patroni2 | 172.22.0.4 | Leader  | running |  1 |             |     |            |     |
+| patroni3 | 172.22.0.7 | Replica | running |  1 |   0/40A4090 |   0 |  0/40A4090 |   0 |
+11:06:32.422301500 | DB_ERROR after 0.001s: OperationalError: connection to server at "haproxy" (172.22.0.6), port 5000 failed: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+11:06:32.422301500 ---
+| patroni1 | 172.22.0.3 | Replica | running |  1 |   0/40A4090 |   0 |  0/40A4090 |   0 |
+| patroni2 | 172.22.0.4 | Leader  | running |  1 |             |     |            |     |
+| patroni3 | 172.22.0.7 | Replica | running |  1 |   0/40A4090 |   0 |  0/40A4090 |   0 |
+11:06:33.643051000 | DB_ERROR after 0.002s: OperationalError: connection to server at "haproxy" (172.22.0.6), port 5000 failed: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+11:06:33.643051000 ---
+| patroni1 | 172.22.0.3 | Replica | running |  1 |   0/40A4090 |   0 |  0/40A4090 |   0 |
+| patroni2 | 172.22.0.4 | Leader  | running |  1 |             |     |            |     |
+| patroni3 | 172.22.0.7 | Replica | running |  1 |   0/40A4090 |   0 |  0/40A4090 |   0 |
+11:06:34.848714400 | DB_ERROR after 0.002s: OperationalError: connection to server at "haproxy" (172.22.0.6), port 5000 failed: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+11:06:34.848714400 ---
+| patroni1 | 172.22.0.3 | Replica | running |  1 |   0/40A4090 |   0 |  0/40A4090 |   0 |
+| patroni2 | 172.22.0.4 | Leader  | running |  1 |             |     |            |     |
+| patroni3 | 172.22.0.7 | Replica | running |  1 |   0/40A4090 |   0 |  0/40A4090 |   0 |
+11:06:36.073065600 | DB_ERROR after 0.001s: OperationalError: connection to server at "haproxy" (172.22.0.6), port 5000 failed: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+11:06:36.073065600 ---
+| patroni1 | 172.22.0.3 | Replica | running |  1 |   0/40A4090 |   0 |  0/40A4090 |   0 |
+| patroni2 | 172.22.0.4 | Leader  | running |  1 |             |     |            |     |
+| patroni3 | 172.22.0.7 | Replica | running |  1 |   0/40A4090 |   0 |  0/40A4090 |   0 |
+11:06:37.277617800 | DB_ERROR after 0.001s: OperationalError: connection to server at "haproxy" (172.22.0.6), port 5000 failed: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+11:06:37.277617800 ---
+| patroni1 | 172.22.0.3 | Replica | running |  1 |   0/40A4090 |   0 |  0/40A4090 |   0 |
+| patroni3 | 172.22.0.7 | Replica | running |  1 |   0/40A4090 |   0 |  0/40A4090 |   0 |
+11:06:38.484558400 | leader=True server_addr=172.22.0.3 elapsed=0.005s
+11:06:38.484558400 ---
+| patroni1 | 172.22.0.3 | Leader  | running   |  2 |             |     |            |     |
+| patroni3 | 172.22.0.7 | Replica | streaming |  2 |   0/40A4950 |   0 |  0/40A4950 |   0 |
+11:06:44.714023800 | leader=True server_addr=172.22.0.3 elapsed=0.004s
+11:06:44.714023800 ---
+| patroni1 | 172.22.0.3 | Leader  | running   |  2 |             |     |            |     |
+| patroni3 | 172.22.0.7 | Replica | streaming |  2 |   0/40A4950 |   0 |  0/40A4950 |   0 |
+11:06:45.918257100 | leader=True server_addr=172.22.0.3 elapsed=0.005s
+11:06:45.918257100 ---
+| patroni1 | 172.22.0.3 | Leader  | running   |  2 |             |     |            |     |
+| patroni3 | 172.22.0.7 | Replica | streaming |  2 |   0/40A4950 |   0 |  0/40A4950 |   0 |
+11:06:47.139960100 | leader=True server_addr=172.22.0.3 elapsed=0.007s
+11:06:47.139960100 ---
+| patroni1 | 172.22.0.3 | Leader  | running   |  2 |             |     |            |     |
+| patroni3 | 172.22.0.7 | Replica | streaming |  2 |   0/40A4950 |   0 |  0/40A4950 |   0 |
+11:06:48.332327700 | leader=True server_addr=172.22.0.3 elapsed=0.004s
+11:06:48.332327700 ---
+| patroni1 | 172.22.0.3 | Leader  | running   |  2 |             |     |            |     |
+| patroni3 | 172.22.0.7 | Replica | streaming |  2 |   0/40A4950 |   0 |  0/40A4950 |   0 |
+11:06:49.528236600 | leader=True server_addr=172.22.0.3 elapsed=0.005s
+11:06:49.528236600 ---
+| patroni1 | 172.22.0.3 | Leader  | running   |  2 |             |     |            |     |
+| patroni3 | 172.22.0.7 | Replica | streaming |  2 |   0/40A4950 |   0 |  0/40A4950 |   0 |
+11:06:50.724088000 | leader=True server_addr=172.22.0.3 elapsed=0.005s
+11:06:50.724088000 ---
+| patroni1 | 172.22.0.3 | Leader  | running   |  2 |             |     |            |     |
+| patroni3 | 172.22.0.7 | Replica | streaming |  2 |   0/40A4988 |   0 |  0/40A4988 |   0 |
+11:06:51.947863600 | leader=True server_addr=172.22.0.3 elapsed=0.004s
+11:06:51.947863600 ---
+| patroni1 | 172.22.0.3 | Leader  | running   |  2 |             |     |            |     |
+| patroni3 | 172.22.0.7 | Replica | streaming |  2 |   0/40A4988 |   0 |  0/40A4988 |   0 |
+11:06:53.149267800 | leader=True server_addr=172.22.0.3 elapsed=0.006s
+11:06:53.149267800 ---
+| patroni1 | 172.22.0.3 | Leader  | running   |  2 |             |     |            |     |
+| patroni3 | 172.22.0.7 | Replica | streaming |  2 |   0/40A4988 |   0 |  0/40A4988 |   0 |
+11:06:54.353550400 | leader=True server_addr=172.22.0.3 elapsed=0.005s
+11:06:54.353550400 ---
+| patroni1 | 172.22.0.3 | Leader  | running   |  2 |             |     |            |     |
+| patroni3 | 172.22.0.7 | Replica | streaming |  2 |   0/40A4988 |   0 |  0/40A4988 |   0 |
+11:06:55.575152600 | leader=True server_addr=172.22.0.3 elapsed=0.007s
+11:06:55.575152600 ---
+| patroni1 | 172.22.0.3 | Leader  | running   |  2 |             |     |            |     |
+| patroni3 | 172.22.0.7 | Replica | streaming |  2 |   0/40A4988 |   0 |  0/40A4988 |   0 |
+11:06:56.776278700 | leader=True server_addr=172.22.0.3 elapsed=0.006s
+11:06:56.776278700 ---
+| patroni1 | 172.22.0.3 | Leader  | running   |  2 |             |     |            |     |
+| patroni3 | 172.22.0.7 | Replica | streaming |  2 |   0/40A4988 |   0 |  0/40A4988 |   0 |
+11:06:58.006265600 | leader=True server_addr=172.22.0.3 elapsed=0.005s
+11:06:58.006265600 ---
+| patroni1 | 172.22.0.3 | Leader  | running   |  2 |             |     |            |     |
+| patroni3 | 172.22.0.7 | Replica | streaming |  2 |   0/40A4988 |   0 |  0/40A4988 |   0 |
+11:06:59.224905400 | leader=True server_addr=172.22.0.3 elapsed=0.009s
+11:06:59.224905400 ---
+| patroni1 | 172.22.0.3 | Leader  | running   |  2 |             |     |            |     |
+| patroni3 | 172.22.0.7 | Replica | streaming |  2 |   0/40A4988 |   0 |  0/40A4988 |   0 |
+11:07:00.494829700 | leader=True server_addr=172.22.0.3 elapsed=0.005s
+11:07:00.494829700 ---
+| patroni1 | 172.22.0.3 | Leader  | running   |  2 |             |     |            |     |
+| patroni3 | 172.22.0.7 | Replica | streaming |  2 |   0/40A4988 |   0 |  0/40A4988 |   0 |
+11:07:01.719613600 | leader=True server_addr=172.22.0.3 elapsed=0.008s
+11:07:01.719613600 ---
+| patroni1 | 172.22.0.3 | Leader  | running   |  2 |             |     |            |     |
+| patroni3 | 172.22.0.7 | Replica | streaming |  2 |   0/40A4988 |   0 |  0/40A4988 |   0 |
+11:07:02.949157800 | leader=True server_addr=172.22.0.3 elapsed=0.004s
+11:07:02.949157800 ---
+| patroni1 | 172.22.0.3 | Leader  | running   |  2 |             |     |            |     |
+| patroni3 | 172.22.0.7 | Replica | streaming |  2 |   0/40A4988 |   0 |  0/40A4988 |   0 |
+11:07:04.155357200 | leader=True server_addr=172.22.0.3 elapsed=0.004s
+11:07:04.155357200 ---
+| patroni1 | 172.22.0.3 | Leader  | running   |  2 |             |     |            |     |
+| patroni3 | 172.22.0.7 | Replica | streaming |  2 |   0/40A4988 |   0 |  0/40A4988 |   0 |
+11:07:05.347653800 | leader=True server_addr=172.22.0.3 elapsed=0.006s
+11:07:05.347653800 ---
+| patroni1 | 172.22.0.3 | Leader  | running   |  2 |             |     |            |     |
+| patroni3 | 172.22.0.7 | Replica | streaming |  2 |   0/40A4988 |   0 |  0/40A4988 |   0 |
+11:07:06.565553200 | leader=True server_addr=172.22.0.3 elapsed=0.006s
+11:07:06.565553200 ---
+| patroni1 | 172.22.0.3 | Leader  | running   |  2 |             |     |            |     |
+| patroni3 | 172.22.0.7 | Replica | streaming |  2 |   0/40A4988 |   0 |  0/40A4988 |   0 |
+11:07:07.784768100 | leader=True server_addr=172.22.0.3 elapsed=0.005s
+11:07:07.784768100 ---
+| patroni1 | 172.22.0.3 | Leader  | running   |  2 |             |     |            |     |
+| patroni3 | 172.22.0.7 | Replica | streaming |  2 |   0/40A4988 |   0 |  0/40A4988 |   0 |
+11:07:08.991363700 | leader=True server_addr=172.22.0.3 elapsed=0.006s
+11:07:08.991363700 ---
+| patroni1 | 172.22.0.3 | Leader  | running   |  2 |             |     |            |     |
+| patroni3 | 172.22.0.7 | Replica | streaming |  2 |   0/40A4988 |   0 |  0/40A4988 |   0 |
+11:07:10.187210800 | leader=True server_addr=172.22.0.3 elapsed=0.005s
+11:07:10.187210800 ---
+| patroni1 | 172.22.0.3 | Leader  | running   |  2 |             |     |            |     |
+| patroni3 | 172.22.0.7 | Replica | streaming |  2 |   0/40A4988 |   0 |  0/40A4988 |   0 |
+11:07:11.376364900 | leader=True server_addr=172.22.0.3 elapsed=0.005s
+11:07:11.376364900 ---
+| patroni1 | 172.22.0.3 | Leader  | running   |  2 |             |     |            |     |
+| patroni3 | 172.22.0.7 | Replica | streaming |  2 |   0/40A4988 |   0 |  0/40A4988 |   0 |
+11:07:12.582469300 | leader=True server_addr=172.22.0.3 elapsed=0.006s
+11:07:12.582469300 ---
+| patroni1 | 172.22.0.3 | Leader  | running   |  2 |             |     |            |     |
+| patroni3 | 172.22.0.7 | Replica | streaming |  2 |   0/40A4988 |   0 |  0/40A4988 |   0 |
+11:07:13.795393100 | leader=True server_addr=172.22.0.3 elapsed=0.005s
+11:07:13.795393100 ---
+| patroni1 | 172.22.0.3 | Leader  | running   |  2 |             |     |            |     |
+| patroni3 | 172.22.0.7 | Replica | streaming |  2 |   0/40A4988 |   0 |  0/40A4988 |   0 |
+11:07:15.019275200 | leader=True server_addr=172.22.0.3 elapsed=0.005s
+11:07:15.019275200 ---
+| patroni1 | 172.22.0.3 | Leader  | running   |  2 |             |     |            |     |
+| patroni3 | 172.22.0.7 | Replica | streaming |  2 |   0/40A4988 |   0 |  0/40A4988 |   0 |

@@ -1,0 +1,20 @@
+=== R14-01 BASELINE 11:02:30 ===
+healthy
+
+leader=True server_addr=172.22.0.4 elapsed=0.008s
+
+WROTE id=1 tag=baseline1 written_at=2026-09-13 05:32:30.450755+00:00 backend_pid=73 elapsed=0.009s
+
+served_by_replica=False elapsed=0.005s
+  id=1 tag=baseline1 written_at=2026-09-13 05:32:30.450755+00:00
+--- patronictl list ---
++ Cluster: demo (7684888192200712225) --------+----+-------------+-----+------------+-----+
+| Member   | Host       | Role    | State     | TL | Receive LSN | Lag | Replay LSN | Lag |
++----------+------------+---------+-----------+----+-------------+-----+------------+-----+
+| patroni1 | 172.22.0.3 | Replica | streaming |  1 |   0/4000060 |   0 |  0/4000060 |   0 |
+| patroni2 | 172.22.0.4 | Leader  | running   |  1 |             |     |            |     |
+| patroni3 | 172.22.0.7 | Replica | streaming |  1 |   0/4000060 |   0 |  0/4000060 |   0 |
++----------+------------+---------+-----------+----+-------------+-----+------------+-----+
+route-order bug fixed: /read-replica now correctly reaches a replica
+replica_max_id=1 in_recovery=True elapsed=0.006s
+

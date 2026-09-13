@@ -1,0 +1,19 @@
+﻿=== R10-02 POD SELF-HEALING ===
+--- BEFORE ---
+NAME                       READY   STATUS    RESTARTS   AGE   IP           NODE          NOMINATED NODE   READINESS GATES
+r10-app-65fd65fcb5-g9g8q   1/1     Running   0          24s   10.244.1.5   r10-worker2   <none>           <none>
+r10-app-65fd65fcb5-j8d5z   1/1     Running   0          24s   10.244.2.4   r10-worker    <none>           <none>
+r10-app-65fd65fcb5-rwttf   1/1     Running   0          24s   10.244.1.4   r10-worker2   <none>           <none>
+deleting pod: r10-app-65fd65fcb5-g9g8q
+--- AFTER (real replacement pod, DIFFERENT name) ---
+NAME                       READY   STATUS    RESTARTS   AGE   IP           NODE          NOMINATED NODE   READINESS GATES
+r10-app-65fd65fcb5-g4d4q   1/1     Running   0          34s   10.244.2.5   r10-worker    <none>           <none>
+r10-app-65fd65fcb5-j8d5z   1/1     Running   0          58s   10.244.2.4   r10-worker    <none>           <none>
+r10-app-65fd65fcb5-rwttf   1/1     Running   0          58s   10.244.1.4   r10-worker2   <none>           <none>
+LAST SEEN   TYPE      REASON      OBJECT                         MESSAGE
+58s         Normal    Scheduled   pod/r10-app-65fd65fcb5-g9g8q   Successfully assigned default/r10-app-65fd65fcb5-g9g8q to r10-worker2
+58s         Normal    Pulled      pod/r10-app-65fd65fcb5-g9g8q   Container image "r10-app:v1" already present on machine
+58s         Normal    Created     pod/r10-app-65fd65fcb5-g9g8q   Created container app
+58s         Normal    Started     pod/r10-app-65fd65fcb5-g9g8q   Started container app
+34s         Normal    Killing     pod/r10-app-65fd65fcb5-g9g8q   Stopping container app
+4s          Warning   Unhealthy   pod/r10-app-65fd65fcb5-g9g8q   Readiness probe failed: Get "http://10.244.1.5:8000/ready": dial tcp 10.244.1.5:8000: connect: connection refused

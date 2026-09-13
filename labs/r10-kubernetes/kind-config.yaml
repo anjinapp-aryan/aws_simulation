@@ -1,0 +1,14 @@
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: r10
+nodes:
+  - role: control-plane
+    extraPortMappings:
+      - containerPort: 30080   # app NodePort
+        hostPort: 65080
+      - containerPort: 30300   # grafana NodePort
+        hostPort: 65300
+      - containerPort: 30090   # prometheus NodePort
+        hostPort: 65090
+  - role: worker
+  - role: worker

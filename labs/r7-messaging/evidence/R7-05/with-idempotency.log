@@ -1,0 +1,13 @@
+=== R7-05 WITH idempotency, 18:41:46 ===
+published id=dup-order-B type=crash_idempotent seq=None
+waiting for crash+restart+redelivery cycle...
+consumer-1  | [consumer-1] 13:11:48 starting, connecting to RabbitMQ...
+consumer-1  | [consumer-1] 13:11:48 ready, consuming from 'orders'
+consumer-1  | [consumer-1] 13:11:48 CRASH_IDEMPOTENT id=dup-order-B - first time, writing side effect then hard-exiting BEFORE ack
+--- purging queue to stop the crash loop after enough evidence ---
+--- side effects log (should show dup-order-B only ONCE = idempotency worked) ---
+1789218708.939 dup-order-B crash-idempotent-first-time
+--- idempotency store ---
+dup-order-B
+=== R7-05 explicit dedup confirmation, 18:42:03 ===
+published id=dup-order-B type=crash_idempotent seq=None

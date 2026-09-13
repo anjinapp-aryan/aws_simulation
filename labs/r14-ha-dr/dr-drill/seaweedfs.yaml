@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: seaweedfs
+  namespace: backup-storage
+  labels: { run: seaweedfs }
+spec:
+  containers:
+    - name: seaweedfs
+      image: chrislusf/seaweedfs
+      args: ["server", "-s3", "-s3.port=8333", "-s3.config=/config/config.json", "-dir=/data"]
+      ports: [{ containerPort: 8333 }]
+      volumeMounts:
+        - { name: s3config, mountPath: /config }
+  volumes:
+    - name: s3config
+      configMap: { name: seaweedfs-s3-config }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: seaweedfs
+  namespace: backup-storage
+spec:
+  selector: { run: seaweedfs }
+  ports: [{ port: 8333, targetPort: 8333 }]

@@ -1,0 +1,6 @@
+=== R8-09 SAMPLING, 19:17:55 ===
+--- full sampling (ratio=1.0), 20 requests ---
+restarting app with SAMPLE_RATIO=1.0
+trace count BEFORE: 15
+trace count AFTER 20 requests: 35
+new traces retained: 20 out of 20 requests sent (ratio=1.0)

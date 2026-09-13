@@ -1,0 +1,75 @@
+=== R7-03 POISON MESSAGE -> DLQ, 18:40:39 ===
+published id=poison-1789218639 type=poison seq=None
+watching all queues for 25s...
+18:40:42
+  orders           ready=0
+  orders-dlq       ready=0
+  orders-retry-1   ready=0
+  orders-retry-2   ready=0
+  orders-retry-3   ready=0
+18:40:44
+  orders           ready=0
+  orders-dlq       ready=0
+  orders-retry-1   ready=0
+  orders-retry-2   ready=0
+  orders-retry-3   ready=0
+18:40:46
+  orders           ready=0
+  orders-dlq       ready=0
+  orders-retry-1   ready=1
+  orders-retry-2   ready=1
+  orders-retry-3   ready=0
+18:40:48
+  orders           ready=0
+  orders-dlq       ready=0
+  orders-retry-1   ready=1
+  orders-retry-2   ready=1
+  orders-retry-3   ready=0
+18:40:50
+  orders           ready=0
+  orders-dlq       ready=0
+  orders-retry-1   ready=0
+  orders-retry-2   ready=1
+  orders-retry-3   ready=0
+18:40:53
+  orders           ready=0
+  orders-dlq       ready=0
+  orders-retry-1   ready=0
+  orders-retry-2   ready=1
+  orders-retry-3   ready=0
+18:40:55
+  orders           ready=0
+  orders-dlq       ready=0
+  orders-retry-1   ready=0
+  orders-retry-2   ready=0
+  orders-retry-3   ready=1
+18:40:57
+  orders           ready=0
+  orders-dlq       ready=0
+  orders-retry-1   ready=0
+  orders-retry-2   ready=0
+  orders-retry-3   ready=1
+18:40:59
+  orders           ready=0
+  orders-dlq       ready=0
+  orders-retry-1   ready=0
+  orders-retry-2   ready=0
+  orders-retry-3   ready=1
+18:41:01
+  orders           ready=0
+  orders-dlq       ready=0
+  orders-retry-1   ready=0
+  orders-retry-2   ready=0
+  orders-retry-3   ready=1
+18:41:03
+  orders           ready=0
+  orders-dlq       ready=0
+  orders-retry-1   ready=0
+  orders-retry-2   ready=0
+  orders-retry-3   ready=1
+18:41:06
+  orders           ready=0
+  orders-dlq       ready=1
+  orders-retry-1   ready=0
+  orders-retry-2   ready=0
+  orders-retry-3   ready=0

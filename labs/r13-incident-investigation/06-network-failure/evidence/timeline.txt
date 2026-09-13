@@ -1,0 +1,18 @@
+=== BASELINE 10:44:09 frontend->backend ALLOWED, backend->database ALLOWED ===
+10:44:09 [inject] rolling out backend-v2 (real label typo: tier=backend-v2 instead of tier=backend)
+deployment.apps/backend-v2 created
+pod/backend-v2-787f6458b4-dx9fg condition met
+10:44:10 [inject] testing database connectivity from BOTH backend replicas
+--- original backend pod (tier=backend) ---
+ALLOWED
+--- backend-v2 pod (tier=backend-v2, the new rollout) ---
+DENIED timed out
+10:44:15 [inject] done, see evidence/connectivity.txt
+10:44:46 [fix] relabeling backend-v2's pod template: tier backend-v2 -> backend
+deployment.apps/backend-v2 patched
+Waiting for deployment "backend-v2" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "backend-v2" rollout to finish: 1 old replicas are pending termination...
+deployment "backend-v2" successfully rolled out
+10:44:50 [fix] verifying recovery
+STILL DENIED timed out
+10:45:10 [fix] re-verified against the correct (new, already-relabeled) pod: ALLOWED (fixed). Earlier STILL DENIED was testing the old terminating pod, a stale pod-selection artifact in the fix script, not a real re-failure.

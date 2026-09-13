@@ -1,0 +1,37 @@
+=== R7-05 WITHOUT idempotency, 18:41:20 ===
+published id=dup-order-A type=crash seq=None
+waiting for crash+restart+redelivery cycle...
+--- consumer log ---
+consumer-1  | [consumer-1] 13:11:21 CRASH id=dup-order-A - writing side effect then hard-exiting BEFORE ack
+consumer-1  | [consumer-1] 13:11:22 starting, connecting to RabbitMQ...
+consumer-1  | [consumer-1] 13:11:22 ready, consuming from 'orders'
+consumer-1  | [consumer-1] 13:11:22 CRASH id=dup-order-A - writing side effect then hard-exiting BEFORE ack
+consumer-1  | [consumer-1] 13:11:22 starting, connecting to RabbitMQ...
+consumer-1  | [consumer-1] 13:11:22 ready, consuming from 'orders'
+consumer-1  | [consumer-1] 13:11:22 CRASH id=dup-order-A - writing side effect then hard-exiting BEFORE ack
+consumer-1  | [consumer-1] 13:11:23 starting, connecting to RabbitMQ...
+consumer-1  | [consumer-1] 13:11:23 ready, consuming from 'orders'
+consumer-1  | [consumer-1] 13:11:23 CRASH id=dup-order-A - writing side effect then hard-exiting BEFORE ack
+consumer-1  | [consumer-1] 13:11:24 starting, connecting to RabbitMQ...
+consumer-1  | [consumer-1] 13:11:24 ready, consuming from 'orders'
+consumer-1  | [consumer-1] 13:11:24 CRASH id=dup-order-A - writing side effect then hard-exiting BEFORE ack
+consumer-1  | [consumer-1] 13:11:25 starting, connecting to RabbitMQ...
+consumer-1  | [consumer-1] 13:11:25 ready, consuming from 'orders'
+consumer-1  | [consumer-1] 13:11:25 CRASH id=dup-order-A - writing side effect then hard-exiting BEFORE ack
+consumer-1  | [consumer-1] 13:11:29 starting, connecting to RabbitMQ...
+consumer-1  | [consumer-1] 13:11:29 ready, consuming from 'orders'
+consumer-1  | [consumer-1] 13:11:29 CRASH id=dup-order-A - writing side effect then hard-exiting BEFORE ack
+--- side effects log (should show dup-order-A TWICE = duplicate business processing) ---
+1789218681.681 dup-order-A crash-no-idempotency
+1789218682.069 dup-order-A crash-no-idempotency
+1789218682.480 dup-order-A crash-no-idempotency
+1789218683.094 dup-order-A crash-no-idempotency
+1789218684.079 dup-order-A crash-no-idempotency
+1789218685.892 dup-order-A crash-no-idempotency
+1789218689.309 dup-order-A crash-no-idempotency
+NOTE: crash-type poison message caused a genuine infinite crash-restart loop (7+ redeliveries observed) since the message is never acked - a real, distinct failure mode from R7-03's safe nack-based poison handling. Clearing queue before WITH-idempotency test.
+=== real lesson found: purge doesn't clear unacked/in-flight messages ===
+dup-order-A's crash-message kept redelivering after an earlier 'purge' because
+it was always mid-delivery (unacked) at purge time - RabbitMQ purge only
+removes messages in 'ready' state, not ones currently out for delivery.
+Fix: drain it with an actual ack (not requeue) via the Management API get endpoint.

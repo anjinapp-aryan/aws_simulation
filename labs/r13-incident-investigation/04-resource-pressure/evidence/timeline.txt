@@ -1,0 +1,9 @@
+=== BASELINE 08:57:58 RESTARTS=0 ===
+08:57:58 [inject] running stress-ng --vm-bytes 300M inside pod r10-app-76f9494cd7-5tvkk (limit is 128Mi)
+08:57:58 [inject] polling pod status every 3s for 45s
+stress-ng: info:  [17] setting to a 30 secs run per stressor
+stress-ng: info:  [17] dispatching hogs: 1 vm
+stress-ng: info:  [23] vm: using 300M per stressor instance (total 300M of 5.75G available memory)
+command terminated with exit code 137
+08:58:46 [inject] done, see evidence/pod-watch.txt
+08:59:09 [fix] verifying recovery: pod self-healed automatically (orchestrator-managed restart, no manual action needed)

@@ -1,0 +1,11 @@
+=== BASELINE 08:49:43 MISS=111ms HIT=3ms ===
+08:52:37 [fix] restoring sane maxmemory (256mb)
+time="2026-09-13T08:52:37+05:30" level=warning msg="D:\\WORK_SPACE\\aws_simulation\\labs\\r13-incident-investigation\\07-cache-failure\\docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+OK
+08:52:37 [fix] verifying recovery: same item requested twice should now HIT
+MISS source=db value=item-fix1 computed_at=2026-09-13 03:22:37.436547+00:00 elapsed=0.111s
+
+HIT source=cache value=item-fix1 computed_at=2026-09-13 03:22:37.436547+00:00 elapsed=0.003s
+
+time="2026-09-13T08:52:37+05:30" level=warning msg="D:\\WORK_SPACE\\aws_simulation\\labs\\r13-incident-investigation\\07-cache-failure\\docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+1

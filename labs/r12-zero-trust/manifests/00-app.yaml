@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  labels: { app: frontend, tier: frontend }
+spec:
+  replicas: 1
+  selector: { matchLabels: { app: frontend } }
+  template:
+    metadata: { labels: { app: frontend, tier: frontend } }
+    spec:
+      containers:
+        - name: app
+          image: r12-app:v1
+          imagePullPolicy: IfNotPresent
+          ports: [{ containerPort: 8000 }]
+          env: [{ name: APP_VERSION, value: frontend }]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+spec:
+  selector: { app: frontend }
+  ports: [{ port: 80, targetPort: 8000 }]
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  labels: { app: backend, tier: backend }
+spec:
+  replicas: 1
+  selector: { matchLabels: { app: backend } }
+  template:
+    metadata: { labels: { app: backend, tier: backend } }
+    spec:
+      containers:
+        - name: app
+          image: r12-app:v1
+          imagePullPolicy: IfNotPresent
+          ports: [{ containerPort: 8000 }]
+          env: [{ name: APP_VERSION, value: backend }]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+spec:
+  selector: { app: backend }
+  ports: [{ port: 80, targetPort: 8000 }]
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: database
+  labels: { app: database, tier: database }
+spec:
+  replicas: 1
+  selector: { matchLabels: { app: database } }
+  template:
+    metadata: { labels: { app: database, tier: database } }
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:16-alpine
+          ports: [{ containerPort: 5432 }]
+          env:
+            - { name: POSTGRES_DB, value: appdb }
+            - { name: POSTGRES_USER, value: appuser }
+            - { name: POSTGRES_PASSWORD, value: apppass }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: database
+spec:
+  selector: { app: database }
+  ports: [{ port: 5432, targetPort: 5432 }]

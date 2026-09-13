@@ -1,0 +1,3 @@
+messages: 58 messages_ready: 57 consumers: 1
+message_stats ack rate (if present): 0.2
+message_stats publish rate: 2.6

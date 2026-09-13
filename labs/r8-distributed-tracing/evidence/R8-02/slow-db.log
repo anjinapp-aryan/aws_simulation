@@ -1,0 +1,15 @@
+=== R8-02 SLOW DB, 19:15:14 ===
+--- baseline (no latency) ---
+{"order_id": "2", "value": "order-2 computed_at=2026-09-12 13:45:14.985355+00:00", "trace_id": "e06670918a401cf3e7ba0a86ae4f1c0d", "elapsed": 0.073}
+(HTTP 200, 0.078305s)
+{"attributes":{"latency":800,"jitter":50},"name":"latency","type":"latency","stream":"downstream","toxicity":1}
+--- with 800ms DB latency injected ---
+{"order_id": "2", "value": "order-2 computed_at=2026-09-12 13:45:18.796697+00:00", "trace_id": "54ebcd21edadd11e99a47aad28c51d7c", "elapsed": 4.041}
+(HTTP 200, 4.047842s)
+trace_id=54ebcd21edadd11e99a47aad28c51d7c
+--- jaeger span breakdown (which span dominates?) ---
+  checkout             service=r8-app       duration_us=4041215
+  cache-lookup         service=r8-app       duration_us=3338
+  db-query             service=r8-app       duration_us=4026955
+  queue-publish        service=r8-app       duration_us=10212
+

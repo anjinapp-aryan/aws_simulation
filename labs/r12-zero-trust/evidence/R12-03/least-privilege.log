@@ -1,0 +1,18 @@
+=== R12-03 LEAST-PRIVILEGE ALLOW (core zero-trust proof), 22:54:33 ===
+networkpolicy.networking.k8s.io/allow-dns-egress created
+networkpolicy.networking.k8s.io/allow-frontend-to-backend created
+networkpolicy.networking.k8s.io/allow-frontend-egress-to-backend created
+networkpolicy.networking.k8s.io/allow-backend-to-database created
+networkpolicy.networking.k8s.io/allow-backend-egress-to-database created
+--- connectivity (expect: frontend->backend ALLOWED, backend->database ALLOWED, frontend->database DENIED) ---
+--- frontend -> backend (expected allowed) ---
+HTTP 200 (0.002029s)
+--- backend -> database (expected allowed, real TCP probe) ---
+TCP connect OK
+--- frontend -> database DIRECT (expected DENIED - zero trust) ---
+TCP connect FAILED: TimeoutError: timed out
+Sep 12 17:24:45.668: default/frontend-64c7797d9f-ntxh6:35368 (ID:9268) <> default/database-6d64fd885d-jzngt:5432 (ID:26264) policy-verdict:none EGRESS DENIED (TCP Flags: SYN)
+Sep 12 17:24:45.668: default/frontend-64c7797d9f-ntxh6:35368 (ID:9268) <> default/database-6d64fd885d-jzngt:5432 (ID:26264) Policy denied DROPPED (TCP Flags: SYN)
+Sep 12 17:24:46.110: 10.244.1.133:50602 (host) <- 10.244.1.244:4240 (health) to-stack FORWARDED (TCP Flags: ACK)
+--
+Sep 12 17:24:46.683: default/frontend-64c7797d9f-ntxh6:35368 (ID:9268) <> default/database-6d64fd885d-jzngt:5432 (ID:26264) policy-verdict:none EGRESS DENIED (TCP Flags: SYN)

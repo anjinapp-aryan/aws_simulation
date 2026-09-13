@@ -1,0 +1,8 @@
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: r12
+networking:
+  disableDefaultCNI: true   # real requirement - Cilium replaces kindnet, which does not enforce NetworkPolicies at all
+nodes:
+  - role: control-plane
+  - role: worker

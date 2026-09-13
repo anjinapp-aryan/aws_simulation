@@ -1,0 +1,14 @@
+producer response: {"order_id": "async-1789220769", "value": "order-async-1789220769 computed_at=2026-09-12 13:46:09.408618+00:00", "trace_id": "0a64384f775704b61887cda883151d4b", "elapsed": 0.071}
+trace_id=0a64384f775704b61887cda883151d4b
+--- jaeger trace detail (should show BOTH r8-app and r8-consumer spans) ---
+services in this trace: {'r8-app'}
+ - checkout service= r8-app
+ - cache-lookup service= r8-app
+ - db-query service= r8-app
+ - queue-publish service= r8-app
+services in this trace: {'r8-app', 'r8-consumer'}
+ - checkout service= r8-app
+ - cache-lookup service= r8-app
+ - db-query service= r8-app
+ - queue-publish service= r8-app
+ - consume-order service= r8-consumer

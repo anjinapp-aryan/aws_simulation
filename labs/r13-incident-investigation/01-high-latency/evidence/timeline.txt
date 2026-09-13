@@ -1,0 +1,14 @@
+=== BASELINE 23:14:29 ===
+checkout: HTTP 200 time=0.071336s
+checkout: HTTP 200 time=0.073909s
+checkout: HTTP 200 time=0.068491s
+23:14:30 [inject] adding 400ms latency toxic to the 'db' Toxiproxy proxy
+{"attributes":{"latency":400,"jitter":50},"name":"latency","type":"latency","stream":"downstream","toxicity":1}
+23:14:30 [inject] generating concurrent checkout load (20 concurrent, 60 total requests) to saturate the 5-connection pgbouncer pool
+23:14:44 [inject] done. See evidence/load-results.txt
+23:15:56 [fix] removing 'latency' toxic from 'db' proxy (immediate mitigation)
+
+23:15:56 [fix] verifying recovery
+checkout: HTTP 200 time=0.077325s
+checkout: HTTP 200 time=0.075011s
+checkout: HTTP 200 time=0.075003s

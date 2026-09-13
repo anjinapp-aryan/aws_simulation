@@ -1,0 +1,16 @@
+=== R8-06 CONSUMER FAILURE, 19:16:33 ===
+--- publish 3 requests while consumer is down ---
+cons-1 660380284b89ebd65c69458b0b321a15
+cons-2 bec993f559a37a4b925db3a51d39e703
+cons-3 b0e2658198e2a7d998ceadb3e6a8bd22
+--- queue depth during outage ---
+ready= 0
+--- queue depth after consumer recovery ---
+ready= 0
+--- queue depth during outage (after allowing for stats refresh lag) ---
+ready= 0
+--- queue depth after consumer recovery ---
+ready= 3
+=== R8-06 real conclusion (verified via authoritative consumer logs, not the laggy Management API snapshot) ===
+cons-1/2/3 processed at 13:46:37 (right after first restart), cons-4/5/6 processed at 13:46:56 (right after second restart).
+Real: backlog fully drained both times, near-instantly. The 'ready=3' reading was the same RabbitMQ Management API ~5s stats-refresh lag already documented in R7 - not a functional bug, just an evidence-gathering timing lesson: use the broker's own consumer log / a repeated poll, not a single snapshot query, right after an action.

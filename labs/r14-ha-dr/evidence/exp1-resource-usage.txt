@@ -1,0 +1,7 @@
+demo-etcd2	2.23%	28.48MiB / 15.43GiB
+demo-etcd1	3.17%	16.98MiB / 15.43GiB
+demo-patroni1	0.34%	60.91MiB / 15.43GiB
+demo-patroni3	0.31%	61.3MiB / 15.43GiB
+demo-patroni2	0.06%	104.5MiB / 15.43GiB
+demo-haproxy	0.17%	38.64MiB / 15.43GiB
+demo-etcd3	2.52%	16.7MiB / 15.43GiB

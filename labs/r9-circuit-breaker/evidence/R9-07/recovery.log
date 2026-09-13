@@ -1,0 +1,7 @@
+=== R9-07 ENVOY RECOVERY, 19:35:18 ===
+ejections before: cluster.app_cluster.outlier_detection.ejections_enforced_total: 5
+req 1: HTTP 200 (0.040093s)
+req 2: HTTP 200 (0.035011s)
+req 3: HTTP 200 (0.032746s)
+ejections after 3 real successful requests: cluster.app_cluster.outlier_detection.ejections_enforced_total: 5 (should be unchanged - no new failures)
+app_cluster::172.22.0.9:8000::health_flags::healthy

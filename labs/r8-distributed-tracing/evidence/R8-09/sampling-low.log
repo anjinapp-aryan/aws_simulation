@@ -1,0 +1,5 @@
+--- low sampling (ratio=0.1), 20 requests ---
+restarting app with SAMPLE_RATIO=0.1
+trace count BEFORE: 35
+trace count AFTER 20 requests: 36
+new traces retained: 1 out of 20 requests sent (ratio=0.1)

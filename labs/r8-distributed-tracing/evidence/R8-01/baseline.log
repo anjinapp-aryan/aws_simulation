@@ -1,0 +1,9 @@
+=== R8-01 NORMAL TRACE, 19:15:03 ===
+{"order_id": "1", "value": "order-1 computed_at=2026-09-12 13:45:03.383285+00:00", "trace_id": "c227ba1faa27fa161cbe508376de85ad", "elapsed": 0.066}
+(HTTP 200, 0.070262s)
+spans: 5
+  db-query             service=r8-app       duration_us=58207
+  cache-lookup         service=r8-app       duration_us=1933
+  queue-publish        service=r8-app       duration_us=5165
+  checkout             service=r8-app       duration_us=65706
+  consume-order        service=r8-consumer  duration_us=50352

@@ -1,0 +1,28 @@
+=== R7-02 CONSUMER DOWN / BACKLOG, 18:39:41 ===
+18:39:42 consumer stopped
+--- producing 10 messages while consumer is down ---
+published id=backlog-1 type=normal seq=None
+published id=backlog-2 type=normal seq=None
+published id=backlog-3 type=normal seq=None
+published id=backlog-4 type=normal seq=None
+published id=backlog-5 type=normal seq=None
+published id=backlog-6 type=normal seq=None
+published id=backlog-7 type=normal seq=None
+published id=backlog-8 type=normal seq=None
+published id=backlog-9 type=normal seq=None
+published id=backlog-10 type=normal seq=None
+--- queue state DURING outage ---
+ready= 8 consumers= 0
+=== R7-02 recheck (management stats have ~5s refresh lag - real, not a bug) ===
+ready=10 unacked=0 total=10 consumers=0  <- confirmed correct after refresh
+
+=== R7-02 RECOVERY, 18:40:23 ===
+18:40:24 consumer started
+18:40:25 queue depth: 10
+18:40:26 queue depth: 10
+18:40:28 queue depth: 10
+18:40:29 queue depth: 10
+18:40:30 queue depth: 0
+18:40:31 queue depth: 0
+18:40:32 queue depth: 0
+18:40:33 queue depth: 0

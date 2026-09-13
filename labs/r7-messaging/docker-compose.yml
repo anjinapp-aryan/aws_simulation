@@ -1,0 +1,81 @@
+# R7 - Async messaging reliability (SQS/DLQ-equivalent) simulation, $0, local.
+# Reused unmodified: rabbitmq:4-management-alpine (real broker + real bundled
+# Management UI + built-in rabbitmq_prometheus plugin - no custom dashboard,
+# no third-party/archived exporter), ghcr.io/shopify/toxiproxy (R4/R5/R6
+# pattern, new target: AMQP port), prom/prometheus, grafana/grafana,
+# amir20/dozzle.
+# Adapted: producer.py/consumer.py (~130 lines total) - thin pika adapters.
+# All retry-delay/DLQ/redelivery behavior is real RabbitMQ mechanics (real
+# per-queue TTL, real dead-lettering, real unacked-message requeue on a
+# dropped connection) driven by this thin glue, not a custom broker.
+version: "3.8"
+
+services:
+  rabbitmq:
+    image: rabbitmq:4-management-alpine
+    volumes:
+      - ./rabbitmq/enabled_plugins:/etc/rabbitmq/enabled_plugins:ro
+      - ./rabbitmq/rabbitmq.conf:/etc/rabbitmq/conf.d/10-prometheus.conf:ro
+    ports:
+      - "62672:15672"   # Management UI
+      - "62692:15692"   # built-in Prometheus metrics
+    networks: [r7net]
+
+  toxiproxy:
+    image: ghcr.io/shopify/toxiproxy:2.9.0
+    ports:
+      - "62474:8474"    # control API
+    depends_on: [rabbitmq]
+    networks: [r7net]
+
+  producer:
+    build: ./producer
+    environment:
+      RABBIT_HOST: toxiproxy
+      RABBIT_PORT: "5672"
+    depends_on: [toxiproxy]
+    networks: [r7net]
+
+  consumer:
+    build: ./consumer
+    environment:
+      RABBIT_HOST: toxiproxy
+      RABBIT_PORT: "5672"
+      CONSUMER_ID: consumer-1
+      PYTHONUNBUFFERED: "1"
+    volumes:
+      - ./data:/data
+    depends_on: [toxiproxy]
+    restart: always
+    networks: [r7net]
+
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    ports:
+      - "62090:9090"
+    networks: [r7net]
+
+  grafana:
+    image: grafana/grafana:latest
+    environment:
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: "Admin"
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+    ports:
+      - "62300:3000"
+    networks: [r7net]
+
+  dozzle:
+    image: amir20/dozzle:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    ports:
+      - "62888:8080"
+    networks: [r7net]
+
+networks:
+  r7net:
+    driver: bridge

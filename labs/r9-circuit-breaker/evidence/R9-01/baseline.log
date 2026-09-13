@@ -1,0 +1,27 @@
+=== R9-01 BASELINE, 19:30:58 ===
+--- app breaker status (should be closed) ---
+{
+    "state": "closed",
+    "fail_counter": 0,
+    "fail_max": 3,
+    "reset_timeout": 10
+}
+--- direct app requests (breaker-protected path) ---
+{"order_id": "1", "value": "order-1 computed_at=2026-09-12 14:00:59.107782+00:00", "protected": true, "breaker_state": "closed", "elapsed": 0.029}
+--- via Envoy (unprotected /order-raw path) ---
+{"order_id": "1", "value": "order-1 computed_at=2026-09-12 14:00:59.184113+00:00", "protected": false, "elapsed": 0.031}
+--- envoy cluster health ---
+app_cluster::outlier::success_rate_average::-1
+app_cluster::outlier::success_rate_ejection_threshold::-1
+app_cluster::outlier::local_origin_success_rate_average::-1
+app_cluster::outlier::local_origin_success_rate_ejection_threshold::-1
+app_cluster::172.22.0.9:8000::health_flags::healthy
+=== R9-01 baseline load via vegeta ===
+Requests      [total, rate, throughput]         50, 10.20, 10.14
+Duration      [total, attack, wait]             4.93s, 4.9s, 29.957ms
+Latencies     [min, mean, 50, 90, 95, 99, max]  28.978ms, 32.847ms, 32.349ms, 36.751ms, 37.855ms, 42.141ms, 42.141ms
+Bytes In      [total, mean]                     5990, 119.80
+Bytes Out     [total, mean]                     0, 0.00
+Success       [ratio]                           100.00%
+Status Codes  [code:count]                      200:50  
+Error Set:

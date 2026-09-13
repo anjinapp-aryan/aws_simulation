@@ -1,0 +1,56 @@
+=== R10-07 HPA SCALE-OUT/SCALE-IN ===
+--- before ---
+HPA: cpu 4%/50%, replicas=2 (from kubectl top/get hpa above)
+20:20:52 starting real CPU load via stress-ng in both pods (cpu requests=50m, limits=250m)
+started stress-ng in: r10-app-66fd5b64bf-7bqr4 r10-app-66fd5b64bf-wxgvf
+20:21:07  r10-app   Deployment/r10-app   cpu: 5%/50%   2     6     2     5m21s
+20:21:13  r10-app   Deployment/r10-app   cpu: 5%/50%   2     6     2     5m27s
+20:21:19  r10-app   Deployment/r10-app   cpu: 176%/50%   2     6     2     5m33s
+20:21:25  r10-app   Deployment/r10-app   cpu: 176%/50%   2     6     2     5m39s
+20:21:31  r10-app   Deployment/r10-app   cpu: 176%/50%   2     6     2     5m45s
+20:21:37  r10-app   Deployment/r10-app   cpu: 501%/50%   2     6     6     5m51s
+20:21:43  r10-app   Deployment/r10-app   cpu: 501%/50%   2     6     6     5m57s
+20:21:49  r10-app   Deployment/r10-app   cpu: 252%/50%   2     6     6     6m4s
+20:21:56  r10-app   Deployment/r10-app   cpu: 252%/50%   2     6     6     6m10s
+20:22:02  r10-app   Deployment/r10-app   cpu: 169%/50%   2     6     6     6m16s
+NAME                       READY   STATUS    RESTARTS   AGE     IP            NODE          NOMINATED NODE   READINESS GATES
+r10-app-66fd5b64bf-7bqr4   1/1     Running   0          4m21s   10.244.2.6    r10-worker    <none>           <none>
+r10-app-66fd5b64bf-8kwjj   1/1     Running   0          52s     10.244.2.10   r10-worker    <none>           <none>
+r10-app-66fd5b64bf-sctb8   1/1     Running   0          52s     10.244.1.7    r10-worker2   <none>           <none>
+r10-app-66fd5b64bf-whzsn   1/1     Running   0          52s     10.244.1.8    r10-worker2   <none>           <none>
+r10-app-66fd5b64bf-wxgvf   1/1     Running   0          2m5s    10.244.2.9    r10-worker    <none>           <none>
+r10-app-66fd5b64bf-xjs59   1/1     Running   0          52s     10.244.1.9    r10-worker2   <none>           <none>
+
+6m22s       Normal    ScalingReplicaSet              deployment/r10-app                Scaled up replica set 
+r10-app-65fd65fcb5 to 3
+5m22s       Normal    ScalingReplicaSet              deployment/r10-app                Scaled down replica set 
+r10-app-65fd65fcb5 to 2 from 3
+4m21s       Normal    ScalingReplicaSet              deployment/r10-app                Scaled up replica set 
+r10-app-7b8cd8c7c8 to 1
+4m21s       Normal    ScalingReplicaSet              deployment/r10-app                Scaled down replica set 
+r10-app-7b8cd8c7c8 to 0 from 1
+4m21s       Normal    ScalingReplicaSet              deployment/r10-app                Scaled up replica set 
+r10-app-66fd5b64bf to 1 from 0
+4m19s       Normal    ScalingReplicaSet              deployment/r10-app                Scaled down replica set 
+r10-app-65fd65fcb5 to 1 from 2
+4m19s       Normal    ScalingReplicaSet              deployment/r10-app                Scaled up replica set 
+r10-app-66fd5b64bf to 2 from 1
+4m17s       Normal    ScalingReplicaSet              deployment/r10-app                Scaled down replica set 
+r10-app-65fd65fcb5 to 0 from 1
+52s         Normal    ScalingReplicaSet              deployment/r10-app                Scaled up replica set 
+r10-app-66fd5b64bf to 6 from 2
+
+
+--- waiting for load to stop (stress-ng timeout=90s) and watching scale-in ---
+20:22:24  r10-app   Deployment/r10-app   cpu: 169%/50%   2     6     6     6m38s
+20:22:34  r10-app   Deployment/r10-app   cpu: 170%/50%   2     6     6     6m48s
+20:22:44  r10-app   Deployment/r10-app   cpu: 170%/50%   2     6     6     6m58s
+20:22:54  r10-app   Deployment/r10-app   cpu: 159%/50%   2     6     6     7m8s
+20:23:04  r10-app   Deployment/r10-app   cpu: 18%/50%   2     6     6     7m18s
+20:23:14  r10-app   Deployment/r10-app   cpu: 18%/50%   2     6     6     7m28s
+20:23:24  r10-app   Deployment/r10-app   cpu: 4%/50%   2     6     6     7m38s
+20:23:34  r10-app   Deployment/r10-app   cpu: 4%/50%   2     6     3     7m49s
+20:23:45  r10-app   Deployment/r10-app   cpu: 4%/50%   2     6     3     7m59s
+20:23:55  r10-app   Deployment/r10-app   cpu: 4%/50%   2     6     2     8m9s
+20:24:05  r10-app   Deployment/r10-app   cpu: 5%/50%   2     6     2     8m19s
+20:24:15  r10-app   Deployment/r10-app   cpu: 5%/50%   2     6     2     8m29s

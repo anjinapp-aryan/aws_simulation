@@ -1,0 +1,19 @@
+=== R7-08b ORDERING - 2 concurrent consumers, variable delay, 18:44:47 ===
+published id=order-seq-1 type=ordered seq=1
+published id=order-seq-2 type=ordered seq=2
+published id=order-seq-3 type=ordered seq=3
+published id=order-seq-4 type=ordered seq=4
+published id=order-seq-5 type=ordered seq=5
+--- completion order (2 concurrent consumers, seq2/seq1 fast, seq1/3/5 slow) ---
+1789218893.944 seq=1 consumer=consumer-1
+1789218894.446 seq=2 consumer=consumer-2
+1789218895.749 seq=3 consumer=consumer-1
+1789218896.232 seq=4 consumer=consumer-2
+1789218897.509 seq=5 consumer=consumer-1
+NOTE: first concurrent-consumer run's completion order (1,2,3,4,5) doesn't prove anything - each produce.sh invocation is a separate docker container (~0.8s overhead), so messages weren't actually published close enough together to race. Redesigning: publish all 5 in one connection, back-to-back, for a real concurrency test.
+--- real completion order, 2 concurrent consumers, true back-to-back publish ---
+1789218926.354 seq=2 consumer=consumer-1
+1789218926.751 seq=1 consumer=consumer-2
+1789218926.854 seq=4 consumer=consumer-2
+1789218926.854 seq=3 consumer=consumer-1
+1789218927.358 seq=5 consumer=consumer-1

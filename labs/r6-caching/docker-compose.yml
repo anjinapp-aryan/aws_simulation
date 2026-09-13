@@ -1,0 +1,172 @@
+# R6 - Caching layer (ElastiCache-equivalent) simulation, $0, entirely local.
+# Reused unmodified: valkey/valkey (BSD-3-Clause - chosen over redis/redis
+# because current Redis is tri-licensed RSALv2/SSPLv1/AGPLv3, verified by
+# reading the actual LICENSE.txt, not the GitHub badge; Valkey is the same
+# real BSD-3 Redis 7.2 codebase, and AWS ElastiCache itself now offers
+# Valkey as an engine choice), oliver006/redis_exporter, rediscommander/
+# redis-commander, traefik:v3.1 (R2/R3/R5 file-provider pattern),
+# postgres:16-alpine, edoburu/pgbouncer, prometheuscommunity/postgres-exporter,
+# prom/prometheus, grafana/grafana, amir20/dozzle.
+# Adapted: app/server.py = R4/R5's server.py + one new /cached-item endpoint
+# (~30 lines) implementing the real cache-aside pattern.
+version: "3.8"
+
+services:
+  traefik:
+    image: traefik:v3.1
+    command:
+      - "--api.insecure=true"
+      - "--providers.file.filename=/etc/traefik/dynamic.yml"
+      - "--providers.file.watch=true"
+      - "--entrypoints.web.address=:80"
+      - "--log.level=INFO"
+      - "--accesslog=true"
+    ports:
+      - "61080:80"
+      - "61081:8080"
+    volumes:
+      - ./traefik-dynamic.yml:/etc/traefik/dynamic.yml:ro
+    networks: [r6net]
+    depends_on: [app]
+
+  app:
+    build: ./app
+    environment:
+      DB_HOST: pgbouncer
+      DB_PORT: "6432"
+      DB_NAME: appdb
+      DB_USER: appuser
+      DB_PASSWORD: apppass
+      CACHE_HOST: toxiproxy
+      CACHE_PORT: "6379"
+      CACHE_TTL_SECONDS: "15"
+      PYTHONUNBUFFERED: "1"
+    ports:
+      - "61000:8000"
+    depends_on: [pgbouncer, toxiproxy]
+    networks: [r6net]
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: appdb
+      POSTGRES_USER: appuser
+      POSTGRES_PASSWORD: apppass
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U appuser -d appdb"]
+      interval: 2s
+      timeout: 2s
+      retries: 15
+    networks: [r6net]
+
+  pgbouncer:
+    image: edoburu/pgbouncer:latest
+    volumes:
+      - ./pgbouncer/pgbouncer.ini:/etc/pgbouncer/pgbouncer.ini:ro
+      - ./pgbouncer/userlist.txt:/etc/pgbouncer/userlist.txt:ro
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks: [r6net]
+
+  postgres_exporter:
+    image: prometheuscommunity/postgres-exporter:latest
+    environment:
+      DATA_SOURCE_NAME: "postgresql://appuser:apppass@postgres:5432/appdb?sslmode=disable"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks: [r6net]
+
+  valkey-primary:
+    image: valkey/valkey:8-alpine
+    command: valkey-server --appendonly no
+    networks:
+      r6net:
+        ipv4_address: 172.28.0.10
+
+  valkey-replica:
+    image: valkey/valkey:8-alpine
+    command: valkey-server --replicaof 172.28.0.10 6379
+    depends_on: [valkey-primary]
+    networks: [r6net]
+
+  sentinel:
+    image: valkey/valkey:8-alpine
+    command: valkey-sentinel /etc/valkey/sentinel.conf
+    volumes:
+      # Real bug found: bind-mounting sentinel.conf as a single FILE (not a
+      # directory) makes every Sentinel state-change rewrite fail with
+      # "Could not rename tmp config file (Resource busy)" on Windows
+      # Docker Desktop - atomic rename-replace doesn't work against a
+      # single mapped file. Mounting the parent directory instead lets
+      # Sentinel write its temp file and rename it within the same real
+      # directory, which works. This failure was also implicated in
+      # Sentinel entering TILT mode (a real safety feature that blocks
+      # failover under suspicious conditions) during R6-06's first run.
+      - ./sentinel:/etc/valkey
+    depends_on: [valkey-primary, valkey-replica]
+    # Real bug found: valkey-sentinel resolves 'sentinel monitor' hostnames
+    # at config-load time and exits FATAL (no internal retry) if Docker's
+    # embedded DNS hasn't registered valkey-primary yet - a real startup
+    # race, not a config error. restart:on-failure lets Compose retry it
+    # until DNS is ready (typically succeeds on the 2nd attempt).
+    restart: on-failure
+    networks: [r6net]
+
+  toxiproxy:
+    image: ghcr.io/shopify/toxiproxy:2.9.0
+    ports:
+      - "61474:8474"
+    depends_on: [valkey-primary]
+    networks: [r6net]
+
+  redis_exporter:
+    image: oliver006/redis_exporter:latest
+    environment:
+      REDIS_ADDR: "redis://valkey-primary:6379"
+    depends_on: [valkey-primary]
+    networks: [r6net]
+
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    environment:
+      REDIS_HOSTS: "primary:valkey-primary:6379,replica:valkey-replica:6379"
+    ports:
+      - "61082:8081"
+    depends_on: [valkey-primary, valkey-replica]
+    networks: [r6net]
+
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    ports:
+      - "61090:9090"
+    networks: [r6net]
+
+  grafana:
+    image: grafana/grafana:latest
+    environment:
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: "Admin"
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+    ports:
+      - "61300:3000"
+    networks: [r6net]
+
+  dozzle:
+    image: amir20/dozzle:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    ports:
+      - "61888:8080"
+    networks: [r6net]
+
+networks:
+  r6net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.28.0.0/16

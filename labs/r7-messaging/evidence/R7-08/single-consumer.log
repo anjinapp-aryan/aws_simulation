@@ -1,0 +1,12 @@
+=== R7-08a ORDERING - single consumer, 18:44:15 ===
+published id=order-seq-1 type=ordered seq=1
+published id=order-seq-2 type=ordered seq=2
+published id=order-seq-3 type=ordered seq=3
+published id=order-seq-4 type=ordered seq=4
+published id=order-seq-5 type=ordered seq=5
+--- completion order (single consumer) ---
+1789218856.467 seq=1 consumer=consumer-1
+1789218857.359 seq=2 consumer=consumer-1
+1789218862.428 seq=3 consumer=consumer-1
+1789218863.329 seq=4 consumer=consumer-1
+1789218869.233 seq=5 consumer=consumer-1

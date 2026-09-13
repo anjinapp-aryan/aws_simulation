@@ -1,0 +1,12 @@
+=== R14-03 PRIMARY FAILURE / FAILOVER ===
+--- current leader before kill ---
++ Cluster: demo (7684888192200712225) --------+----+-------------+-----+------------+-----+
+| Member   | Host       | Role    | State     | TL | Receive LSN | Lag | Replay LSN | Lag |
++----------+------------+---------+-----------+----+-------------+-----+------------+-----+
+| patroni1 | 172.22.0.3 | Replica | streaming |  1 |   0/40A4038 |   0 |  0/40A4038 |   0 |
+| patroni2 | 172.22.0.4 | Leader  | running   |  1 |             |     |            |     |
+| patroni3 | 172.22.0.7 | Replica | streaming |  1 |   0/40A4038 |   0 |  0/40A4038 |   0 |
++----------+------------+---------+-----------+----+-------------+-----+------------+-----+
+leader=True server_addr=172.22.0.4 elapsed=0.005s
+
+T0 (primary killed): 2026-09-13 11:06:12.220027100

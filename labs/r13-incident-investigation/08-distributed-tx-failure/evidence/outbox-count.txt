@@ -1,0 +1,6 @@
+time="2026-09-13T08:54:51+05:30" level=warning msg="D:\\WORK_SPACE\\aws_simulation\\labs\\r13-incident-investigation\\08-distributed-tx-failure\\docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+ count 
+-------
+     4
+(1 row)
+

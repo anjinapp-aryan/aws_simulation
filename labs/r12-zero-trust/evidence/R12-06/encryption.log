@@ -1,0 +1,32 @@
+=== R12-06 TRANSPARENT ENCRYPTION, 22:57:10 ===
+pod "rogue" deleted from default namespace
+✨ Patching ConfigMap cilium-config with enable-wireguard=true...
+♻️  Restarted Cilium pods
+daemonset.apps/cilium restarted
+Waiting for daemon set "cilium" rollout to finish: 0 out of 2 new pods have been updated...
+Waiting for daemon set "cilium" rollout to finish: 0 out of 2 new pods have been updated...
+Waiting for daemon set "cilium" rollout to finish: 1 out of 2 new pods have been updated...
+Waiting for daemon set "cilium" rollout to finish: 0 of 2 updated pods are available...
+Waiting for daemon set "cilium" rollout to finish: 1 of 2 updated pods are available...
+daemon set "cilium" successfully rolled out
+--- real encryption status ---
+Encryption: Wireguard (2/2 nodes)
+
+--- app pods after Cilium restart ---
+NAME                        READY   STATUS    RESTARTS   AGE     IP             NODE         NOMINATED NODE   READINESS GATES
+backend-7987656979-zkvsr    1/1     Running   0          6m28s   10.244.1.147   r12-worker   <none>           <none>
+database-6d64fd885d-jzngt   1/1     Running   0          6m28s   10.244.1.222   r12-worker   <none>           <none>
+frontend-64c7797d9f-ntxh6   1/1     Running   0          6m28s   10.244.1.208   r12-worker   <none>           <none>
+--- detailed wireguard state on worker node's agent ---
+Error from server (NotFound): pods "cilium-7b75n" not found
+--- verify legitimate traffic still works post-encryption ---
+--- frontend -> backend (expected allowed) ---
+HTTP 200 (0.003882s)
+--- backend -> database (expected allowed, real TCP probe) ---
+TCP connect OK
+--- frontend -> database DIRECT (expected DENIED - zero trust) ---
+TCP connect FAILED: TimeoutError: timed out
+Encryption: Wireguard                 
+Interface: cilium_wg0
+	Public key: DiiI/BDUOTOOZXHkjOJfWykYNML2u9QUsHB5ehgbJgw=
+	Number of peers: 1
