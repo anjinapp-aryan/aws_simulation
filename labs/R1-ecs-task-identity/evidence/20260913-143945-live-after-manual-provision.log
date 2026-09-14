@@ -1,0 +1,18 @@
+=== Lab R1 - scenario: live-after-manual-provision ===
+
+--- Step 1: real credentials fetched from the ECS-compatible metadata endpoint ---
+{"AccessKeyId":"TASKROLEACCESSKEY01","Expiration":"2026-09-13T09:22:15Z","RoleArn":"","SecretAccessKey":"[REDACTED]","Token":"LabR1LocalSessionTokenNotRealSTS"}
+
+--- Step 2: s3:ListBucket (currently granted by policy) ---
+time="2026-09-13T14:39:46+05:30" level=warning msg="D:\\WORK_SPACE\\aws_simulation\\labs\\R1-ecs-task-identity\\docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+
+--- Step 3: s3:PutObject (the permission broken/fixed in this lab) ---
+time="2026-09-13T14:39:47+05:30" level=warning msg="D:\\WORK_SPACE\\aws_simulation\\labs\\R1-ecs-task-identity\\docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+Completed 16 Bytes/16 Bytes (1.7 KiB/s) with 1 file(s) remainingupload: ../tmp/evidence.txt to s3://lab-bucket/evidence.txt     
+
+--- Step 4: s3:DeleteObject (never granted - proves least privilege) ---
+time="2026-09-13T14:39:48+05:30" level=warning msg="D:\\WORK_SPACE\\aws_simulation\\labs\\R1-ecs-task-identity\\docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+
+aws: [ERROR]: An error occurred (AccessDenied) when calling the DeleteObject operation: Access Denied.
+
+Evidence saved to evidence/20260913-143945-live-after-manual-provision.log

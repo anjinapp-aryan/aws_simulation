@@ -1,0 +1,26 @@
+=== Preflight ===
+=== R14 prerequisite - Patroni image ===
+=== R14 prerequisite - 3-node Patroni cluster ===
+waiting for Patroni cluster to elect a leader (timeout 120s). ok (2s)
+waiting for all 3 Patroni members healthy (timeout 120s).. ok (4s)
+Patroni leader: patroni1
+=== R14 prerequisite - wal_level=logical ===
+wal_level is 'replica' - setting logical via Patroni REST PATCH /config
+waiting for cluster healthy after restart (timeout 120s) ok (0s)
+wal_level now: logical
+=== R15 infrastructure ===
+waiting for Toxiproxy control API (timeout 60s) ok (0s)
+=== R15 Toxiproxy proxies (orderdb, orderdb2, cache) ===
+proxy 'orderdb' created (56000 -> pgbouncer:6432)
+proxy 'orderdb2' created (56010 -> pgbouncer:6432)
+proxy 'cache' created (56001 -> valkey:6379)
+=== R15 applications ===
+waiting for order-service via Envoy (timeout 180s). ok (2s)
+waiting for both order-service replicas healthy in Envoy (timeout 150s)........................... ok (54s)
+=== Debezium connectors ===
+waiting for Kafka Connect REST API (timeout 180s) ok (0s)
+connector 'order-outbox-connector' registered
+connector 'payment-outbox-connector' registered
+waiting for order-outbox-connector RUNNING (connector + task) (timeout 120s). ok (2s)
+waiting for payment-outbox-connector RUNNING (connector + task) (timeout 120s) ok (0s)
+=== R15 is up ===

@@ -1,0 +1,29 @@
+
+--- R14 foundation (Patroni HA cluster) ---
+  PASS  3 Patroni members healthy
+  PASS  leader identified: patroni1
+  PASS  2 replicas streaming
+  PASS  patroni1 holds the leader role (required by the pinned order connector)
+  PASS  wal_level=logical (logical replication available to Debezium)
+  PASS  PostgreSQL reachable on the leader
+
+--- R15 application tier ---
+  PASS  order-service healthy through Envoy
+  PASS  Envoy reports 2 healthy upstream endpoints (both order-service replicas)
+
+--- CDC pipeline (Debezium / Kafka Connect) ---
+  PASS  order-outbox-connector RUNNING (connector + task): RUNNING RUNNING
+  PASS  payment-outbox-connector RUNNING (connector + task): RUNNING RUNNING
+
+--- Saga round trip (real CDC relay, order verify-1789403982) ---
+  PASS  order placed: CREATED
+  waiting for CONFIRMED (timeout 120s)....
+  PASS  Saga completed: CREATED -> CONFIRMED in ~12s (real Kafka/Debezium relay)
+
+--- Cache-aside behaviour ---
+  PASS  cache-aside verified: first read source=db, second read source=cache
+
+======================================
+  PASSED: 13   FAILED: 0
+======================================
+R15 VERIFY: PASS - environment matches R15/BASELINE.md. Ready to run an incident.

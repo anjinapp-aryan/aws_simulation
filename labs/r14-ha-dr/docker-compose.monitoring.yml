@@ -1,0 +1,66 @@
+# R14 metrics visualization — OPTIONAL, purely additive. Zero edits to
+# patroni-src/ (official, unmodified) or docker-compose.override.yml
+# (app/pgweb/dozzle, unchanged). Removing this file removes monitoring
+# only; failover/backup/restore/pgweb/dozzle have zero dependency on it.
+#
+# Architecture decision (see R14/METRICS-VISUALIZATION.md for full reasoning):
+#   PRIMARY:   Patroni's own native /metrics endpoint, scraped from all 3
+#              real nodes — authoritative HA-state (primary/replica/standby,
+#              WAL position, failover) straight from Patroni itself.
+#   SECONDARY: postgres_exporter (prometheus-community, same image already
+#              used in R4) against HAProxy's write port — standard Postgres
+#              connection-count/availability metrics for the current leader.
+version: "3.8"
+services:
+  # REAL BUG FOUND + FIXED (investigated live, not hidden): killing the
+  # leader mid-scrape left this exporter's cached DB connection pointed at
+  # a socket to the now-dead container. Its default reconnect attempt then
+  # hung indefinitely inside the /metrics handler itself (Prometheus's own
+  # scrape showed "context deadline exceeded"; a direct wget to the
+  # exporter hung with no response) even though HAProxy had already
+  # rerouted correctly and a fresh psql connection worked immediately.
+  # Root cause: no connect_timeout on the DSN, so a dead-socket reconnect
+  # could block far longer than any scrape interval, with no bound. Fix:
+  # connect_timeout=5 bounds that hang so a failed scrape becomes a fast,
+  # visible "down" in Prometheus instead of an indefinite hang. NOTE: a
+  # Docker healthcheck alone does NOT auto-restart a container (that
+  # requires an orchestrator or a watcher like willfarrell/autoheal,
+  # deliberately not added here to keep this $0/minimal) - it exists so
+  # `docker compose ps`/`docker inspect` surface the unhealthy state for a
+  # human/monitoring system to act on, same as it would in production.
+  postgres_exporter:
+    image: prometheuscommunity/postgres-exporter:latest
+    environment:
+      DATA_SOURCE_NAME: "postgresql://postgres:postgres@haproxy:5000/postgres?sslmode=disable&connect_timeout=5"
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "--timeout=5", "http://localhost:9187/metrics"]
+      interval: 10s
+      timeout: 6s
+      retries: 3
+    restart: unless-stopped
+    networks: [demo]
+
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    ports:
+      - "58503:9090"
+    networks: [demo]
+
+  grafana:
+    image: grafana/grafana:latest
+    environment:
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: "Viewer"
+    volumes:
+      - ./monitoring/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./monitoring/grafana/dashboards:/var/lib/grafana/dashboards:ro
+    ports:
+      - "58504:3000"
+    networks: [demo]
+
+networks:
+  demo:
+    external: true
+    name: patroni-src_demo

@@ -1,0 +1,66 @@
+=== BASELINE (before kill) ===
+patroni1 [1789395897.843, '0']
+patroni2 [1789395897.843, '0']
+patroni3 [1789395897.843, '1']
+{"status":"success","data":{"resultType":"vector","result":[{"metric":{"__name__":"pg_up","instance":"postgres_exporter:9187","job":"postgres"},"value":[1789395897.924,"1"]}]}}
+T0 = 2026-09-14T14:25:01.238850Z
+demo-patroni3
+[14:25:06] patroni_primary: patroni1=0,patroni2=0,patroni3=1 | pg_up: 1
+[14:25:08] patroni_primary: patroni1=0,patroni2=0 | pg_up: 1
+[14:25:11] patroni_primary: patroni1=0,patroni2=0 | pg_up: no-data
+[14:25:13] patroni_primary: patroni1=0,patroni2=0 | pg_up: no-data
+[14:25:15] patroni_primary: patroni1=0,patroni2=0 | pg_up: no-data
+[14:25:18] patroni_primary: patroni1=0,patroni2=0 | pg_up: no-data
+[14:25:20] patroni_primary: patroni1=0,patroni2=0 | pg_up: no-data
+[14:25:22] patroni_primary: patroni1=0,patroni2=0 | pg_up: no-data
+[14:25:25] patroni_primary: patroni1=0,patroni2=0 | pg_up: no-data
+[14:25:27] patroni_primary: patroni1=0,patroni2=0 | pg_up: no-data
+[14:25:29] patroni_primary: patroni1=1,patroni2=0 | pg_up: no-data
+[14:25:32] patroni_primary: patroni1=1,patroni2=0 | pg_up: no-data
+[14:25:34] patroni_primary: patroni1=1,patroni2=0 | pg_up: no-data
+[14:25:41] patroni_primary: patroni1=1,patroni2=0 | pg_up: no-data
+[14:25:44] patroni_primary: patroni1=1,patroni2=0 | pg_up: no-data
+[14:25:46] patroni_primary: patroni1=1,patroni2=0 | pg_up: no-data
+[14:25:49] patroni_primary: patroni1=1,patroni2=0 | pg_up: no-data
+[14:25:51] patroni_primary: patroni1=1,patroni2=0 | pg_up: no-data
+[14:25:53] patroni_primary: patroni1=1,patroni2=0 | pg_up: no-data
+[14:25:56] patroni_primary: patroni1=1,patroni2=0 | pg_up: no-data
+[14:26:09] pg_up: no-data
+[14:26:12] pg_up: no-data
+[14:26:15] pg_up: no-data
+[14:26:18] pg_up: no-data
+[14:26:22] pg_up: no-data
+[14:26:25] pg_up: no-data
+[14:26:28] pg_up: no-data
+[14:26:31] pg_up: no-data
+[14:26:34] pg_up: no-data
+[14:26:38] pg_up: no-data
+[14:26:41] pg_up: no-data
+[14:26:44] pg_up: no-data
+[14:26:47] pg_up: no-data
+[14:26:51] pg_up: no-data
+[14:26:54] pg_up: no-data
+
+=== RE-TEST after connect_timeout fix ===
+T0 = 2026-09-14T14:28:22.843344Z
+demo-patroni1
+[14:28:27] patroni_primary: patroni2=0 | pg_up: 1
+[14:28:30] patroni_primary: patroni2=0 | pg_up: no-data
+[14:28:34] patroni_primary: patroni2=0 | pg_up: no-data
+[14:28:37] patroni_primary: patroni2=0 | pg_up: no-data
+[14:28:40] patroni_primary: patroni2=0 | pg_up: no-data
+[14:28:44] patroni_primary: patroni2=0 | pg_up: no-data
+[14:28:47] patroni_primary: patroni2=0 | pg_up: 0
+[14:28:50] patroni_primary: patroni2=0 | pg_up: 0
+[14:28:54] patroni_primary: patroni2=1 | pg_up: 0
+[14:28:57] patroni_primary: patroni2=1 | pg_up: 1
+[14:29:00] patroni_primary: patroni2=1 | pg_up: 1
+[14:29:04] patroni_primary: patroni2=1 | pg_up: 1
+[14:29:07] patroni_primary: patroni2=1 | pg_up: 1
+[14:29:10] patroni_primary: patroni2=1 | pg_up: 1
+[14:29:14] patroni_primary: patroni2=1 | pg_up: 1
+[14:29:17] patroni_primary: patroni2=1 | pg_up: 1
+[14:29:20] patroni_primary: patroni2=1 | pg_up: 1
+[14:29:24] patroni_primary: patroni2=1 | pg_up: 1
+[14:29:27] patroni_primary: patroni2=1 | pg_up: 1
+[14:29:30] patroni_primary: patroni2=1 | pg_up: 1

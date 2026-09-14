@@ -1,0 +1,133 @@
+# R10 — OPTIONAL Kubernetes resource visualization (kubernetes-sigs/headlamp,
+# Apache-2.0, https://github.com/kubernetes-sigs/headlamp). Purely additive:
+# nothing else in R10 depends on this, and removing it has zero effect on
+# any existing experiment, script, or dashboard.
+#
+# Base: the project's own official in-cluster manifest
+# (https://raw.githubusercontent.com/kubernetes-sigs/headlamp/main/kubernetes-headlamp.yaml),
+# fetched and verified for this exact addition, with two changes:
+#   1. Image pinned to the verified latest release (v0.45.0) instead of
+#      `:latest`, matching this project's own standing convention of always
+#      pinning exact versions (e.g. envoyproxy/envoy:v1.31-latest,
+#      jaegertracing/all-in-one:1.60).
+#   2. The official manifest's OTel tracing/metrics env vars were dropped -
+#      they point at an `otel-collector` service that does not exist
+#      anywhere in R10; leaving them in would just be a harmless but
+#      confusing dangling reference.
+#
+# RBAC: DEMO/LOCAL LEARNING RBAC, not production practice - the official
+# quick-start commonly binds the token's ServiceAccount to `cluster-admin`.
+# For this read-only visualization use case this manifest instead binds to
+# the built-in `view` ClusterRole (list/get/watch on nearly all objects,
+# including pods/deployments/services/hpa - everything R10's learning
+# objective needs - but no create/update/delete anywhere). A production
+# deployment would scope this further still (namespace-limited, resource-
+# type-limited) - documented here, not silently expanded.
+kind: ServiceAccount
+apiVersion: v1
+metadata:
+  name: headlamp-admin
+  namespace: kube-system
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: headlamp-admin-view
+subjects:
+  - kind: ServiceAccount
+    name: headlamp-admin
+    namespace: kube-system
+roleRef:
+  kind: ClusterRole
+  name: view
+  apiGroup: rbac.authorization.k8s.io
+---
+kind: Secret
+apiVersion: v1
+metadata:
+  name: headlamp-admin
+  namespace: kube-system
+  annotations:
+    kubernetes.io/service-account.name: "headlamp-admin"
+type: kubernetes.io/service-account-token
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: headlamp
+  namespace: kube-system
+spec:
+  ports:
+    - port: 80
+      targetPort: 4466
+  selector:
+    k8s-app: headlamp
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: headlamp
+  namespace: kube-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: headlamp
+  template:
+    metadata:
+      labels:
+        k8s-app: headlamp
+    spec:
+      containers:
+        - name: headlamp
+          image: ghcr.io/headlamp-k8s/headlamp:v0.45.0
+          args:
+            - "-in-cluster"
+          ports:
+            - containerPort: 4466
+              name: http
+          readinessProbe:
+            httpGet:
+              scheme: HTTP
+              path: /
+              port: 4466
+            initialDelaySeconds: 30
+            timeoutSeconds: 30
+          livenessProbe:
+            httpGet:
+              scheme: HTTP
+              path: /
+              port: 4466
+            initialDelaySeconds: 30
+            timeoutSeconds: 30
+      nodeSelector:
+        'kubernetes.io/os': linux
+---
+# Real, live-tested finding: Kubernetes' built-in `view` ClusterRole does
+# NOT include cluster-scoped resources (nodes, persistentvolumes,
+# namespaces themselves) by design - confirmed via
+# `kubectl auth can-i list nodes --as=system:serviceaccount:kube-system:headlamp-admin`
+# returning "no". R10's own success criteria requires node visibility, so
+# this narrow, explicit, read-only-on-nodes-only role is added alongside
+# `view` rather than escalating to `cluster-admin`.
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: headlamp-node-reader
+rules:
+  - apiGroups: [""]
+    resources: ["nodes"]
+    verbs: ["get", "list", "watch"]
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: headlamp-admin-node-reader
+subjects:
+  - kind: ServiceAccount
+    name: headlamp-admin
+    namespace: kube-system
+roleRef:
+  kind: ClusterRole
+  name: headlamp-node-reader
+  apiGroup: rbac.authorization.k8s.io
