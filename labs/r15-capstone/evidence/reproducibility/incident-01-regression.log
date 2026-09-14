@@ -1,0 +1,58 @@
+=== INCIDENT-01 REGRESSION (existing mechanism, unchanged) ===
+order id: regress-1789404441
+
+--- BASELINE /order-status latency (5 reads) ---
+0.008674s
+0.016329s
+0.016544s
+0.017003s
+0.014356s
+
+--- T0 INJECT: real Toxiproxy 400ms latency toxic on 'orderdb' (INCIDENT-01's documented mechanism) ---
+T0=16:47:32Z
+{
+    "attributes": {
+        "latency": 400,
+        "jitter": 0
+    },
+    "name": "latency_down",
+    "type": "latency",
+    "stream": "downstream",
+    "toxicity": 1
+}
+
+--- SYMPTOM: /order-status latency during fault (8 reads) ---
+0.013026s
+2.039971s
+2.023365s
+2.020199s
+0.014586s
+0.015460s
+2.022075s
+0.016593s
+
+--- EVIDENCE: competing hypotheses eliminated ---
+Envoy endpoints healthy: 2
+order connector state: RUNNING
+active toxics on orderdb: ["latency:{'latency': 400, 'jitter': 0}"]
+active toxics on orderdb2: none
+
+--- FIX: remove the toxic (INCIDENT-01's documented mitigation) ---
+T3=16:47:59Z
+toxic removed
+
+--- VERIFICATION: /order-status latency after fix (8 reads) ---
+0.013790s
+0.016158s
+0.013114s
+0.015521s
+0.013923s
+0.014926s
+0.014622s
+0.015399s
+  PASS  cache-aside verified: first read source=db, second read source=cache
+
+======================================
+  PASSED: 13   FAILED: 0
+======================================
+R15 VERIFY: PASS - environment matches R15/BASELINE.md. Ready to run an incident.

@@ -1,0 +1,28 @@
+=== Preflight ===
+=== R14 prerequisite - Patroni image ===
+image 'patroni' already present (skipping build)
+=== R14 prerequisite - 3-node Patroni cluster ===
+waiting for Patroni cluster to elect a leader (timeout 120s) ok (0s)
+waiting for all 3 Patroni members healthy (timeout 120s) ok (0s)
+=== R14 prerequisite - wal_level=logical ===
+wal_level already logical (skipping reconfiguration)
+=== R15 infrastructure ===
+waiting for Toxiproxy control API (timeout 60s) ok (0s)
+=== R15 Toxiproxy proxies (orderdb, orderdb2, cache) ===
+proxy 'orderdb' already exists (skipping)
+proxy 'orderdb2' already exists (skipping)
+proxy 'cache' already exists (skipping)
+=== R15 applications ===
+ Container r15-capstone-payment-service-1 Recreated 
+ Container r15-capstone-order-service-2-1 Recreated 
+ Container r15-capstone-order-service-1-1 Recreated 
+waiting for order-service via Envoy (timeout 180s). ok (2s)
+waiting for both order-service replicas healthy in Envoy (timeout 150s) ok (0s)
+=== Debezium connectors ===
+waiting for Kafka Connect REST API (timeout 180s) ok (0s)
+connector 'order-outbox-connector' already registered (skipping creation)
+connector 'payment-outbox-connector' already registered (skipping creation)
+waiting for order-outbox-connector RUNNING (connector + task) (timeout 120s) ok (0s)
+waiting for payment-outbox-connector RUNNING (connector + task) (timeout 120s) ok (0s)
+=== R15 is up ===
+order after re-run: verify-1789403982 CONFIRMED source=db
