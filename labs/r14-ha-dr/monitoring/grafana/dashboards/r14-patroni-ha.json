@@ -1,0 +1,119 @@
+{
+  "title": "R14 - Patroni HA/DR",
+  "uid": "r14-patroni-ha",
+  "schemaVersion": 39,
+  "version": 1,
+  "refresh": "5s",
+  "time": { "from": "now-15m", "to": "now" },
+  "panels": [
+    {
+      "id": 1,
+      "title": "Primary / Replica State (per node)",
+      "type": "stat",
+      "gridPos": { "h": 6, "w": 24, "x": 0, "y": 0 },
+      "targets": [
+        {
+          "expr": "patroni_primary",
+          "legendFormat": "{{name}} primary",
+          "refId": "A"
+        },
+        {
+          "expr": "patroni_replica",
+          "legendFormat": "{{name}} replica",
+          "refId": "B"
+        },
+        {
+          "expr": "patroni_standby_leader",
+          "legendFormat": "{{name}} standby_leader",
+          "refId": "C"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "red", "value": null },
+              { "color": "green", "value": 1 }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "description": "REAL, from Patroni's own /metrics. 1 = this node currently holds that role. A leader change (failover) shows as the 1 moving to a different node."
+    },
+    {
+      "id": 2,
+      "title": "Replication Lag (bytes, approx, from Patroni WAL position)",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 6 },
+      "targets": [
+        {
+          "expr": "(scalar(max(patroni_xlog_location)) - patroni_xlog_replayed_location) * on(name) group_left() patroni_replica",
+          "legendFormat": "{{name}} lag bytes",
+          "refId": "A"
+        }
+      ],
+      "description": "REAL, computed from Patroni's own patroni_xlog_location (leader) and patroni_xlog_replayed_location (each node); zeroed on the leader row via patroni_replica since lag only applies to replicas. NOT the same as RPO - this is live WAL byte lag, not a recovery-point guarantee. See R14/RTO-RPO.md for the real RPO measurement methodology."
+    },
+    {
+      "id": 3,
+      "title": "WAL Replay Activity (per node)",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 6 },
+      "targets": [
+        {
+          "expr": "patroni_xlog_replayed_location",
+          "legendFormat": "{{name}} replayed LSN",
+          "refId": "A"
+        }
+      ],
+      "description": "REAL. A flat line during an outage means that node stopped replaying WAL; a resumed upward slope shows real recovery."
+    },
+    {
+      "id": 4,
+      "title": "Active Connections (current leader, via HAProxy write port)",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 14 },
+      "targets": [
+        {
+          "expr": "pg_stat_database_numbackends{datname=\"postgres\"}",
+          "legendFormat": "connections",
+          "refId": "A"
+        }
+      ],
+      "description": "REAL, from postgres_exporter (prometheus-community, same image as R4) scraping the real Postgres leader through HAProxy's write port."
+    },
+    {
+      "id": 5,
+      "title": "PostgreSQL Availability",
+      "type": "stat",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 14 },
+      "targets": [
+        {
+          "expr": "pg_up",
+          "legendFormat": "pg_up (via HAProxy)",
+          "refId": "A"
+        },
+        {
+          "expr": "patroni_postgres_running",
+          "legendFormat": "{{name}} postgres_running",
+          "refId": "B"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "red", "value": null },
+              { "color": "green", "value": 1 }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "description": "REAL. pg_up drops to 0 only if HAProxy cannot reach any writable leader - i.e. real, full write-unavailability, not a single node's local status."
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+# Standard Grafana file-provider provisioning (no prior R-lab needed this
+# since none provisioned a dashboard JSON before; R14 is the first to need
+# a purpose-built dashboard rather than ad-hoc Explore queries).
+apiVersion: 1
+providers:
+  - name: R14
+    folder: ""
+    type: file
+    options:
+      path: /var/lib/grafana/dashboards
